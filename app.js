@@ -27,7 +27,6 @@ const server = http.createServer((req, res) => {
     if (url === '/profile' && method === 'POST') {
 
         const formData = []
-        const storeData = []
         req.on('data', (chunk) => {
             console.log('The chunk', chunk)
             formData.push(chunk)
@@ -36,14 +35,19 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
             const parsedData = Buffer.concat(formData).toString()
             console.log('The parsed data', parsedData)
-            storeData.push(parsedData)
+            const storedData = parsedData.split(' ')
+            fs.writeFileSync('formData.txt', storedData)
         })
+        
 
-        fs.writeFileSync('formData', storeData)
+        // res.statusCode = 302
+        //res.setHeader('Location', '/')
+        const readFile = fs.readFileSync('formData.txt').toString()
+        console.log('the read file', readFile)
         res.write('<html>')
         res.write('<header><title>My profile</title></header>')
         res.write('<body>')
-        res.write('<h3>This is my profile</h3>')
+        res.write('<h3>This is my profile and this is the data</h3>')
         res.write('</body>')
         res.write('</html>')
         res.end()
