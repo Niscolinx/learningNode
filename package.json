@@ -1,0 +1,20 @@
+{
+  "name": "learningNode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Niscolinx/learningNode.git"
+  },
+  "keywords": [],
+  "author": "Igboanugwo Collins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Niscolinx/learningNode/issues"
+  },
+  "homepage": "https://github.com/Niscolinx/learningNode#readme"
+}
