@@ -1,11 +1,11 @@
 const express = require('express')
+const path = require('path')
 
 const router = express.Router()
 
 
 router.get('/', (req, res, next) => {
-    console.log('The home page')
-    res.send('<h3>This is the home page</h3>')
+    res.send
 })
 
 module.exports = router;

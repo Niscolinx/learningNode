@@ -10,6 +10,10 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(adminRoutes)
 app.use(shopRoutes)
 
+app.use((req, res) => {
+    res.send('<h2>Page not found</h2>')
+})
+
 app.listen(3030, () => {
     console.log('listening to port', 3030)
 })
