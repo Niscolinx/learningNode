@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Niscolinx/learningNode/issues"
   },
-  "homepage": "https://github.com/Niscolinx/learningNode#readme"
+  "homepage": "https://github.com/Niscolinx/learningNode#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
