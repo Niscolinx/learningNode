@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add product</title>
 </head>
+
 <body>
     <header>
         <nav>
@@ -16,9 +18,13 @@
     </header>
 
     <main>
-        <h2>
-            This is the product page
-        </h2>
+        <h2>This is the product page </h2>
+        <p>Please add your book title below</p>
+        <form action="/admin/add-product" method="POST">
+            <input type="text" placeholder="Add book title" name="bookTitle">> <button>Add product</button>
+        </form>
+
     </main>
 </body>
+
 </html>
