@@ -12,7 +12,7 @@ app.use('/admin',adminRoutes)
 app.use(shopRoutes)
 
 app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '../', 'views', '404page.html'))
+    res.status(404).sendFile(path.join(__dirname, 'views', '404page.html'))
 })
 
 app.listen(3030, () => {
