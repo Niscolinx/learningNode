@@ -10,27 +10,30 @@
 </head>
 
 <body>
-    <header class="header">
-        <nav class="header-nav">
-            <ul class="header-nav__items">
-                <li class="header-nav__item"> <a href="admin/add-product">Add product</a></li>
-                <li class="header-nav__item"> <a href="/">Home</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main class="main">
-        <div>
-            <h2 class="main-text">This is the product page </h2>
-            <p class="main-text__secondary">Please add your book title below</p>
-        </div>
-        <div>
-            <form action="/admin/add-product" method="POST">
-                <input type="text" placeholder="Add book title" name="bookTitle" class="btn"> <button>Add product</button>
-            </form>
-        </div>
-
-    </main>
+    <div class="container">
+        <header class="header">
+            <nav class="header-nav">
+                <ul class="header-nav__items">
+                    <li class="header-nav__item"> <a href="admin/add-product">Add product</a></li>
+                    <li class="header-nav__item"> <a href="/">Home</a></li>
+                </ul>
+            </nav>
+        </header>
+    
+        <main class="main">
+            <div>
+                <h2 class="main-text">This is the product page </h2>
+                <p class="main-text__secondary">Please add your book title below</p>
+            </div>
+            <div>
+                <form action="/admin/add-product" method="POST">
+                    <input type="text" placeholder="Add book title" name="bookTitle" class="btn"> <button>Add product</button>
+                </form>
+            </div>
+    
+        </main>
+    </div>
 </body>
 
 </html>
