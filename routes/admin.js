@@ -8,7 +8,7 @@ const rootDir = require('../path')
 
 router.get('/add-product', (req, res, next) => {
     console.log('Adding products')
-    res.sendFile(path.join(rootDir, '../', 'views', 'add-product.html')) 
+    res.sendFile(path.join(rootDir, 'views', 'add-product.html')) 
 })
 
 router.post('/add-product', (req, res, next) => {
