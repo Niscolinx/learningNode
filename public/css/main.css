@@ -23,9 +23,15 @@
     justify-content: flex-end;
     padding: 1.8rem;
     font-size: 1.4rem;
+    color: black;
 }
 
 .container .header-nav__items .header-nav__item a {
     text-decoration: none;
-    
+    color: black;
+    margin: 1rem;
+}
+
+.container .header-nav__items .header-nav__item a:hover{
+    color: #dbc12d;
 }
