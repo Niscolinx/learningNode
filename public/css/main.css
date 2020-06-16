@@ -13,7 +13,7 @@
 .container .header{
     width: 100%;
     background-color: #bdca43;
-    color: #6b2b63;
+    color: #a83a9a;
 }
 
 .container .header-nav__items{
@@ -23,15 +23,15 @@
     justify-content: flex-end;
     padding: 1.8rem;
     font-size: 1.2rem;
-    color: #6b2b63;
+    color: #a83a9a;
 }
 
 .container .header-nav__items .header-nav__item a {
     text-decoration: none;
-    color: #6b2b63;
+    color: #a83a9a;
     margin: 1rem;
 }
 
 .container .header-nav__items .header-nav__item a:hover{
-    color: #dbc12d;
+    color: black;
 }
