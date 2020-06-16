@@ -4,6 +4,8 @@ const express = require('express')
 const router = express.Router()
 
 const rootDir = require('../path')
+const app = express()
+
 
 
 router.get('/add-product', (req, res, next) => {
