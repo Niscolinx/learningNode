@@ -12,8 +12,8 @@
 
 .container .header{
     width: 100%;
-    background-color: #62a585;
-    color: black;
+    background-color: #bdca43;
+    color: #6b2b63;
 }
 
 .container .header-nav__items{
@@ -22,13 +22,13 @@
     align-items: center;
     justify-content: flex-end;
     padding: 1.8rem;
-    font-size: 1.4rem;
-    color: black;
+    font-size: 1.2rem;
+    color: #6b2b63;
 }
 
 .container .header-nav__items .header-nav__item a {
     text-decoration: none;
-    color: black;
+    color: #6b2b63;
     margin: 1rem;
 }
 
