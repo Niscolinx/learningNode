@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.set('view engine', 'pug')
 app.set('views', 'views')
-app.use('/admin',adminRoutes)
+app.use('/admin',adminRoutes.router)
 app.use(shopRoutes)
 
 app.use((req, res) => {
