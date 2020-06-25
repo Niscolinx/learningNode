@@ -83,7 +83,9 @@
 
 .product-item {
     width: 20rem;
-    max-width: 95%;
+    margin: 1rem 0;
+    max-width: 50%;
+    cursor: pointer;
 }
 
 .product__title {
@@ -101,7 +103,7 @@
     text-align: center;
 }
 
-grid {
+.grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
