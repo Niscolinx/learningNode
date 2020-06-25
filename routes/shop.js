@@ -7,7 +7,8 @@ const rootDir = require('../path')
 
 
 router.get('/', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'shop.html'))
+    res.render(path.join(rootDir, 'views', 'shop.pug'))
+   // res.sendFile(path.join(rootDir, 'views', 'shop.pug'))
 })
 
 module.exports = router;

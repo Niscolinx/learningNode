@@ -1,0 +1,20 @@
+meta(charset='UTF-8')
+meta(name='viewport' content='width=device-width,initial-scale=1')
+title Add product
+link(rel='stylesheet' href='/css/main.css')
+.container
+  header.header
+    nav.header-nav
+      ul.header-nav__items
+        li.header-nav__item
+          a(href='/admin/add-product') Add product
+        li.header-nav__item
+          a(href='/') Home
+  main.main
+    div
+      h2.main-text This is the product page
+      p.main-text__secondary Please add your book title below
+    .form-box
+      form(action='/admin/add-product' method='POST')
+        input.form-input(type='text' placeholder='Add book title' name='bookTitle')
+      button.btn Add product
