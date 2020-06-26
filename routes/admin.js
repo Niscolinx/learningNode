@@ -3,12 +3,10 @@ const path = require('path')
 const express = require('express')
 const router = express.Router()
 
-const productControllers = require('../controllers/products')
+const productsController = require('../controllers/products')
 
+router.get('/add-product', productsController.getAddProducts)
 
-
-router.get('/add-product', productControllers.getAddProducts)
-
-router.post('/add-product', productControllers.postAddProducts)
+router.post('/add-product', productsController.postAddProducts)
 
 module.exports = router

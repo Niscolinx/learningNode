@@ -7,17 +7,17 @@ const app = express()
 
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
-const productControllers = require('./controllers/error')
+const errrosController = require('./controllers/error')
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.set('view engine', 'ejs')
 app.set('views', 'views')
-app.use('/admin',adminRoutes.router)
+app.use('/admin',adminRoutes)
 app.use(shopRoutes)
 
-app.use(productControllers.get404)
+app.use(errrosController.get404)
 
 app.listen(3030, () => {
     console.log('listening to port', 3030)
