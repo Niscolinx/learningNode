@@ -11,7 +11,7 @@ const products = []
 router.get('/add-product', (req, res, next) => {
     console.log('Adding products')
    // res.sendFile(path.join(rootDir, 'views', 'add-product_copy.html'))
-    res.render('add-product') 
+    res.render('add-product', {pageTitle: 'Add product'}) 
 })
 
 router.post('/add-product', (req, res, next) => {

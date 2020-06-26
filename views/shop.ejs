@@ -22,9 +22,10 @@
         </header>
 
         <main>
-            <h1>My Products</h1>
-            <p>List of all the products...</p>
+            <% if(products.length > 0) { %>
             <div class="grid">
+                <h1>My Products</h1>
+                <p>List of all the products...</p>
                 <article class="card product-item">
                     <header class="card__header">
                         <h1 class="product__title">Great Book</h1>
@@ -42,6 +43,9 @@
                     </div>
                 </article>
             </div>
+            <% else { %>
+            <h2>No products found</h2>
+            <% } %>
         </main>
     </div>
 </body>
