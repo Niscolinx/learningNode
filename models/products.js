@@ -11,19 +11,28 @@ module.exports = class Products {
 
     save() {
         fs.readFile(p, (err, fileContents) => {
-            const products = []
+            let products = []
             if (!err) {
                 products = JSON.parse(fileContents)
+                console.log('the inner products', products)
             }
+
             products.push(this)
+            console.log('the products', products)
             fs.writeFile(p, JSON.stringify(products), (er, file) => {
                 console.log('This is the error', er)
             })
         })
-        //products_store.push(this)
+        products_store.push(this)
     }
 
     fetchAll() {
+        fs.readFile(p, (err, fileContents) => {
+            if(err){
+                console.log(err)
+            }
+            return JSON.parse(fileContents)
+        })
         return products_store
     }
 }
