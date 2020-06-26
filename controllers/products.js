@@ -1,4 +1,4 @@
-const products = []
+const Products = require('../models/products')
 
 
 exports.getAddProducts = (req, res, next) => {
@@ -8,10 +8,13 @@ exports.getAddProducts = (req, res, next) => {
 
 exports.postAddProducts = (req, res, next) => {
     const { bookTitle } = req.body
-    products.push({ title: bookTitle })
+    const product = new Products(bookTitle)
+    product.save()
     res.redirect('/')
 }
 
 exports.getShop = (req, res, next) => {
-    res.render('shop', { products, pageTitle: 'My shop' })
+    const fetchAllProducts = new Products
+    const productItems = fetchAllProducts.fetchAll()
+    res.render('shop', { products: productItems, pageTitle: 'My shop' })
 }
