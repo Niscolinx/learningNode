@@ -10,7 +10,7 @@ const productsData = require('./admin')
 router.get('/', (req, res, next) => {
     const data = productsData.products
     console.log('the data', data)
-    res.render('shop', {products: data, docTitle: 'My shop'})
+    res.render('shop', {products: data, pageTitle: 'My shop'})
    // res.sendFile(path.join(rootDir, 'views', 'shop.pug'))
 })
 
