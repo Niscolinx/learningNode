@@ -56,8 +56,12 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding: 1rem;
 }
 
+.center__col{
+    flex-direction: column;
+}
 .form-box {
     margin-top: .5rem;
     padding: .5rem;
@@ -114,7 +118,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: stretch;
+    align-items: center;
+    text-align: center;
 }
 
 .card {

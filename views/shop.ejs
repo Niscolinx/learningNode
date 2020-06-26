@@ -1,31 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('includes/head.ejs') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= pageTitle%></title>
-    <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body>
     <div class="container">
 
-        <header class="header">
-            <nav class="header-nav">
-                <ul class="header-nav__items">
-                    <li class="header-nav__item"> <a href="/admin/add-product">Add product</a></li>
-                    <li class="header-nav__item"> <a href="/">Home</a></li>
-                </ul>
-            </nav>
-        </header>
+        <%- include('includes/navigation.ejs') %>
 
         <main>
             <% if(products.length > 0) { %>
-            <div class="grid">
+            <div class="center center__col">
                 <h1>My Products</h1>
                 <p>List of all the products...</p>
+            </div>
+            <div class="grid">
                 <% for(let item of products) { %>
                 <article class="card product-item">
                     <header class="card__header">
@@ -50,6 +38,4 @@
             </div>
         </main>
     </div>
-</body>
-
-</html>
+    <%- include('includes/end.ejs') %>
