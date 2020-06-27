@@ -4,7 +4,6 @@ const path = require('path')
 module.exports = class Products {
     constructor(bookTitle) {
         this.title = bookTitle
-        this.title = bookTitle
     }
 
     save() {
