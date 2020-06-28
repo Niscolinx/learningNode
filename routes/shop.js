@@ -6,9 +6,11 @@ const router = express.Router()
 const productsController = require('../controllers/products')
 
 
-router.get('/', productsController.listProducts)
+router.get('/list-products', productsController.listProducts)
 
-router.get('/cart', productsController.cart)
+router.get('/', productsController.home)
+
+router.post('/cart', productsController.cart)
 
 module.exports = router;
  

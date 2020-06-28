@@ -45,7 +45,7 @@ module.exports = class Products {
            
     }
 
-    displayCart(){
+    static displayCart(cb){
         getItemsFromCart(cb)
     }
 
