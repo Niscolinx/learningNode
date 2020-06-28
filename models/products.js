@@ -1,11 +1,15 @@
 const fs = require('fs')
 const path = require('path')
 
+
 module.exports = class Products {
     constructor(bookTitle) {
         this.title = bookTitle
     }
 
+    getItemsFromFile(){
+        
+    }
     save() {
         const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json')
 
