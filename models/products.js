@@ -1,9 +1,10 @@
 const fs = require('fs')
 const path = require('path')
-const e = require('express')
 
 
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json') 
+
+const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json') 
 
 const getItemsFromFile = cb => {
 
@@ -16,9 +17,21 @@ const getItemsFromFile = cb => {
         }
     })
 }
+const getItemsFromCart = cb => {
+
+    fs.readFile(cartPath, (err, fileContents) => {
+        if (err) {
+            cb([])
+        }
+        else{
+            cb(JSON.parse(fileContents))
+        }
+    })
+}
 module.exports = class Products {
-    constructor(bookTitle) {
+    constructor(bookTitle, id) {
         this.title = bookTitle
+        this.id = id
     }
 
     save() {
@@ -30,6 +43,10 @@ module.exports = class Products {
 
         })
            
+    }
+
+    displayCart(){
+        getItemsFromCart(cb)
     }
 
     static fetchAll(cb) {

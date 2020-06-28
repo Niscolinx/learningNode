@@ -28,7 +28,12 @@
                             things!</p>
                     </div>
                     <div class="card__actions">
-                        <button class="btn">Add to Cart</button>
+                        <form name="addToCart" method="POST" action="/cart">
+                            <input type="hidden" name="param1" value="param1Value">
+                            <a href="javascript:document.addToCart.submit()"> <button class="btn">Add to
+                                    Cart</button></a>
+                        </form>
+                       
                     </div>
                 </article>
                 <% } %>

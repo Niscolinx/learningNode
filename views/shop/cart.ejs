@@ -1,0 +1,37 @@
+<%- include('../includes/head.ejs') %>
+
+</head>
+
+<body>
+    <div class="container">
+
+        <%- include('../includes/navigation.ejs') %>
+
+        <main>
+            <% if(cart.length > 0) { %>
+            <div class="center center__col">
+                <h1>My Cart</h1>
+                <p>List of all the cart items...</p>
+            </div>
+            <div class="grid">
+                <% for(let item of cart) { %>
+                <article class="card product-item">
+                    <header class="card__header">
+                        <h1 class="product__title"><%= item.title%></h1>
+                    </header>
+                    <div class="card__image">
+                        <img src="https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png" alt="A Book">
+                    </div>
+                    <div class="card__content">
+                        <h2 class="product__price">$19.99</h2>
+                    </div>
+                   
+                </article>
+                <% } %>
+                <% } else { %>
+                <h2 class="center">No items found in Cart</h2>
+                <% } %>
+            </div>
+        </main>
+    </div>
+    <%- include('../includes/end.ejs') %>

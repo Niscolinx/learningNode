@@ -8,13 +8,20 @@ exports.getAddProducts = (req, res, next) => {
 
 exports.postAddProducts = (req, res, next) => {
     const { bookTitle } = req.body
-    const product = new Products(bookTitle)
+    const id = Math.floor(Math.random() * 2000) + bookTitle
+    const product = new Products(bookTitle, id)
     product.save()
     res.redirect('/')
 }
 
-exports.getShop = (req, res, next) => {
+exports.listProducts = (req, res, next) => {
     Products.fetchAll(products => {
         res.render('shop/list-products', { products, pageTitle: 'My shop', path: '/'})
+    })
+}
+
+exports.cart = (req, res, next) => {
+    Products.displayCart(cart => {
+        res.render('shop/cart', {cart, pageTitle: 'My Cart', path: '/cart'})
     })
 }
