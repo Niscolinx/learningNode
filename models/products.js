@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const e = require('express')
 
 
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json') 
@@ -10,7 +11,9 @@ const getItemsFromFile = cb => {
         if (err) {
             cb([])
         }
-        cb(JSON.parse(fileContents))
+        else{
+            cb(JSON.parse(fileContents))
+        }
     })
 }
 module.exports = class Products {
@@ -19,14 +22,14 @@ module.exports = class Products {
     }
 
     save() {
-      
         getItemsFromFile(products => {
-            console.info('This is the product', products)
-        })
             products.push(this)
             fs.writeFile(p, JSON.stringify(products), (er, file) => {
-                console.log('This is the error', er)
+                console.log('This is the error', er, file)
             })
+
+        })
+           
     }
 
     static fetchAll(cb) {
