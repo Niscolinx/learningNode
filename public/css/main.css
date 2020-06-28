@@ -31,6 +31,9 @@
     color: #a83a9a;
     margin: 1rem;
 }
+.container .header-nav__items .header-nav__item .active {
+    color: black;
+}
 
 .container .header-nav__items .header-nav__item a:hover {
     color: black;
