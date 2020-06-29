@@ -37,7 +37,7 @@ module.exports = class Cart {
     remove(id){
         getItemsFromCart(cart => {
            const newItems =  cart.filter(cartItem => {
-                cartItem.id !== id
+               return cartItem.id !== id
             })
             cart = newItems
             fs.writeFile(cartPath, JSON.stringify(cart), err => {

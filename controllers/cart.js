@@ -18,6 +18,7 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.postRemoveProduct = (req, res, next) => {
+    console.log('this is the remove cart')
     const { cartId } = req.body
     const cart = new Cart()
     cart.remove(cartId)
