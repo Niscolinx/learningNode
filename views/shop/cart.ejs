@@ -25,7 +25,14 @@
                     <div class="card__content">
                         <h2 class="product__price">$19.99</h2>
                     </div>
-                   
+                    <div class="card__actions">
+                        <form method="POST" action="/admin/edit-product">
+                            <input type="hidden" name="cartId" value=<%= item.id %>>
+
+                            <button class="btn">Delete Item</button>
+                        </form>
+                    </div>
+
                 </article>
                 <% } %>
                 <% } else { %>

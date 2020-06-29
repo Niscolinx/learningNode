@@ -41,3 +41,10 @@ exports.postCart = (req, res, next) => {
     cart.save()
     res.redirect('/list-products')
 }
+
+exports.postRemoveProduct = (req, res, next) => {
+    const { cartId } = req.body
+    const cart = new Cart()
+    cart.remove(cartId)
+    res.redirect('/cart')
+}
