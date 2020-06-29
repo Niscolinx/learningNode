@@ -10,7 +10,9 @@ router.get('/list-products', productsController.listProducts)
 
 router.get('/', productsController.home)
 
-router.post('/cart', productsController.cart)
+router.get('/cart', productsController.getCart)
+
+router.post('/cart', productsController.postCart)
 
 module.exports = router;
  

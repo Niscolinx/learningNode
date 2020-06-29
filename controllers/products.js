@@ -25,10 +25,16 @@ exports.listProducts = (req, res, next) => {
     })
 }
 
-exports.cart = (req, res, next) => {
+exports.getCart = (req, res, next) => {
     Products.displayCart(cart => {
-        const d = req.body.addToCart
-        console.log('the cart body', d)
         res.render('shop/cart', {cart, pageTitle: 'My Cart', path: '/cart'})
+    })
+}
+
+exports.postCart = (req, res, next) => {
+    const d = req.body
+    console.log('the cart body', d)
+    res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' }, () => {
+        console.log(res)
     })
 }
