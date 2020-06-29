@@ -4,7 +4,6 @@ const path = require('path')
 
 const p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json') 
 
-const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json') 
 
 const getItemsFromFile = cb => {
 
@@ -17,17 +16,7 @@ const getItemsFromFile = cb => {
         }
     })
 }
-const getItemsFromCart = cb => {
 
-    fs.readFile(cartPath, (err, fileContents) => {
-        if (err) {
-            cb([])
-        }
-        else{
-            cb(JSON.parse(fileContents))
-        }
-    })
-}
 module.exports = class Products {
     constructor(bookTitle, id) {
         this.title = bookTitle
@@ -45,11 +34,9 @@ module.exports = class Products {
            
     }
 
-    static displayCart(){
-      
-    }
-
     static fetchAll(cb) {
        getItemsFromFile(cb)
     }
 }
+
+

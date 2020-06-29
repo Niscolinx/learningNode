@@ -28,8 +28,8 @@
                             things!</p>
                     </div>
                     <div class="card__actions">
-                        <form name="addToCart" method="POST" action="/cart" >
-                            <input type="hidden" name="cartId" value= <%= item.id %>
+                        <form method="POST" action="/cart" >
+                            <input type="hidden" name="cartId" value= <%= item %>
                             >                                    
                            
                               <button class="btn" >Add to Cart</button>

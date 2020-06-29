@@ -1,4 +1,5 @@
 const Products = require('../models/products')
+const Cart = require('../models/cart')
 
 
 exports.getAddProducts = (req, res, next) => {
@@ -26,16 +27,16 @@ exports.listProducts = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-    Products.displayCart(cart => {
-        console.log('this is the get cart')
-        res.render('shop/cart', {cart, pageTitle: 'My Cart', path: '/cart'})
+    console.log('this is the get cart')
+    Cart.fetchAll(cart => {
+        res.render('shop/cart', {cart, pageTitle: 'My Cart', path: '/cart'}) 
     })
 }
 
 exports.postCart = (req, res, next) => {
-   Products.displayCart(cart => {
-       console.log('this is the post cart')
-       res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
-
-   })
+    const { cartId } = req.body
+    const id = Math.floor(Math.random() * 2000) + bookTitle
+    const product = new Products(bookTitle, id)
+    product.save()
+    res.redirect('/list-products')
 }
