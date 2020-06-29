@@ -35,8 +35,9 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
     const { cartId } = req.body
-    const id = Math.floor(Math.random() * 2000) + bookTitle
-    const product = new Products(bookTitle, id)
-    product.save()
+    const {cartTitle} = req.body
+    console.log('the cart body', cartId)
+    const cart = new Cart(cartTitle, cartId)
+    cart.save()
     res.redirect('/list-products')
 }

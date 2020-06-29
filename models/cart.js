@@ -1,5 +1,8 @@
-const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json') 
+const fs = require('fs')
+const path = require('path')
 
+
+const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json') 
 
 const getItemsFromCart = cb => {
 
@@ -22,7 +25,8 @@ module.exports = class Cart {
     save() {
         getItemsFromCart(cart => {
             cart.push(this)
-            fs.writeFile(p, JSON.stringify(cart), (er, file) => {
+            console.log('This is the cart item', cart)
+            fs.writeFile(cartPath, JSON.stringify(cart), (er, file) => {
                 console.log('This is the error', er, file)
             })
 
