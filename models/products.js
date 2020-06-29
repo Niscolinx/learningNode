@@ -30,9 +30,10 @@ module.exports = class Products {
                 console.log('This is the error', er, file)
             })
 
-        })
-           
+        })   
     }
+
+    
 
     static fetchAll(cb) {
        getItemsFromFile(cb)
