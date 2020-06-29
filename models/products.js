@@ -27,13 +27,13 @@ module.exports = class Products {
         getItemsFromFile(products => {
             products.push(this)
             fs.writeFile(p, JSON.stringify(products), (er, file) => {
-                console.log('This is the error', er, file)
+                console.log('This is the error from saving product', er, file)
             })
 
         })   
     }
 
-    
+
 
     static fetchAll(cb) {
        getItemsFromFile(cb)
