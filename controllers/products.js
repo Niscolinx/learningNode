@@ -19,8 +19,10 @@ exports.postAddProducts = (req, res, next) => {
     res.redirect('/list-products')
 }
 
-exports.listProducts = (req, res, next) => {
+exports.listProducts = (req, res, next) => {    
     Products.fetchAll(products => {
+        console.log('the list products page')
+        
         res.render('shop/list-products', { products, pageTitle: 'My shop', path: '/list-products'})
     })
 }

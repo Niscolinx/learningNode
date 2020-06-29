@@ -4,15 +4,16 @@ const express = require('express')
 const router = express.Router()
 
 const productsController = require('../controllers/products')
+const cartController = require('../controllers/cart')
 
 
 router.get('/list-products', productsController.listProducts)
 
 router.get('/', productsController.home)
 
-router.get('/cart', productsController.getCart)
+router.get('/cart', cartController.getCart)
 
-router.post('/cart', productsController.postCart)
+router.post('/cart', cartController.postCart)
 
 module.exports = router;
  
