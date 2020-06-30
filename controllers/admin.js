@@ -1,10 +1,8 @@
 const Cart = require('../models/cart')
 
-exports.getCart = (req, res, next) => {
-    console.log('this is the get cart')
-    Cart.fetchAll(cart => {
-        res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
-    })
+exports.getAddProducts = (req, res, next) => {
+
+    res.render('admin/add-product', { pageTitle: 'Add product', path: '/admin/add-product' })
 }
 
 exports.postCart = (req, res, next) => {
@@ -23,4 +21,12 @@ exports.postRemoveProduct = (req, res, next) => {
     const cart = new Cart()
     cart.remove(cartId)
     res.redirect('/cart')
+}
+
+exports.postAddProducts = (req, res, next) => {
+    const { bookTitle } = req.body
+    const id = Math.floor(Math.random() * 2000) + bookTitle
+    const product = new Products(bookTitle, id)
+    product.save()
+    res.redirect('/list-products')
 }
