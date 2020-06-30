@@ -5,15 +5,6 @@ exports.getAddProducts = (req, res, next) => {
     res.render('admin/add-product', { pageTitle: 'Add product', path: '/admin/add-product' })
 }
 
-exports.postCart = (req, res, next) => {
-    const { cartId } = req.body
-    const { cartTitle } = req.body
-
-    console.log('the cart body', req.body)
-    const cart = new Cart(cartTitle, cartId)
-    cart.save()
-    res.redirect('/list-products')
-}
 
 exports.postRemoveProduct = (req, res, next) => {
     console.log('this is the remove cart')
