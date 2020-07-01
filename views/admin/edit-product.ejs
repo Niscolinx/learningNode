@@ -10,12 +10,12 @@
         <main class="main form-container">
             <div class="center-box">
                 <h2 class="main-text">Edit your product</h2>
-                <p class="main-text__secondary form-text">Please Update the details of your book below</p>
+                <p class="main-text__secondary form-text">Please Update the details of your <%= product_details.title %></p>
             </div>
             <div class="form-box">
                 <form action="/admin/re-product" method="POST">
                     <div class="form-control">
-                        <label for="title" class="form-label">Add Title</label>
+                        <label for="title" class="form-label">Title</label>
                         <input type="text" id="bookTitle" name="bookTitle" class="form-input">
                     </div>
 
