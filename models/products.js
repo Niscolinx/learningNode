@@ -32,10 +32,24 @@ module.exports = class Products {
             fs.writeFile(p, JSON.stringify(products), (er, file) => {
                 console.log('This is the error from saving product', er, file)
             })
-
         })   
     }
 
+    update(id){
+        getItemsFromFile(products => {
+
+            for(let product of products){
+                if(product.id === id){
+                    console.log('the product in json', product)
+                }
+            }
+            // products.push(this)
+            // fs.writeFile(p, JSON.stringify(products), (er, file) => {
+            //     console.log('This is the error from saving product', er, file)
+            // })
+
+        })  
+    }
 
 
     static fetchAll(cb) {
