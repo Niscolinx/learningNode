@@ -5,6 +5,10 @@ exports.getAddProducts = (req, res, next) => {
 
     res.render('admin/add-product', { pageTitle: 'Add product', path: '/admin/add-product' })
 }
+exports.getEditProduct = (req, res, next) => {
+
+    res.render('admin/edit-product', { pageTitle: 'Edit product', path: '/admin/edit-product' })
+}
 
 
 exports.postRemoveProduct = (req, res, next) => {
@@ -21,4 +25,20 @@ exports.postAddProducts = (req, res, next) => {
     const product = new Products(bookTitle, description, price, imgUrl, id)
     product.save()
     res.redirect('/list-products')
+}
+exports.postRemoveProducts = (req, res, next) => {
+    const { bookTitle, description, price, imgUrl } = req.body
+    const id = Math.floor(Math.random() * 2000) + bookTitle
+    const product = new Products(bookTitle, description, price, imgUrl, id)
+    product.remove()
+    res.redirect('/list-products')
+}
+
+exports.getEditProduct = (req, res, next) => {
+    Products.fetchAll(products => {
+        console.log('the list products page')
+        console.log('this is the body', req.body)
+
+        res.render('admin/edit-product', { products, pageTitle: 'Edit', path: '/admin/edit-product' })
+    })
 }

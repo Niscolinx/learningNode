@@ -26,7 +26,7 @@ exports.postCart = (req, res, next) => {
 
 exports.listProducts = (req, res, next) => {    
     Products.fetchAll(products => {
-        console.log('the list products page')
+        console.log('the list products page', products)
         
         res.render('shop/list-products', { products, pageTitle: 'My shop', path: '/list-products'})
     })
