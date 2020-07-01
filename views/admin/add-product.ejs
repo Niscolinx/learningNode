@@ -1,44 +1,44 @@
 <%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/form.css">
 
 </head>
 
 <body>
     <div class="container">
-   <%- include('../includes/navigation.ejs') %>
+        <%- include('../includes/navigation.ejs') %>
 
-    
+
         <main class="main">
             <div>
                 <h2 class="main-text">This is the product page </h2>
-                <p class="main-text__secondary">Please fill in the details of your book below</p>
+                <p class="main-text__secondary form-text">Please fill in the details of your book below</p>
             </div>
             <div class="form-box">
                 <form action="/admin/add-product" method="POST">
                     <div class="form-control">
-                        <label for="title">Add Title</label>
-                        <input type="text" id="bookTitle" name="bookTitle" class="form-input"> 
+                        <label for="title" class="form-label">Add Title</label>
+                        <input type="text" id="bookTitle" name="bookTitle" class="form-input">
                     </div>
 
                     <div class="form-control">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" class="form-input" rows="5">
-                        <textarea name="description" id="description" class="form-input" rows="5">Description</textarea>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-input" rows="5"></textarea>
                     </div>
 
                     <div class="form-control">
-                        <label for="price">Price</label>
+                        <label for="price" class="form-label">Price</label>
                         <input type="number" id="price" name="price" class="form-input">
                     </div>
 
                     <div class="form-control">
-                        <label for="ImgUrl">Image Url</label>
+                        <label for="ImgUrl" class="form-label">Image Url</label>
                         <input type="text" id="ImgUrl" name="ImgUrl" class="form-input">
                     </div>
 
                     <button class="btn">Add product</button>
                 </form>
-          </div>
-    
+            </div>
+
         </main>
     </div>
-<%- include('../includes/end.ejs') %>
+    <%- include('../includes/end.ejs') %>
