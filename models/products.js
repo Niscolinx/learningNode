@@ -41,14 +41,19 @@ module.exports = class Products {
             for(let product of products){
                 if(product.id === id){
                     console.log('the product in json', product)
-                    updatedProduct = product
+                    console.log('this is the product that needs to be updated', this)
+                    updatedProduct = this
                 }
             }
+            const newProducts = products.filter(productItem => {
+                return productItem.id !== id
+            })
+            newProducts.push(updatedProduct)
+            products = newProducts
            
-            // products.push(this)
-            // fs.writeFile(p, JSON.stringify(products), (er, file) => {
-            //     console.log('This is the error from saving product', er, file)
-            // })
+            fs.writeFile(p, JSON.stringify(products), (er, file) => {
+                console.log('This is the error from saving product', er, file)
+            })
 
         })  
     }
