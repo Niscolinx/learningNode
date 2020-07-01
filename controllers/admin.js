@@ -36,10 +36,10 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
     console.log('this is the edit page', req.body)
-    const {bookTitle, price, imgUrl, description, id } = req.body
-    const updateProduct = new Products(bookTitle, description, price, imgUrl, id)
-    updateProduct.update()
-    res.redirect('/admin/edit-product')
+    // const {bookTitle, price, imgUrl, description, id } = req.body
+    // const updateProduct = new Products(bookTitle, description, price, imgUrl, id)
+    // updateProduct.update()
+    res.redirect('admin/edit-product', {product_details: 'Hello world'})
 }
 
 
