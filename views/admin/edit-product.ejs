@@ -13,7 +13,7 @@
                 <p class="main-text__secondary form-text">Please Update the details of your <%= product_details.title %></p>
             </div>
             <div class="form-box">
-                <form action="/admin/re-product" method="POST">
+                <form action="/admin/edit-product" method="POST">
                     <div class="form-control">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" id="bookTitle" name="bookTitle" class="form-input" value="<%=product_details.title%>">
@@ -37,16 +37,8 @@
                     </div>
 
                     <div class="card__actions">
-                        <form method="POST" action="/cart">
-                            <input type="hidden" name="cartTitle" value="<%= product_details %>">
-                        </form>
-                            <!-- <input type="hidden" name="cartId" value="<%= product_details %>">
-                            <button class="btn product-btn">Update Cart</button>
-
-                        <form method="POST" action="/admin/edit-product">
-                            <input type="hidden" name="cartId" value=<%= product_details %>>
-                            <button class="btn product-btn btn-delete">Delete product</button>
-                        </form> -->
+                    
+                        <button class="btn product-btn">Update Cart</button>
                     </div>
                 </form>
             </div>
