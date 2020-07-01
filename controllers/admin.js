@@ -5,9 +5,41 @@ exports.getAddProducts = (req, res, next) => {
 
     res.render('admin/add-product', { pageTitle: 'Add product', path: '/admin/add-product' })
 }
+
 exports.getEditProduct = (req, res, next) => {
 
     res.render('admin/edit-product', { pageTitle: 'Edit product', path: '/admin/edit-product' })
+}
+
+exports.getEditProduct = (req, res, next) => {
+    Products.fetchAll(products => {
+        let id;
+        let product_details;
+        for (let items in req.query) {
+            if (items === 'cartId') {
+                id = req.query[items]
+                break;
+            }
+        }
+
+        for (let product of products) {
+            if (product.id === id) {
+                product_details = product
+                break;
+            }
+        }
+
+        res.render('admin/edit-product', { product_details, pageTitle: 'Edit', path: '/admin/edit-product' })
+    })
+}
+
+
+exports.postEditProduct = (req, res, next) => {
+    console.log('this is the remove cart')
+    const { cartId } = req.body
+    const cart = new Cart()
+    cart.remove(cartId)
+    res.redirect('/cart')
 }
 
 
@@ -34,24 +66,3 @@ exports.postRemoveProducts = (req, res, next) => {
     res.redirect('/list-products')
 }
 
-exports.getEditProduct = (req, res, next) => {
-    Products.fetchAll(products => {
-        let id;
-        let product_details;
-        for(let items in req.query){
-            if(items === 'cartId'){
-                id = req.query[items]
-                break;
-            } 
-        }
-
-        for(let product of products){
-            if(product.id === id){
-                product_details = product
-                break;
-            }
-        }
-
-        res.render('admin/edit-product', { product_details, pageTitle: 'Edit', path: '/admin/edit-product' })
-    })
-}
