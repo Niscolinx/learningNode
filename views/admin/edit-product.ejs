@@ -10,8 +10,8 @@
 
         <main class="main form-container">
             <div class="center-box">
-                <h2 class="main-text">This is the product page </h2>
-                <p class="main-text__secondary form-text">Please fill in the details of your book below</p>
+                <h2 class="main-text">Edit your product</h2>
+                <p class="main-text__secondary form-text">Please Update the details of your book below</p>
             </div>
             <div class="form-box">
                 <form action="/admin/add-product" method="POST">
@@ -35,7 +35,18 @@
                         <input type="text" id="ImgUrl" name="imgUrl" class="form-input">
                     </div>
 
-                    <button class="btn form-btn">Add product</button>
+                    <div class="card__actions">
+                        <form method="POST" action="/cart">
+                            <input type="hidden" name="cartTitle" value="<%= item.title %>">
+                            <input type="hidden" name="cartId" value=<%= item.id %>>
+                            <button class="btn product-btn">Update Cart</button>
+                        </form>
+
+                        <form method="POST" action="/admin/edit-product">
+                            <input type="hidden" name="cartId" value=<%= item.id %>>
+                            <button class="btn product-btn btn-delete">Delete product</button>
+                        </form>
+                    </div>
                 </form>
             </div>
 

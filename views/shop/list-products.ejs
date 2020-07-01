@@ -33,8 +33,7 @@
                               <button class="btn product-btn" >Add to Cart</button>
                         </form>
 
-                        <form method="POST" action="/cart" >
-                            <input type="hidden" name="cartTitle" value= "<%= item.title %>" >
+                        <form method="POST" action="/admin/edit-product" >
                             <input type="hidden" name="cartId" value= <%= item.id %> >                              
                               <button class="btn product-btn">Edit product</button>
                         </form>

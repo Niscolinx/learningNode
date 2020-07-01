@@ -112,6 +112,11 @@
     padding: .5rem;
 }
 
+.btn-delete{
+    background-color: rgb(141, 20, 20);
+    color: black
+}
+
 .grid {
     display: flex;
     flex-wrap: wrap;
