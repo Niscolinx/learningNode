@@ -1,4 +1,5 @@
 const Cart = require('../models/cart')
+const Products = require('../models/products')
 
 exports.getAddProducts = (req, res, next) => {
 
@@ -15,9 +16,9 @@ exports.postRemoveProduct = (req, res, next) => {
 }
 
 exports.postAddProducts = (req, res, next) => {
-    const { bookTitle } = req.body
+    const { bookTitle, description, price, imgUrl } = req.body
     const id = Math.floor(Math.random() * 2000) + bookTitle
-    const product = new Products(bookTitle, id)
+    const product = new Products(bookTitle, description, price, imgUrl, id)
     product.save()
     res.redirect('/list-products')
 }
