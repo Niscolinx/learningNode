@@ -10,7 +10,7 @@ router.post('/add-product', adminController.postAddProducts)
 
 router.post('/remove-product', adminController.postRemoveProduct)
 
-//router.post('/edit-product', adminController.postEditProduct)
+router.post('/edit-product', adminController.postEditProduct)
 
 router.get('/edit-product', adminController.getEditProduct)
 

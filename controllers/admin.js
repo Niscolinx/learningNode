@@ -35,11 +35,11 @@ exports.getEditProduct = (req, res, next) => {
 
 
 exports.postEditProduct = (req, res, next) => {
-    console.log('this is the remove cart')
-    const { cartId } = req.body
-    const cart = new Cart()
-    cart.remove(cartId)
-    res.redirect('/cart')
+    console.log('this is the edit page', req.body)
+    const {bookTitle, price, imgUrl, description, id } = req.body
+    const updateProduct = new Products(bookTitle, description, price, imgUrl, id)
+    updateProduct.update()
+    res.redirect('/admin/edit-product')
 }
 
 
