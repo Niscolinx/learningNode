@@ -29,12 +29,12 @@
                     <div class="card__actions">
                         <form method="POST" action="/cart" >
                             <input type="hidden" name="cartTitle" value= "<%= item.title %>" >
-                            <input type="hidden" name="cartId" value= <%= item.id %> >                              
+                            <input type="hidden" name="cartId" value= "<%= item.id %>" >                              
                               <button class="btn product-btn" >Add to Cart</button>
                         </form>
 
                         <form method="GET" action="/admin/edit-product" >
-                            <input type="hidden" name="cartId" value= <%= item.id %> >                              
+                            <input type="hidden" name="cartId" value= "<%= item.id %>">                              
                               <button class="btn product-btn">Edit product</button>
                         </form>
                     </div>
