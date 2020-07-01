@@ -107,6 +107,11 @@
     text-align: center;
 }
 
+.product-btn{
+    font-size: 1.2rem;
+    padding: .5rem;
+}
+
 .grid {
     display: flex;
     flex-wrap: wrap;
@@ -140,9 +145,12 @@
 }
 
 .card__actions {
-    padding: 1rem;
     text-align: center;
+    display: flex;
+    margin: 1rem;
+    justify-content: space-evenly;
 }
+
 
 .card__actions button,
 .card__actions a {
