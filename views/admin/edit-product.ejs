@@ -1,6 +1,6 @@
 <%- include('../includes/head.ejs') %>
 <link rel="stylesheet" href="/css/form.css">
-
+<%= console.log('the product', product_details)%>
 </head>
 
 <body>
@@ -37,15 +37,15 @@
 
                     <div class="card__actions">
                         <form method="POST" action="/cart">
-                            <input type="hidden" name="cartTitle" value="<%= item.title %>">
-                            <input type="hidden" name="cartId" value="<%= item.id %>">
-                            <button class="btn product-btn">Update Cart</button>
+                            <input type="hidden" name="cartTitle" value="<%= product_details %>">
                         </form>
+                            <!-- <input type="hidden" name="cartId" value="<%= product_details %>">
+                            <button class="btn product-btn">Update Cart</button>
 
                         <form method="POST" action="/admin/edit-product">
-                            <input type="hidden" name="cartId" value=<%= item.id %>>
+                            <input type="hidden" name="cartId" value=<%= product_details %>>
                             <button class="btn product-btn btn-delete">Delete product</button>
-                        </form>
+                        </form> -->
                     </div>
                 </form>
             </div>

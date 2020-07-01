@@ -52,6 +52,6 @@ exports.getEditProduct = (req, res, next) => {
             }
         }
 
-        res.render('admin/edit-product', { products: product_details, pageTitle: 'Edit', path: '/admin/edit-product' })
+        res.render('admin/edit-product', { product_details, pageTitle: 'Edit', path: '/admin/edit-product' })
     })
 }
