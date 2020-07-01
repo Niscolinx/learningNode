@@ -46,7 +46,7 @@ exports.getEditProduct = (req, res, next) => {
         }
 
         console.log('the products', products)
-        console.log("This is the id", id)
+        console.log("This is the id", id, req.query)
 
         res.render('admin/edit-product', { products, pageTitle: 'Edit', path: '/admin/edit-product' })
     })
