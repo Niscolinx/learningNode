@@ -16,22 +16,24 @@
                 <form action="/admin/re-product" method="POST">
                     <div class="form-control">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" id="bookTitle" name="bookTitle" class="form-input">
+                        <input type="text" id="bookTitle" name="bookTitle" class="form-input" value="<%=product_details.title%>">
                     </div>
 
                     <div class="form-control">
                         <label for="description" class="form-label">Description</label>
-                        <textarea name="description" id="description" class="form-input" rows="5"></textarea>
+                        <textarea name="description" id="description" class="form-input" rows="5"><%=product_details.description%></textarea>
                     </div>
 
                     <div class="form-control">
                         <label for="price" class="form-label">Price</label>
-                        <input type="number" id="price" name="price" class="form-input">
+                        <input type="number" id="price" name="price" class="form-input"
+                            value="<%=product_details.price%>">
                     </div>
 
                     <div class="form-control">
                         <label for="ImgUrl" class="form-label">Image Url</label>
-                        <input type="text" id="ImgUrl" name="imgUrl" class="form-input">
+                        <input type="text" id="ImgUrl" name="imgUrl" class="form-input"
+                            value="<%=product_details.imgUrl%>">
                     </div>
 
                     <div class="card__actions">
