@@ -36,8 +36,17 @@ exports.postRemoveProducts = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
     Products.fetchAll(products => {
-        console.log('the list products page')
-        console.log('this is the body', req.body)
+        let id;
+        for(let items in req.query){
+            if(items === 'cartId'){
+                id = req.query[items]
+                break;
+            }
+            
+        }
+
+        console.log('the products', products)
+        console.log("This is the id", id)
 
         res.render('admin/edit-product', { products, pageTitle: 'Edit', path: '/admin/edit-product' })
     })
