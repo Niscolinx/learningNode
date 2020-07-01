@@ -40,8 +40,6 @@ module.exports = class Products {
             let updatedProduct;
             for(let product of products){
                 if(product.id === id){
-                    console.log('the product in json', product)
-                    console.log('this is the product that needs to be updated', this)
                     updatedProduct = this
                 }
             }
