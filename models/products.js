@@ -37,12 +37,14 @@ module.exports = class Products {
 
     update(id){
         getItemsFromFile(products => {
-
+            let updatedProduct;
             for(let product of products){
                 if(product.id === id){
                     console.log('the product in json', product)
+                    updatedProduct = product
                 }
             }
+           
             // products.push(this)
             // fs.writeFile(p, JSON.stringify(products), (er, file) => {
             //     console.log('This is the error from saving product', er, file)

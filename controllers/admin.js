@@ -40,7 +40,6 @@ exports.postEditProduct = (req, res, next) => {
     const updateProduct = new Products(bookTitle, description, price, imgUrl, id)
     updateProduct.update(id)
     res.redirect('/list-products')
-    // res.render('admin/edit-product', { product_details, pageTitle: 'Edit page', path: '/admin/edit-product' })
 }
 
 exports.postRemoveProduct = (req, res, next) => {
