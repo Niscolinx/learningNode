@@ -29,18 +29,17 @@ exports.getEditProduct = (req, res, next) => {
             }
         }
 
-        res.render('admin/edit-product', { product_details, pageTitle: 'Edit', path: '/admin/edit-product' })
+        res.render('admin/edit-product', { product_details, pageTitle: 'Edit page', path: '/admin/edit-product' })
     })
 }
 
 
 exports.postEditProduct = (req, res, next) => {
     console.log('this is the edit page', req.body)
-    // const {bookTitle, price, imgUrl, description, id } = req.body
-    // const updateProduct = new Products(bookTitle, description, price, imgUrl, id)
-    // updateProduct.update()
-    res.redirect('admin/edit-product', {product_details: 'Hello world'})
-}
+    const {bookTitle, price, imgUrl, description, id } = req.body
+    const updateProduct = new Products(bookTitle, description, price, imgUrl, id)
+    updateProduct.update()
+    res.render('admin/edit-product', { product_details, pageTitle: 'Edit page', path: '/admin/edit-product' })}
 
 
 exports.postRemoveProduct = (req, res, next) => {
