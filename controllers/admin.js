@@ -45,8 +45,9 @@ exports.getEditProduct = (req, res, next) => {
             
         }
 
-        console.log('the products', products)
-        console.log("This is the id", id, req.query)
+        for(let product in products){
+            console.log('the loop of product', product)
+        }
 
         res.render('admin/edit-product', { products, pageTitle: 'Edit', path: '/admin/edit-product' })
     })
