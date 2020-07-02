@@ -16,11 +16,8 @@ exports.getCart = (req, res, next) => {
 
 
 exports.postCart = (req, res, next) => {
-    const { cartId } = req.body
-    const { cartTitle } = req.body
-
-    console.log('the cart body', req.body)
-    const cart = new Cart(cartTitle, cartId)
+    const { cartTitle, price, cartId} = req.body
+    const cart = new Cart(cartTitle, price, cartId)
     cart.save()
     res.redirect('/list-products')
 }

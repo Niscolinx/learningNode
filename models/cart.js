@@ -17,8 +17,9 @@ const getItemsFromCart = cb => {
 }
 
 module.exports = class Cart {
-    constructor(bookTitle, id) {
+    constructor(bookTitle, price, id) {
         this.title = bookTitle
+        this.price = price
         this.id = id
     }
 
@@ -53,7 +54,6 @@ module.exports = class Cart {
                 console.log('the items of the cart', cartItem)
                 total += item.price 
             }
-
             console.log('The total price is', total)
         })
     }
