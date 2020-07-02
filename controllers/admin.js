@@ -43,7 +43,7 @@ exports.postEditProduct = (req, res, next) => {
 }
 
 exports.postRemoveProduct = (req, res, next) => {
-    console.log('this is the remove cart')
+    console.log('this is the remove cart', req.body)
     const { cartId } = req.body
     const cart = new Cart()
     cart.remove(cartId)
