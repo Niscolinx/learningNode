@@ -48,13 +48,13 @@ module.exports = class Cart {
     }
 
     static getAllPrices(){
-        getItemsFromCart(cartItem => {
+      getItemsFromCart(cartItem => {
             let total = 0
             for(let item of cartItem){
                 total += Math.floor(Number(item.price))
             }
-            console.log('The total price is', total)
-            return total
+            cartItem.push({totalPrice: total})
+            console.log('print total cb', cartItem)
         })
     }
 
