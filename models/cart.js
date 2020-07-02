@@ -52,7 +52,8 @@ module.exports = class Cart {
             for (let item of cartItem) {
                 total += Math.floor(Number(item.price))
             }
-            cartItem.push({ totalPrice: total })
+           cartItem.push({ totalPrice: total })
+           console.log('the cart item', cartItem)
             fs.writeFile(cartPath, JSON.stringify(cartItem), err => {
                 console.log('The error from removing the cart', err)
             })
