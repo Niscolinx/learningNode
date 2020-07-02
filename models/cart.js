@@ -47,7 +47,15 @@ module.exports = class Cart {
     }
 
     static getAllPrices(){
-        gt
+        getItemsFromCart(cartItem => {
+            let total = 0
+            for(let item of cartItem){
+                console.log('the items of the cart', cartItem)
+                total += item.price 
+            }
+
+            console.log('The total price is', total)
+        })
     }
 
     static fetchAll(cb) {

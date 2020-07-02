@@ -8,6 +8,7 @@ exports.home = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
     console.log('this is the get cart')
+    Cart.getAllPrices()
     Cart.fetchAll(cart => {
         res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
     })
