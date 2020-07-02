@@ -51,10 +51,10 @@ module.exports = class Cart {
         getItemsFromCart(cartItem => {
             let total = 0
             for(let item of cartItem){
-                console.log('the items of the cart', cartItem)
-                total += item.price 
+                total += Math.floor(Number(item.price))
             }
             console.log('The total price is', total)
+            return total
         })
     }
 
