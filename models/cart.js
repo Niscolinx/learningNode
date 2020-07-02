@@ -47,20 +47,34 @@ module.exports = class Cart {
     }
 
     static getTotalPrice() {
+        const holdTotal = (cb) =>{
+            console.log(cb) 
+        }
+       fs.readFile(cartPath, (err, fileContents) => {
+            if (err) {
+                holdTotal([])
+            }
+            else {
+                holdTotal(JSON.parse(fileContents))
+            }
+        })
+
+        console.log('the hold total', holdTotal)
         getItemsFromCart(cartItem => {
             let total = 0
             for (let item of cartItem) {
                 total += Math.floor(Number(item.price))
             }
-           cartItem.push({ totalPrice: total })
-          // console.log('the cart item', cartItem)
-            fs.writeFile(cartPath, JSON.stringify(cartItem), err => {
-                console.log('The error from removing the cart', err)
-            })
+            cartItem.push({ totalPrice: total })
+            console.log('the cart item', cartItem)
+            // fs.writeFile(cartPath, JSON.stringify(cartItem), err => {
+            //     console.log('The error from removing the cart', err)
+            // })
         })
     }
 
     static fetchAll(cb) {
+        this.getTotalPrice()
         getItemsFromCart(cb)
     }
 }

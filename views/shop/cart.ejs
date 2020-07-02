@@ -7,7 +7,7 @@
 
         <%- include('../includes/navigation.ejs') %>
 
-        <main>
+        <main class="main">
             <% if(cart.length > 0) { %>
             <div class="center center__col">
                 <h1>My Cart</h1>
@@ -34,7 +34,6 @@
                     </div>
 
                 </article>
-                <button class="btn">Proceed to Checkout</button>
 
                 <% } %>
                 <% } else { %>
@@ -42,6 +41,9 @@
                 <% } %>
                 <div class="center center__col">
                 </div>
+            </div>
+            <div class="checkout-btn__box">
+                <button class="btn checkout-btn">Proceed to Checkout</button>
             </div>
         </main>
     </div>
