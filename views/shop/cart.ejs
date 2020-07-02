@@ -6,13 +6,12 @@
     <div class="container">
 
         <%- include('../includes/navigation.ejs') %>
-        
+
         <main>
             <% if(cart.length > 0) { %>
-                <div class="center center__col">
-                    <h1>My Cart</h1>
-                    <p>List of all the cart items...</p>
-                    <p>The total price is $<%=totalPrice%></p>
+            <div class="center center__col">
+                <h1>My Cart</h1>
+                <p>List of all the cart items...</p>
             </div>
             <div class="grid">
                 <% for(let item of cart) { %>
@@ -35,12 +34,14 @@
                     </div>
 
                 </article>
+                <button class="btn">Proceed to Checkout</button>
+
                 <% } %>
                 <% } else { %>
                 <h2 class="center">No items found in Cart</h2>
                 <% } %>
-                 <div class="center center__col">
-                 </div>
+                <div class="center center__col">
+                </div>
             </div>
         </main>
     </div>

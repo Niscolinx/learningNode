@@ -7,7 +7,6 @@ exports.home = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-    console.log('this is the get cart')
     Cart.fetchAll(cart => {
         res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
     })
@@ -22,9 +21,7 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.listProducts = (req, res, next) => {    
-    Products.fetchAll(products => {
-        console.log('the list products page', products)
-        
+    Products.fetchAll(products => {        
         res.render('shop/list-products', { products, pageTitle: 'My shop', path: '/list-products'})
     })
 }
