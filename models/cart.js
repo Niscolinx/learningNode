@@ -46,6 +46,10 @@ module.exports = class Cart {
         })
     }
 
+    static getAllPrices(){
+        gt
+    }
+
     static fetchAll(cb) {
         getItemsFromCart(cb)
     }
