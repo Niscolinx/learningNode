@@ -41,6 +41,7 @@ module.exports = class Products {
             for(let product of products){
                 if(product.id === id){
                     updatedProduct = this
+                    break;
                 }
             }
             const newProducts = products.filter(productItem => {
