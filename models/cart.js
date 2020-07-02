@@ -59,6 +59,8 @@ module.exports = class Cart {
     }
 
     static fetchAll(cb) {
+        const totalprice = this.getAllPrices()
+        console.log('the total price', totalprice)
         getItemsFromCart(cb)
     }
 }

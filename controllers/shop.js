@@ -8,10 +8,9 @@ exports.home = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
     console.log('this is the get cart')
-    const totalPrice = Cart.getAllPrices()
-    console.log('the total price from getCart', totalPrice)
+     Cart.getAllPrices()
     Cart.fetchAll(cart => {
-        res.render('shop/cart', { cart, totalPrice, pageTitle: 'My Cart', path: '/cart' })
+        res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
     })
 }
 
