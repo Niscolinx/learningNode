@@ -35,7 +35,6 @@ exports.getEditProduct = (req, res, next) => {
 
 
 exports.postEditProduct = (req, res, next) => {
-    console.log('this is the edit page', req.body)
     const {bookTitle, price, imgUrl, description, id } = req.body
     const updateProduct = new Products(bookTitle, description, price, imgUrl, id)
     updateProduct.update(id)
@@ -43,7 +42,6 @@ exports.postEditProduct = (req, res, next) => {
 }
 
 exports.postRemoveProduct = (req, res, next) => {
-    console.log('this is the remove cart', req.body)
     const { cartId } = req.body
     const cart = new Cart()
     cart.remove(cartId)

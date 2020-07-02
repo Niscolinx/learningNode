@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 
-const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json') 
+const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json')
 
 const getItemsFromCart = cb => {
 
@@ -28,17 +28,17 @@ module.exports = class Cart {
             cart.push(this)
             console.log('This is the cart item', cart)
             fs.writeFile(cartPath, JSON.stringify(cart), err => {
-                console.log('The error from saving the cart item',err)
+                console.log('The error from saving the cart item', err)
             })
 
         })
 
     }
 
-    remove(id){
+    remove(id) {
         getItemsFromCart(cart => {
-           const newItems =  cart.filter(cartItem => {
-               return cartItem.id !== id
+            const newItems = cart.filter(cartItem => {
+                return cartItem.id !== id
             })
             cart = newItems
             fs.writeFile(cartPath, JSON.stringify(cart), err => {
@@ -47,22 +47,20 @@ module.exports = class Cart {
         })
     }
 
-    static getAllPrices(){
-      getItemsFromCart(cartItem => {
+    static getTotalPrice() {
+        getItemsFromCart(cartItem => {
             let total = 0
-            for(let item of cartItem){
+            for (let item of cartItem) {
                 total += Math.floor(Number(item.price))
             }
-            cartItem.push({totalPrice: total})
-          fs.writeFile(cartPath, JSON.stringify(cartItem), err => {
-              console.log('The error from removing the cart', err)
-          })
+            cartItem.push({ totalPrice: total })
+            fs.writeFile(cartPath, JSON.stringify(cartItem), err => {
+                console.log('The error from removing the cart', err)
+            })
         })
     }
 
     static fetchAll(cb) {
-        const totalprice = this.getAllPrices()
-        console.log('the total price', totalprice)
         getItemsFromCart(cb)
     }
 }
