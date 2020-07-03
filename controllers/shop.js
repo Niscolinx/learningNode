@@ -15,38 +15,40 @@ exports.home = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
+    var totalP;
     fs.readFile(cp, (err, fileContents) => {
         if (err) {
-            // res.send('Hello world')
             console.log('the error', err)
         }
         else {
             cartItems = JSON.parse(fileContents)
-              let total = 0
-            for(let item of cartItems){
+            let total = 0
+            for (let item of cartItems) {
                 total += Math.floor(Number(item.price))
             }
-            cartItem.push({totalPrice: total})
-            console.log('the cartItems', cartItem)
+            cartItems.push({ totalPrice: total })
+            console.log('the cartItems', cartItems)
+            totalP = cartItems
         }
     })
-
+    console.log('the totalP', totalP)
     Cart.fetchAll(cart => {
+        console.log('the single cart', cart)
         res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
     })
 }
 
 
 exports.postCart = (req, res, next) => {
-    const { cartTitle, price, cartId} = req.body
+    const { cartTitle, price, cartId } = req.body
     const cart = new Cart(cartTitle, price, cartId)
     cart.save()
     res.redirect('/list-products')
 }
 
-exports.listProducts = (req, res, next) => {    
-    Products.fetchAll(products => {        
-        res.render('shop/list-products', { products, pageTitle: 'My shop', path: '/list-products'})
+exports.listProducts = (req, res, next) => {
+    Products.fetchAll(products => {
+        res.render('shop/list-products', { products, pageTitle: 'My shop', path: '/list-products' })
     })
 }
 
