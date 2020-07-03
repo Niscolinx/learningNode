@@ -15,7 +15,7 @@ exports.home = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-    var totalP;
+    let totalP;
     fs.readFile(cp, (err, fileContents) => {
         if (err) {
             console.log('the error', err)
@@ -30,8 +30,8 @@ exports.getCart = (req, res, next) => {
             console.log('the cartItems', cartItems)
             totalP = cartItems
         }
+        console.log('the totalP', totalP)
     })
-    console.log('the totalP', totalP)
     Cart.fetchAll(cart => {
         console.log('the single cart', cart)
         res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
