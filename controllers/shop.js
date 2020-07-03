@@ -1,5 +1,4 @@
 
-
 const Products = require('../models/products')
 const Cart = require('../models/cart')
 
@@ -17,8 +16,8 @@ exports.getCart = (req, res, next) => {
 
 
 exports.postCart = (req, res, next) => {
-    const { cartTitle, price, cartId } = req.body
-    const cart = new Cart(cartTitle, price, cartId)
+    const { cartTitle, price, imgUrl, cartId } = req.body
+    const cart = new Cart(cartTitle, price, imgUrl,cartId)
     cart.save()
     res.redirect('/list-products')
 }

@@ -30,6 +30,7 @@
                         <form method="POST" action="/cart" >
                             <input type="hidden" name="cartTitle" value= "<%= item.title %>">
                             <input type="hidden" name="cartId" value= "<%= item.id %>">                              
+                            <input type="hidden" name="imgUrl" value= "<%= item.imgUrl%>">                              
                             <input type="hidden" name="price" value= <%= item.price %>>                              
                               <button class="btn product-btn" >Add to Cart</button>
                         </form>
