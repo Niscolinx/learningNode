@@ -3,6 +3,7 @@ const path = require('path')
 
 
 const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json')
+const totalPricePath = path.join(path.dirname(process.mainModule.filename), 'data', 'totalPrice.json')
 
 const getItemsFromCart = cb => {
 
@@ -12,6 +13,17 @@ const getItemsFromCart = cb => {
         }
         else {
             cb(JSON.parse(fileContents))
+        }
+    })
+}
+const getTotalPrice = tb => {
+
+    fs.readFile(totalPricePath, (err, fileContents) => {
+        if (err) {
+            tb([])
+        }
+        else {
+            tb(JSON.parse(fileContents))
         }
     })
 }
@@ -26,13 +38,25 @@ module.exports = class Cart {
 
     save() {
         getItemsFromCart(cart => {
+            cart.push(this)
+            console.log('This is the cart item', cart)
+            fs.writeFile(cartPath, JSON.stringify(cart), err => {
+                console.log('The error from saving the cart item', err)
+            })
+
+        })
+
+    }
+
+    static updateAll() {
+        getItemsFromCart(cart => {
             let total = 0
             for (let item of cart) {
                 total += Math.floor(Number(item.price))
             }
-            cart.push(this, { totalPrice: total })
-            console.log('This is the cart item', cart)
-            fs.writeFile(cartPath, JSON.stringify(cart), err => {
+            cart.push({totalPrice: total})
+            console.log('This is the update cart', cart)
+            fs.writeFile(totalPricePath, JSON.stringify(cart), err => {
                 console.log('The error from saving the cart item', err)
             })
 

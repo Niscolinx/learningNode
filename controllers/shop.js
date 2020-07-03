@@ -8,6 +8,7 @@ exports.home = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {    
+    Cart.updateAll()
     Cart.fetchAll(cart => {
         console.log('the single cart', cart)
         res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
