@@ -29,28 +29,13 @@ module.exports = class Cart {
             console.log('This is the cart item', cart)
             fs.writeFile(cartPath, JSON.stringify(cart), err => {
                 console.log('The error from saving the cart item', err)
+                
             })
 
         })
 
     }
 
-    // static updateAll() {
-    //     getItemsFromCart(cart => {
-    //         let total = 0
-    //         for (let item of cart) {
-    //             total += Math.floor(Number(item.price))
-    //         }
-    //         const totalPrice = {
-    //             totalPrice: total
-    //         }
-    //         console.log('This is the update cart', totalPrice)
-    //         fs.writeFile(cartPath, JSON.parse(totalPrice), err => {
-    //             console.log('The error from saving the cart item', err)
-    //         })
-    //     })
-
-    // }
 
     remove(id) {
         getItemsFromCart(cart => {
@@ -64,16 +49,6 @@ module.exports = class Cart {
         })
     }
 
-    // static getAllPrices(){
-    //   getItemsFromCart(cartItem => {
-    //         let total = 0
-    //         for(let item of cartItem){
-    //             total += Math.floor(Number(item.price))
-    //         }
-    //         cartItem.push({totalPrice: total})
-    //         console.log('print total cb', this.title)
-    //     })
-    // }
 
     static fetchAll(cb) {
         getItemsFromCart(cb)
