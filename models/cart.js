@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 
-const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json')
+const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json') 
 
 const getItemsFromCart = cb => {
 
@@ -26,18 +26,19 @@ module.exports = class Cart {
     save() {
         getItemsFromCart(cart => {
             cart.push(this)
+            console.log('This is the cart item', cart)
             fs.writeFile(cartPath, JSON.stringify(cart), err => {
-                console.log('The error from saving the cart item', err)
+                console.log('The error from saving the cart item',err)
             })
 
         })
 
     }
 
-    remove(id) {
+    remove(id){
         getItemsFromCart(cart => {
-            const newItems = cart.filter(cartItem => {
-                return cartItem.id !== id
+           const newItems =  cart.filter(cartItem => {
+               return cartItem.id !== id
             })
             cart = newItems
             fs.writeFile(cartPath, JSON.stringify(cart), err => {
@@ -46,35 +47,18 @@ module.exports = class Cart {
         })
     }
 
-    static getTotalPrice() {
-        const holdTotal = (cb) =>{
-            console.log(cb) 
-        }
-       fs.readFile(cartPath, (err, fileContents) => {
-            if (err) {
-                holdTotal([])
-            }
-            else {
-                holdTotal(JSON.parse(fileContents))
-            }
-        })
-
-        console.log('the hold total', holdTotal)
-        getItemsFromCart(cartItem => {
-            let total = 0
-            for (let item of cartItem) {
-                total += Math.floor(Number(item.price))
-            }
-            cartItem.push({ totalPrice: total })
-            console.log('the cart item', cartItem)
-            // fs.writeFile(cartPath, JSON.stringify(cartItem), err => {
-            //     console.log('The error from removing the cart', err)
-            // })
-        })
-    }
+    // static getAllPrices(){
+    //   getItemsFromCart(cartItem => {
+    //         let total = 0
+    //         for(let item of cartItem){
+    //             total += Math.floor(Number(item.price))
+    //         }
+    //         cartItem.push({totalPrice: total})
+    //         console.log('print total cb', this.title)
+    //     })
+    // }
 
     static fetchAll(cb) {
-        this.getTotalPrice()
         getItemsFromCart(cb)
     }
 }

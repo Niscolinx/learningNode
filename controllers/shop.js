@@ -1,5 +1,6 @@
 const Products = require('../models/products')
 const Cart = require('../models/cart')
+const totalPrice = require('../models/getTotalPrice')
 
 exports.home = (req, res, next) => {
 
@@ -7,6 +8,7 @@ exports.home = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
+    console.log('the total price', totalPrice)
     Cart.fetchAll(cart => {
         res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
     })
