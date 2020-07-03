@@ -1,37 +1,14 @@
 
-const fs = require('fs')
-const path = require('path')
-
-const tp = path.join(path.dirname(process.mainModule.filename), 'data', 'totalprice.json')
-const cp = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json')
 
 const Products = require('../models/products')
 const Cart = require('../models/cart')
-//const totalPrice = require('../models/getTotalPrice')
 
 exports.home = (req, res, next) => {
 
     res.render('shop/index', { pageTitle: 'Home', path: '/' })
 }
 
-exports.getCart = (req, res, next) => {
-    let totalP;
-    fs.readFile(cp, (err, fileContents) => {
-        if (err) {
-            console.log('the error', err)
-        }
-        else {
-            cartItems = JSON.parse(fileContents)
-            let total = 0
-            for (let item of cartItems) {
-                total += Math.floor(Number(item.price))
-            }
-            cartItems.push({ totalPrice: total })
-            console.log('the cartItems', cartItems)
-            totalP = cartItems
-        }
-        console.log('the totalP', totalP)
-    })
+exports.getCart = (req, res, next) => {    
     Cart.fetchAll(cart => {
         console.log('the single cart', cart)
         res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
