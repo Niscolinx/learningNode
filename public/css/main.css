@@ -8,7 +8,6 @@
     width: 100%;
     height: 100vh;
     box-sizing: border-box;
-    background: #e7e3e3;
 }
 
 .container .header {
@@ -48,6 +47,8 @@
     text-align: center;
     justify-content: center;
     align-content: center;
+    background: #e7e3e3;
+
 }
 
 
@@ -166,13 +167,14 @@
 }
 
 /* CHECKOUT */
-.checkout-btn__box{
+.checkout-btn__box {
     display: flex;
     justify-content: center;
     align-content: center;
     width: 20%;
     margin: 1rem auto;
 }
-.checkout-btn{
+
+.checkout-btn {
     width: 100%;
 }
