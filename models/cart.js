@@ -37,22 +37,22 @@ module.exports = class Cart {
 
     }
 
-    static updateAll() {
-        getItemsFromCart(cart => {
-            let total = 0
-            for (let item of cart) {
-                total += Math.floor(Number(item.price))
-            }
-            const totalPrice = {
-                totalPrice: total
-            }
-            console.log('This is the update cart', totalPrice)
-            fs.writeFile(cartPath, JSON.parse(totalPrice), err => {
-                console.log('The error from saving the cart item', err)
-            })
-        })
+    // static updateAll() {
+    //     getItemsFromCart(cart => {
+    //         let total = 0
+    //         for (let item of cart) {
+    //             total += Math.floor(Number(item.price))
+    //         }
+    //         const totalPrice = {
+    //             totalPrice: total
+    //         }
+    //         console.log('This is the update cart', totalPrice)
+    //         fs.writeFile(cartPath, JSON.parse(totalPrice), err => {
+    //             console.log('The error from saving the cart item', err)
+    //         })
+    //     })
 
-    }
+    // }
 
     remove(id) {
         getItemsFromCart(cart => {
