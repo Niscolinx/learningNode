@@ -1,3 +1,8 @@
+const fs = require('fs')
+const path = require('path')
+
+
+const totalPricePath = path.join(path.dirname(process.mainModule.filename), 'data', 'totalPrice.json')
 
 const Products = require('../models/products')
 const Cart = require('../models/cart')
@@ -10,8 +15,18 @@ exports.home = (req, res, next) => {
 exports.getCart = (req, res, next) => {    
     Cart.fetchAll(cart => {
         Cart.updateAll()
-        console.log('the single cart', cart)
-        res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
+
+        fs.readFile(totalPricePath, (err, fileContents) => {
+            if (err) {
+                console.log('the error from hold total', err)
+                return []
+            }
+            else {
+                const holdTotal = JSON.parse(fileContents)
+                console.log('the hold total', holdTotal)
+                res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
+            }
+        })
     })
 }
 

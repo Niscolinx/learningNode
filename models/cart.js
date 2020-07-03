@@ -16,17 +16,6 @@ const getItemsFromCart = cb => {
         }
     })
 }
-const getTotalPrice = tb => {
-
-    fs.readFile(totalPricePath, (err, fileContents) => {
-        if (err) {
-            tb([])
-        }
-        else {
-            tb(JSON.parse(fileContents))
-        }
-    })
-}
 
 module.exports = class Cart {
     constructor(bookTitle, price, imgUrl, id) {
@@ -61,7 +50,6 @@ module.exports = class Cart {
             fs.writeFile(totalPricePath, JSON.stringify(totalPrice), err => {
                 console.log('The error from saving the cart item', err)
             })
-
         })
 
     }
