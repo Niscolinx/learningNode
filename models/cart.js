@@ -54,9 +54,11 @@ module.exports = class Cart {
             for (let item of cart) {
                 total += Math.floor(Number(item.price))
             }
-            cart.push({totalPrice: total})
-            console.log('This is the update cart', cart)
-            fs.writeFile(totalPricePath, JSON.stringify(cart), err => {
+            const totalPrice = {
+                totalPrice: total
+            }
+            console.log('This is the update cart', totalPrice)
+            fs.writeFile(totalPricePath, JSON.stringify(totalPrice), err => {
                 console.log('The error from saving the cart item', err)
             })
 
