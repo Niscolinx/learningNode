@@ -15,14 +15,19 @@ exports.home = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-    console.log('the total price', totalPrice)
     fs.readFile(cp, (err, fileContents) => {
         if (err) {
             // res.send('Hello world')
             console.log('the error', err)
         }
         else {
-            return JSON.parse(fileContents)
+            cartItems = JSON.parse(fileContents)
+              let total = 0
+            for(let item of cartItems){
+                total += Math.floor(Number(item.price))
+            }
+            cartItem.push({totalPrice: total})
+            console.log('the cartItems', cartItem)
         }
     })
 
