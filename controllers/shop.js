@@ -1,6 +1,13 @@
+
+const fs = require('fs')
+const path = require('path')
+
+const tp = path.join(path.dirname(process.mainModule.filename), 'data', 'totalprice.json')
+const cp = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json')
+
 const Products = require('../models/products')
 const Cart = require('../models/cart')
-const totalPrice = require('../models/getTotalPrice')
+//const totalPrice = require('../models/getTotalPrice')
 
 exports.home = (req, res, next) => {
 
@@ -9,6 +16,16 @@ exports.home = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
     console.log('the total price', totalPrice)
+    fs.readFile(cp, (err, fileContents) => {
+        if (err) {
+            // res.send('Hello world')
+            console.log('the error', err)
+        }
+        else {
+            return JSON.parse(fileContents)
+        }
+    })
+
     Cart.fetchAll(cart => {
         res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
     })
