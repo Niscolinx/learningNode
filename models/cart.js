@@ -1,9 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-
 const cartPath = path.join(path.dirname(process.mainModule.filename), 'data', 'cart.json')
-const totalPricePath = path.join(path.dirname(process.mainModule.filename), 'data', 'totalPrice.json')
 
 const getItemsFromCart = cb => {
 

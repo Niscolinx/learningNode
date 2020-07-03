@@ -9,7 +9,13 @@ exports.home = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {    
     Cart.fetchAll(cart => {
-        res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
+
+        let totalPrice = 0
+        for (let item of cart) {
+            totalPrice += Math.floor(Number(item.price))
+        }
+        
+        res.render('shop/cart', { cart, totalPrice, pageTitle: 'My Cart', path: '/cart' })
     })
 }
 
