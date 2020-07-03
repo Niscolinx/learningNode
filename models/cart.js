@@ -47,7 +47,7 @@ module.exports = class Cart {
                 totalPrice: total
             }
             console.log('This is the update cart', totalPrice)
-            fs.writeFile(totalPricePath, JSON.stringify(totalPrice), err => {
+            fs.writeFile(cartPath, JSON.parse(totalPrice), err => {
                 console.log('The error from saving the cart item', err)
             })
         })

@@ -15,18 +15,16 @@ exports.home = (req, res, next) => {
 exports.getCart = (req, res, next) => {    
     Cart.fetchAll(cart => {
         Cart.updateAll()
-
-        fs.readFile(totalPricePath, (err, fileContents) => {
-            if (err) {
-                console.log('the error from hold total', err)
-                return []
-            }
-            else {
-                const holdTotal = JSON.parse(fileContents)
-                console.log('the hold total', holdTotal)
-                res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
-            }
-        })
+        // fs.readFile(totalPricePath, (err, fileContents) => {
+        //     if (err) {
+        //         console.log('the error from hold total', err)
+        //         return []
+        //     }
+        //     else {
+        //         console.log('the hold total', JSON.parse(fileContents))
+        //     }
+        // })
+        res.render('shop/cart', { cart, pageTitle: 'My Cart', path: '/cart' })
     })
 }
 
