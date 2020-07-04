@@ -26,6 +26,7 @@ module.exports = class Cart {
     save() {
         getItemsFromCart(cart => {
             cart.push(this)
+            cart.push(this)
             console.log('This is the cart item', cart)
             fs.writeFile(cartPath, JSON.stringify(cart), err => {
                 console.log('The error from saving the cart item', err)
