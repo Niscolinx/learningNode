@@ -1,30 +1,23 @@
 {
-  "name": "learningNode",
+  "name": "nodejs-complete-guide",
   "version": "1.0.0",
-  "description": "",
+  "description": "Complete Node.js Guide",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "start-server": "node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Niscolinx/learningNode.git"
-  },
-  "keywords": [],
-  "author": "Igboanugwo Collins",
+  "author": "Maximilian Schwarzmüller",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Niscolinx/learningNode/issues"
-  },
-  "homepage": "https://github.com/Niscolinx/learningNode#readme",
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^1.18.3"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "ejs": "^3.1.3",
-    "express": "^4.17.1",
-    "express-handlebars": "^4.0.4",
-    "pug": "^3.0.0"
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "pug": "^2.0.3"
   }
 }
