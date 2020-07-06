@@ -22,5 +22,5 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 app.listen(3030, ()=> {
-    console.log('listening on port 3030 f')
+    console.log('listening on port 3030')
 });
