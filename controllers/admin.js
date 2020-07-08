@@ -14,6 +14,16 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
   
+  Product.create({
+    title,
+    imageUrl,
+    price,
+    description
+  })
+  .then(result => {
+    console.log('result from sequelize', result)
+  })
+  .catch(err => console.log('error from sequelize', err))
 };
 
 exports.getEditProduct = (req, res, next) => {
