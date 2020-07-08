@@ -11,7 +11,7 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err)
+      console.log('the error from findAll products',err)
     })
 
 };
