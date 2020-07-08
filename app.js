@@ -23,8 +23,12 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-sequelize.sync().then().catch(err =)
+sequelize.sync()
+    .then(res => {
+        console.log(res)
+        app.listen(3030, () => {
+            console.log('listening on port 3030')
+        });
+    })
+    .catch(err => console.log(err))
 
-app.listen(3030, ()=> {
-    console.log('listening on port 3030')
-});
