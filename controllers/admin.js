@@ -27,6 +27,10 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getEditProduct = (req, res, next) => {
+  const editMode = req.query.edit;
+  if (!editMode) {
+    return res.redirect('/');
+  }
   const prodId = req.params.productId;
   Product.findByPk(prodId)
   .then(product => {
@@ -45,20 +49,21 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const prodId = req.body.productId;
-  const updatedTitle = req.body.title;
-  const updatedPrice = req.body.price;
-  const updatedImageUrl = req.body.imageUrl;
-  const updatedDesc = req.body.description;
-  const updatedProduct = new Product(
-    prodId,
-    updatedTitle,
-    updatedImageUrl,
-    updatedDesc,
-    updatedPrice
-  );
-  updatedProduct.save();
-  res.redirect('/admin/products');
+  const {prodId, updatedTitle, updatedImageUrl, updatedDesc, updatedPrice} = req.body;
+
+  Product.findByPk(prodId).then(product => {
+    product.title = updatedTitle,
+    product.price = updatedPrice,
+    product.imageUrl = updatedImageUrl,
+    product.description = updatedDesc
+    return product.save()
+  })
+  .then(result => {
+    console.log('result from the edited product', result)
+    res.redirect('/admin/products');
+
+  })
+  .catch(err => console.log('error from edited product', err))
 };
 
 exports.getProducts = (req, res, next) => {
@@ -75,6 +80,13 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId);
-  res.redirect('/admin/products');
+  Product.findByPk(prodId)
+  .then(product => {
+    return product.destroy()
+  })
+  .then(success => {
+    console.log('successfully deleted product', success)
+    res.redirect('/admin/products');
+  })
+  .catch(err => console.log('error from deleting a product', err))
 };
