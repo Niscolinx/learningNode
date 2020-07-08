@@ -30,5 +30,5 @@ sequelize.sync()
             console.log('listening on port 3030')
         });
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log('error from starting app', err))
 
