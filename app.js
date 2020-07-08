@@ -25,7 +25,7 @@ app.use(errorController.get404);
 
 sequelize.sync()
     .then(res => {
-        console.log(res)
+        console.log('connected to the database')
         app.listen(3030, () => {
             console.log('listening on port 3030')
         });
