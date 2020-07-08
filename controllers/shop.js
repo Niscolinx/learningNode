@@ -19,11 +19,11 @@ exports.getProducts = (req, res, next) => {
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
-    .then(([row]) => {
-      console.log('product id from database', row)
+    .then(product => {
+      console.log('product id from sequelize', product)
       res.render('shop/product-detail', {
-        product: row[0],
-        pageTitle: row[0].title,
+        product: product,
+        pageTitle: product.title,
         path: '/products'
       });
     })
@@ -32,7 +32,7 @@ exports.getProduct = (req, res, next) => {
 
 exports.getIndex = (req, res, next) => {
   Product.findAll()
-    .then((products) => {
+    .then(products => {
       res.render('shop/index', {
         prods: products,
         pageTitle: 'All Products',
