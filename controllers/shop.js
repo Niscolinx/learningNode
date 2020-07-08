@@ -19,13 +19,16 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId, product => {
+  Product.findById(prodId)
+  .then(([row]) => {
+    console.log('product id from database', row)
     res.render('shop/product-detail', {
-      product: product,
-      pageTitle: product.title,
+      product: row[0],
+      pageTitle: row[0].title,
       path: '/products'
     });
-  });
+  })
+  .catch(err => console.log(err))
 };
 
 exports.getIndex = (req, res, next) => {
