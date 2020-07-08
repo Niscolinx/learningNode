@@ -18,7 +18,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId)
+  Product.findByPk(prodId)
     .then(product => {
       console.log('product id from sequelize', product)
       res.render('shop/product-detail', {
@@ -27,7 +27,7 @@ exports.getProduct = (req, res, next) => {
         path: '/products'
       });
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log('error from getting a product detail', err))
 };
 
 exports.getIndex = (req, res, next) => {

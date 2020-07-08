@@ -24,11 +24,10 @@ form {
 }
 
 .image-box{
-  height: 20rem;
 }
 
 .image-box img{
-  width: 100%;
+  width: 50%;
 }
 
 .main-header {
