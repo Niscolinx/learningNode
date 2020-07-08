@@ -9,11 +9,8 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
-  const price = req.body.price;
-  const description = req.body.description;
-  
+  const {title, imageUrl, price, description} = req.body;
+ 
   Product.create({
     title,
     imageUrl,
@@ -22,6 +19,7 @@ exports.postAddProduct = (req, res, next) => {
   })
   .then(result => {
     console.log('result from sequelize', result)
+    res.redirect('/admin/products')
   })
   .catch(err => console.log('error from sequelize', err))
 };
@@ -49,13 +47,13 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const {prodId, updatedTitle, updatedImageUrl, updatedDesc, updatedPrice} = req.body;
+  const {productId, title, price, imageUrl, description} = req.body;
 
-  Product.findByPk(prodId).then(product => {
-    product.title = updatedTitle,
-    product.price = updatedPrice,
-    product.imageUrl = updatedImageUrl,
-    product.description = updatedDesc
+  Product.findByPk(productId).then(product => {
+    product.title = title,
+    product.price = price,
+    product.imageUrl = imageUrl,
+    product.description = description
     return product.save()
   })
   .then(result => {
