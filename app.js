@@ -3,6 +3,9 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const Product = require('./models/product')
+const User = require('./models/user')
+
 const errorController = require('./controllers/error');
 
 const app = express();
@@ -23,9 +26,30 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-sequelize.sync()
-    .then(res => {
-        console.log('connected to the database')
+Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
+User.hasMany(Product)
+
+app.use(req, res, next){
+    User.findByPk(1)
+    .then(user => {
+        req.user = user
+        console.log('req.user is ', req.user)
+    })
+    .catch(err => console.log('user failure from db', err))
+}
+
+sequelize.sync({force:true})
+    .then(result => {
+        return User.findByPk(1)
+    })
+    .then(user => {
+        if(!user){
+           return User.create({name: 'Collins', email: 'collins@gmail.com'})
+        }
+        return user
+    })
+    .then(user => {
+        console.log('connected to the database', user)
         app.listen(3030, () => {
             console.log('listening on port 3030')
         });
