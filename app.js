@@ -29,16 +29,17 @@ app.use(errorController.get404);
 Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
 User.hasMany(Product)
 
-app.use(req, res, next){
+app.use((req, res, next) => {
     User.findByPk(1)
     .then(user => {
         req.user = user
         console.log('req.user is ', req.user)
+        next()
     })
     .catch(err => console.log('user failure from db', err))
-}
+})
 
-sequelize.sync({force:true})
+sequelize.sync()
     .then(result => {
         return User.findByPk(1)
     })
