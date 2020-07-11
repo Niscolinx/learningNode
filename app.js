@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const Product = require('./models/product')
 const User = require('./models/user')
 const Cart = require('./models/cart')
-const CartItems = require('./models/cart-items')
+const CartItems = require('./models/cartItems')
 
 const errorController = require('./controllers/error');
 
@@ -40,10 +40,14 @@ app.use(errorController.get404);
 Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
 User.hasMany(Product)
 
-Cart.belongsToMany(Users, {through: CartItems})
-User.hasOnlyOne(Cart, {through: CartItems})
+Cart.belongsTo(User)
+User.hasOne(Cart)
 
-sequelize.sync()
+Product.belongsToMany(Cart, {through: CartItems})
+
+sequelize
+ //.sync({force: true})
+.sync()
     .then(result => {
         return User.findByPk(1)
     })
