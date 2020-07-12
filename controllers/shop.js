@@ -112,6 +112,18 @@ exports.postCartDeleteProduct = (req, res, next) => {
   .catch(err => console.log('err destroying the cart item', err))
 };
 
+exports.postOrder = (req, res, next) => {
+  req.user.getCart()
+  .then(cart => {
+    return cart.getProducts()
+  })
+  .then(products => {
+    console.log('the order products', products)
+  })
+  .catch(err => console.log('err posting order', err))
+}
+
+
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', {
     path: '/orders',
