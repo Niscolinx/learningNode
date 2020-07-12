@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const aliExpress = require('aliexpress')
 
 const Product = require('./models/product')
 const User = require('./models/user')
@@ -22,6 +23,12 @@ const sequelize = require('./util/database')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+aliExpress.Search({
+    keyword: 'ipad',
+}).then(function (d) {
+    console.log('the rc flitehobby ', d)
+})
 
 app.use((req, res, next) => {
     User.findByPk(1)
