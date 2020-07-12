@@ -44,6 +44,7 @@ Cart.belongsTo(User)
 User.hasOne(Cart)
 
 Product.belongsToMany(Cart, {through: CartItems})
+Cart.belongsToMany(Product, {through: CartItems})
 
 sequelize
  //.sync({force: true})
@@ -58,7 +59,10 @@ sequelize
         return user
     })
     .then(user => {
-        console.log('connected to the database', user)
+       user.createCart()
+    })
+    .then(cart => {
+        console.log('connected to the database')
         app.listen(3030, () => {
             console.log('listening on port 3030')
         });

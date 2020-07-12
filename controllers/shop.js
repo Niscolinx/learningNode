@@ -11,7 +11,7 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log('the error from findAll products',err)
+      console.log('the error from findAll products', err)
     })
 
 };
@@ -46,22 +46,35 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   req.user.getCart()
-  .then(cart => {
-    console.log('the cart', cart)
-        res.render('shop/cart', {
-          path: '/cart',
-          pageTitle: 'Your Cart',
-          products: cartProducts
-        });
-  })
-  .catch(err => console.log('the error from cart', err))
+    .then(cart => {
+      return cart.getProducts()
+
+    })
+    .then(foundCart => {
+      console.log('the found cart', foundCart)
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products: foundCart
+      });
+    })
+    .catch(err => console.log('the error from cart', err))
 };
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findById(prodId, product => {
-    Cart.addProduct(prodId, product.price);
-  });
+  
+  req.user.getCart()
+  .then(cart => {
+   return cart.getProducts({where: {id : prodId}})
+  })
+  .then(fetchedProducts => {
+    let products;
+    if(fetchedProducts){
+      products = fetchedProducts
+    }
+    
+  })
   res.redirect('/cart');
 };
 
