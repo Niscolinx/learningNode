@@ -104,12 +104,12 @@ exports.postCartDeleteProduct = (req, res, next) => {
   .then(products => {
     const product = products[0]
     product.cartItems.destroy()
-  }){
+  })
   .then(result => {
     console.log('destroyed the a cart item', result)
     res.redirect('/cart');
-
   })
+  .catch(err => console.log('err destroying the cart item', err))
 };
 
 exports.getOrders = (req, res, next) => {
