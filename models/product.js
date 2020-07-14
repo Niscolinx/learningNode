@@ -12,7 +12,7 @@ class Product {
     const db = getDB()
     
     console.log('getDB', db)
-    return db.collection().insertOne({name: 'Collins', email: 'munisco@gmail.com'})
+    return db.collection('products').insertOne({name: 'Collins', email: 'munisco@gmail.com'})
       .then(result => {
         console.log('the result from db', result)
       })
