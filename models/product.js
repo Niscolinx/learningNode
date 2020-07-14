@@ -10,8 +10,9 @@ class Product {
 
   save() {
     const db = getDB()
-    db.collection('products')
-      .insertOne(this)
+    
+    console.log('getDB', db)
+    return db.collection().insertOne({name: 'Collins', email: 'munisco@gmail.com'})
       .then(result => {
         console.log('the result from db', result)
       })

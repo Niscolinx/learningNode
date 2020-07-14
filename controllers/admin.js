@@ -14,13 +14,6 @@ exports.postAddProduct = (req, res, next) => {
 
   const product = new Product(title, price, description, imageUrl)
   product.save()
-  
-  req.user.createProduct({
-    title,
-    imageUrl,
-    price,
-    description
-  })
     .then(result => {
       console.log('result from sequelize', result)
       res.redirect('/admin/products')
@@ -76,15 +69,16 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  req.user.getProducts()
-    .then(products => {
-      res.render('admin/products', {
-        prods: products,
-        pageTitle: 'Admin Products',
-        path: '/admin/products'
-      });
-    })
-    .catch(err => console.log('error from admin findAll', err))
+  const products = [];
+  res.render('admin/products', {
+    prods: products,
+    pageTitle: 'Admin Products',
+    path: '/admin/products'
+  });
+  // req.user.getProducts()
+  //   .then(products => {
+  //   })
+  //   .catch(err => console.log('error from admin findAll', err))
 };
 
 exports.postDeleteProduct = (req, res, next) => {
