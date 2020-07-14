@@ -1,27 +1,15 @@
-
-const Product = sequelize.define('product', {
-  id: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  title: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  price: {
-    type: Sequelize.DOUBLE,
-    allowNull: false
-  },
-  imageUrl: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  description: {
-    type: Sequelize.STRING,
-    allowNull: false
+class Product {
+  constructor(title, price, description, id){
+    this.title = title,
+    this.price = price, 
+    this.description = description,
+    this.id = id
   }
-})
+
+  save(){
+    
+  }
+}
+
 
 module.exports = Product
