@@ -12,7 +12,8 @@ class Product {
     const db = getDB()
     
     console.log('getDB', db)
-    return db.collection('products').insertOne({name: 'Collins', email: 'munisco@gmail.com'})
+    
+    return db.insertMany([{name: 'Collin', email: 'munisco@gmail.com'}, {user: 'me'}])
       .then(result => {
         console.log('the result from db', result)
       })
