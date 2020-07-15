@@ -10,10 +10,8 @@ class Product {
 
   save() {
     const db = getDB()
-    
-    console.log('getDB', db)
-    
-    return db.insertMany([{name: 'Collin', email: 'munisco@gmail.com'}, {user: 'me'}])
+      
+    return db.collection('products').insertOne(this)
       .then(result => {
         console.log('the result from db', result)
       })
