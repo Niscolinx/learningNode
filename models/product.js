@@ -22,10 +22,7 @@ class Product {
     const db = getDB()
 
     return db.collection('products').find().toArray()
-    // .then(res => {
-    //   console.log('foundAll', res)
-    // })
-    // .catch(err => console.log('foundAll', err))
+  
   }
 }
 
