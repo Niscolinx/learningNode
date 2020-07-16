@@ -18,7 +18,7 @@ exports.postAddProduct = (req, res, next) => {
       console.log('result from added mongodb', result)
       res.redirect('/admin/products')
     })
-    .catch(err => console.log('error from sequelize', err))
+    .catch(err => console.log('error from mongodb', err))
 };
 
 exports.getEditProduct = (req, res, next) => {
