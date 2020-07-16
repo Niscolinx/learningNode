@@ -28,9 +28,10 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  req.user.getProducts({ where: { id: prodId } })
+  Product.findById(prodId)
     .then(products => {
-      const product = products[0]
+      const product = products
+      console.log('the product to edit', product)
       if (!product) {
         res.redirect('admin/products')
       }
@@ -69,16 +70,17 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  const products = [];
-  res.render('admin/products', {
-    prods: products,
-    pageTitle: 'Admin Products',
-    path: '/admin/products'
-  });
-  // req.user.getProducts()
-  //   .then(products => {
-  //   })
-  //   .catch(err => console.log('error from admin findAll', err))
+  Product.fetchAll()
+  .then(prods => {
+    res.render('admin/products', {
+      prods,
+      pageTitle: 'Admin Products',
+      path: '/admin/products'
+    });
+
+  })
+  .catch(err => console.log('failed to get products', err))
+ 
 };
 
 exports.postDeleteProduct = (req, res, next) => {
