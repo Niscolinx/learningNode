@@ -44,7 +44,7 @@ app.use(errorController.get404);
 
 
 MongoConnect(client => {
-    console.log('connected to the client', client)
+    console.log('connected to the client')
     app.listen(3030, () => {
         console.log('Listening on 3030')
     })

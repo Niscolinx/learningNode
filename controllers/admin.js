@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const Mongodb = require('mongodb')
 
 exports.getAddProduct = (req, res, next) => {
 
@@ -30,8 +31,7 @@ exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(products => {
-      const product = products
-      console.log('the product to edit', product)
+      const product = products[0]
       if (!product) {
         res.redirect('admin/products')
       }
@@ -52,17 +52,12 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const { productId, title, price, imageUrl, description } = req.body;
+  const { title, imageUrl, price, description, productId } = req.body;
 
-  Product.findByPk(productId).then(product => {
-    product.title = title,
-      product.price = price,
-      product.imageUrl = imageUrl,
-      product.description = description
-    return product.save()
-  })
+  const product = new Product(title, price, description, imageUrl, new Mongodb.ObjectId(productId))
+  return product.save()
     .then(result => {
-      console.log('result from the edited product', result)
+      console.log('result from the edited product')
       res.redirect('/admin/products');
 
     })
@@ -85,12 +80,9 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findByPk(prodId)
-    .then(product => {
-      return product.destroy()
-    })
+  Product.deleteOne(prodId)
     .then(success => {
-      console.log('successfully deleted product', success)
+      console.log('successfully deleted product')
       res.redirect('/admin/products');
     })
     .catch(err => console.log('error from deleting a product', err))
