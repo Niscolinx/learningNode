@@ -2,12 +2,13 @@ const { getDB } = require('../util/database')
 const Mongodb = require('mongodb')
 
 class Product {
-  constructor(title, price, description, imageUrl, id) {
+  constructor(title, price, description, imageUrl, id, userId) {
     this.title = title,
       this.price = price,
       this.description = description,
       this.imageUrl = imageUrl
     this._id = id
+    this._userId = userId
   }
 
   save() {
@@ -42,7 +43,7 @@ class Product {
   static findById(prodId) {
     const db = getDB()
 
-    return db.collection('products').find({ _id: new Mongodb.ObjectId(prodId) }).toArray()
+    return db.collection('products').findOne({ _id: new Mongodb.ObjectId(prodId) })
   }
 
   static deleteOne(prodId){

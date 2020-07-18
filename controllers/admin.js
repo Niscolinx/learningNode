@@ -13,8 +13,9 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, price, description } = req.body;
+  const user = User.findById(req.user._id)
 
-  const product = new Product(title, price, description, imageUrl)
+  const product = new Product(title, price, description, imageUrl, null, user._id)
   product.save()
     .then(result => {
       console.log('result from added mongodb', result)
@@ -31,8 +32,8 @@ exports.getEditProduct = (req, res, next) => {
   }
   const prodId = req.params.productId;
   Product.findById(prodId)
-    .then(products => {
-      const product = products[0]
+    .then(product => {
+
       if (!product) {
         res.redirect('admin/products')
       }
@@ -41,7 +42,7 @@ exports.getEditProduct = (req, res, next) => {
           pageTitle: 'Edit Product',
           path: '/admin/edit-product',
           editing: editMode,
-          product: product
+          product
         });
       }
 
@@ -67,20 +68,20 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
-  .then(prods => {
-    return User.findById(req.user._id)
-    .then(user => {
-      res.render('admin/products', {
-        prods,
-        user,
-        pageTitle: 'Admin Products',
-        path: '/admin/products'
-      });
+    .then(prods => {
+      return User.findById(req.user._id)
+        .then(user => {
+          console.log('user in found products', user)
+          res.render('admin/products', {
+            prods,
+            user,
+            pageTitle: 'Admin Products',
+            path: '/admin/products'
+          });
+        })
     })
+    .catch(err => console.log('failed to get products', err))
 
-  })
-  .catch(err => console.log('failed to get products', err))
- 
 };
 
 exports.postDeleteProduct = (req, res, next) => {

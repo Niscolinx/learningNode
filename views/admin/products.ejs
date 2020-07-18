@@ -6,7 +6,7 @@
     <%- include('../includes/navigation.ejs') %>
 
     <main>
-            <h3 class="grid">The user is <%=user.username%></h3>
+            <h3 class="grid">The user <%= user ? 'is' + user.username : 'No user found'%></h3>
         <% if (prods.length > 0) { %>
         <div class="grid">
             <% for (let product of prods) { %>

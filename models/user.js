@@ -10,8 +10,26 @@ class User {
 
     save(){
         const db = getDB()
+        
+        return db.collection('users').findOne({username: this.username})
+        .then(userExists => {
 
-        return db.collection('users').insertOne(this)
+            if(userExists === null){
+                return db.collection('users').insertOne(this)
+                .then(userCreated => {
+                    console.log('user created', userCreated)
+                    return userCreated.ops
+                })
+                .catch(err => {console.log('failed to create user', err)})
+            }
+            else{
+                console.log('user found', userExists)
+                return userExists.ops
+            }
+        })
+        .catch(userNotFound => {
+            console.log('user does not exist', userNotFound)
+        })
         
     }
 

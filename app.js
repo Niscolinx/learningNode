@@ -20,7 +20,8 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-const { MongoConnect } = require('./util/database')
+const { MongoConnect } = require('./util/database');
+const e = require('express');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public'))); 
@@ -33,14 +34,20 @@ app.use(express.static(path.join(__dirname, 'public')));
     user.save()
         .then(user => {
             let userData;
-            for(let info in user.ops){
-               userData = user.ops[info]
+            console.log('the user', user)
+            if(user){
+                console.log('valid user')
+                req.user = userData
+
             }
-            req.user = userData
-            next()
+            else{
+                console.log('invalid user')
+                return req.user = userData
+            }
         })
         .catch(err => console.log('user failure from db', err))
-})
+        next()
+    })
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
