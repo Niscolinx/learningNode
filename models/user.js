@@ -1,5 +1,6 @@
 const MongoDb = require('mongodb')
 const {getDB} = require('../util/database')
+const { get } = require('../routes/shop')
 
 class User {
     constructor(username, email){
@@ -11,14 +12,13 @@ class User {
         const db = getDB()
 
         return db.collection('users').insertOne(this)
-        .then(user => {
-            console.log('new user', user)
-        })
-        .catch(err => console.log('Failed to create a new user', err))
+        
     }
 
     static findById(userId){
+        const db = getDB()
 
+        return db.collection('users').find({_id: new MongoDb.ObjectId(userId)}).toArray()
     }
 }
 

@@ -6,6 +6,9 @@
     <%- include('../includes/navigation.ejs') %>
 
     <main>
+        <% for(let info of user){ %>
+            <h3 class="grid">The user is <%=info.username%></h3>
+        <% } %>
         <% if (prods.length > 0) { %>
         <div class="grid">
             <% for (let product of prods) { %>

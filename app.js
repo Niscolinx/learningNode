@@ -32,8 +32,11 @@ app.use(express.static(path.join(__dirname, 'public')));
     const user = new User('Collins', 'munisco12@gmail.com')
     user.save()
         .then(user => {
-            console.log('user created successfully', user)
-            req.user = user
+            let userData;
+            for(let info in user.ops){
+               userData = user.ops[info]
+            }
+            req.user = userData
             next()
         })
         .catch(err => console.log('user failure from db', err))

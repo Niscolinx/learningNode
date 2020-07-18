@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const User = require('../models/user')
 const Mongodb = require('mongodb')
 
 exports.getAddProduct = (req, res, next) => {
@@ -67,11 +68,15 @@ exports.postEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
   .then(prods => {
-    res.render('admin/products', {
-      prods,
-      pageTitle: 'Admin Products',
-      path: '/admin/products'
-    });
+    return User.findById(req.user._id)
+    .then(user => {
+      res.render('admin/products', {
+        prods,
+        user,
+        pageTitle: 'Admin Products',
+        path: '/admin/products'
+      });
+    })
 
   })
   .catch(err => console.log('failed to get products', err))
