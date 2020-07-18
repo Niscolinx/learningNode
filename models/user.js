@@ -18,7 +18,7 @@ class User {
     static findById(userId){
         const db = getDB()
 
-        return db.collection('users').find({_id: new MongoDb.ObjectId(userId)}).toArray()
+        return db.collection('users').findOne({_id: new MongoDb.ObjectId(userId)})
     }
 }
 
