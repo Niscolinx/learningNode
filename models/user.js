@@ -59,7 +59,9 @@ class User {
         .then(product => {
             console.log('the product', product)
             updatedCart = {...updatedCart, items: product, quantity: 1}
-            return updatedCart
+            this.cart = updatedCart
+            console.log('the full user', this)
+            return db.collection('users').updateOne({ _id: new MongoDb.ObjectId(userId) }, {$set: this})
         })
         .catch(err => {
             console.log('Failed to post cart', err)
