@@ -5,7 +5,8 @@ const { get } = require('../routes/shop')
 class User {
     constructor(username, email){
         this.username = username,
-        this.email = email
+        this.email = email,
+        this.cart = {items: []}
     }
 
     save(){
@@ -14,7 +15,7 @@ class User {
         return db.collection('users').findOne({username: this.username})
         .then(userExists => {
             let userData;
-            
+
             if(userExists === null){
                 return db.collection('users').insertOne(this)
                 .then(userCreated => {
@@ -36,14 +37,32 @@ class User {
 
     static findById(userId){
         const db = getDB()
-        console.log('id', userId)
         return db.collection('users').findOne({_id: new MongoDb.ObjectId(userId)})
         .then(res => {
-            console.log('Adding the id ', res)
             return res
         })
         .catch(err => {
             console.log('Error adding the product', err)
+        })
+    }
+
+    static postCart(prodId, userId){
+        const db = getDB()
+        let updatedCart;
+
+        db.collection('users').findOne({_id: new MongoDb.ObjectId(userId)})
+        .then(user => {
+            console.log('the user', user)
+            updatedCart = user.cart
+            return db.collection('products').findOne({ _id: new MongoDb.ObjectId(prodId) })
+        })
+        .then(product => {
+            console.log('the product', product)
+            updatedCart = {...updatedCart, items: product, quantity: 1}
+            return updatedCart
+        })
+        .catch(err => {
+            console.log('Failed to post cart', err)
         })
     }
 }

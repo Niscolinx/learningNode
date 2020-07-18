@@ -4,10 +4,10 @@ const Mongodb = require('mongodb')
 class Product {
   constructor(title, price, description, imageUrl, id, userId) {
     this.title = title,
-      this.price = price,
-      this.description = description,
-      this.imageUrl = imageUrl
-    this._id = id
+    this.price = price,
+    this.description = description,
+    this.imageUrl = imageUrl,
+    this._id = id,
     this._userId = userId
   }
 
@@ -19,9 +19,9 @@ class Product {
     if (this._id) {
       prod = db.collection('products').updateOne({ _id: this._id }, { $set: this })
       console.log('updated')
-        
+
     }
-    else{
+    else {
       prod = db.collection('products').insertOne(this)
       console.log('newly saved')
     }
@@ -46,7 +46,7 @@ class Product {
     return db.collection('products').findOne({ _id: new Mongodb.ObjectId(prodId) })
   }
 
-  static deleteOne(prodId){
+  static deleteOne(prodId) {
     const db = getDB()
 
     return db.collection('products').deleteOne({ _id: new Mongodb.ObjectId(prodId) })

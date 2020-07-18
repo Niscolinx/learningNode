@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const User =  require('../models/user')
 //const OrderItems = require('../models/orderItems');
 
 exports.getProducts = (req, res, next) => {
@@ -30,7 +31,6 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  console.log('From the shop', req.user)
   Product.fetchAll()
     .then(products => {
       console.log('the products data', products)
@@ -67,7 +67,8 @@ exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
   let fetchedCart;
   let newQuantity = 1
-  req.user.getCart()
+
+  User.postCart(prodId, req.user._id)
     .then(cart => {
       fetchedCart = cart
       return cart.getProducts({ where: { id: prodId } })
