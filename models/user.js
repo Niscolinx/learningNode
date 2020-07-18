@@ -14,7 +14,7 @@ class User {
         return db.collection('users').findOne({username: this.username})
         .then(userExists => {
             let userData;
-
+            
             if(userExists === null){
                 return db.collection('users').insertOne(this)
                 .then(userCreated => {

@@ -13,9 +13,6 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, price, description } = req.body;
-  console.log('the user id', req.user)
-  const user = User.findById(req.user)
-  user.then(result => console.log('result', result)).catch(err => console.log('error', err))
 
   const product = new Product(title, price, description, imageUrl, null, req.user._id)
   product.save()
