@@ -30,6 +30,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+  console.log('From the shop', req.user)
   Product.fetchAll()
     .then(products => {
       console.log('the products data', products)

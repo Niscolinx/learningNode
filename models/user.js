@@ -13,19 +13,21 @@ class User {
         
         return db.collection('users').findOne({username: this.username})
         .then(userExists => {
+            let userData;
 
             if(userExists === null){
                 return db.collection('users').insertOne(this)
                 .then(userCreated => {
                     console.log('user created', userCreated.ops)
-                    return userCreated.ops
+                    userData = userCreated.ops
                 })
                 .catch(err => {console.log('failed to create user', err)})
             }
             else{
                 console.log('user found', userExists)
-                return userExists
+                userData = userExists
             }
+            return userData
         })
         .catch(userNotFound => {
             console.log('user does not exist', userNotFound)

@@ -21,7 +21,6 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 const { MongoConnect } = require('./util/database');
-const e = require('express');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -29,15 +28,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use((req, res, next) => {
-
-    const user = new User('Collins', 'munisco12@gmail.com')
-    user.save()
+    const newUser = new User('Collins', 'munisco12@gmail.com')
+    newUser.save()
         .then(user => {
             req.user = user
-            console.log('req.user', req.user)
+            next()
         })
         .catch(err => console.log('user failure from db', err))
-        next()
 })
 
 app.use('/admin', adminRoutes);
