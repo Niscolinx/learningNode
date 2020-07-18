@@ -1,6 +1,5 @@
 const MongoDb = require('mongodb')
 const {getDB} = require('../util/database')
-const { get } = require('../routes/shop')
 
 class User {
     constructor(username, email){
@@ -37,6 +36,7 @@ class User {
 
     static findById(userId){
         const db = getDB()
+
         return db.collection('users').findOne({_id: new MongoDb.ObjectId(userId)})
         .then(res => {
             return res
@@ -46,27 +46,40 @@ class User {
         })
     }
 
-    static postCart(prodId, userId){
+    static addCart(prodId, userId){
         const db = getDB()
         let updatedCart;
 
-        db.collection('users').findOne({_id: new MongoDb.ObjectId(userId)})
-        .then(user => {
-            console.log('the user', user)
-            updatedCart = user.cart
-            return db.collection('products').findOne({ _id: new MongoDb.ObjectId(prodId) })
+        console.log(prodId, userId)
+
+    //   return  db.collection('users').findOne({_id: new MongoDb.ObjectId(userId)})
+    //     .then(user => {
+    //         console.log('the user', user)
+    //         updatedCart = user.cart
+    //         return db.collection('products').findOne({ _id: new MongoDb.ObjectId(prodId) })
+    //     })
+    //     .then(product => {
+    //         console.log('the product', product)
+    //         updatedCart = {...updatedCart, items: product, quantity: 1}
+    //         this.cart = updatedCart
+    //         console.log('the full user', this)
+    //         return db.collection('users').updateOne({ _id: new MongoDb.ObjectId(userId) }, {$set: this})
+    //     })
+    //     .catch(err => {
+    //         console.log('Failed to post cart', err)
+    //     })
+     }
+
+     static getCart() {
+         const db = getDB()
+
+        return db.collection('users').find(cart).toArray()
+        .then(cart => {
+            console.log('All cart', cart)
+            return cart
         })
-        .then(product => {
-            console.log('the product', product)
-            updatedCart = {...updatedCart, items: product, quantity: 1}
-            this.cart = updatedCart
-            console.log('the full user', this)
-            return db.collection('users').updateOne({ _id: new MongoDb.ObjectId(userId) }, {$set: this})
-        })
-        .catch(err => {
-            console.log('Failed to post cart', err)
-        })
-    }
+        .catch(err => console.log('failed to get cart', err))
+     }
 }
 
 module.exports = User
