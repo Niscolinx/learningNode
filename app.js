@@ -33,16 +33,9 @@ app.use(express.static(path.join(__dirname, 'public')));
     const user = new User('Collins', 'munisco12@gmail.com')
     user.save()
         .then(user => {
-            console.log('the user', user)
-            if(user){
-                console.log('valid user', user)
-                req.user = user
-
-            }
-            else{
-                console.log('invalid user', user)
-                return req.user = user
-            }
+            req.user = user
+            console.log('the user', req.user)
+            
         })
         .catch(err => console.log('user failure from db', err))
         next()
