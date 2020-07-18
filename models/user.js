@@ -17,14 +17,14 @@ class User {
             if(userExists === null){
                 return db.collection('users').insertOne(this)
                 .then(userCreated => {
-                    console.log('user created', userCreated)
+                    console.log('user created', userCreated.ops)
                     return userCreated.ops
                 })
                 .catch(err => {console.log('failed to create user', err)})
             }
             else{
                 console.log('user found', userExists)
-                return userExists.ops
+                return userExists
             }
         })
         .catch(userNotFound => {

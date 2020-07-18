@@ -30,12 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
  app.use((req, res, next) => {
 
-    const user = new User('Collins', 'munisco12@gmail.com')
+    const user = new User('Munischg', 'munisco12@gmail.com')
     user.save()
         .then(user => {
-            req.user = user
-            console.log('the user', req.user)
-            
+            req.user = user            
         })
         .catch(err => console.log('user failure from db', err))
         next()

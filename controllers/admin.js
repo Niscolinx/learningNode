@@ -69,7 +69,7 @@ exports.postEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
     .then(prods => {
-      return User.findById(req.user._id)
+      User.findById(req.user._id)
         .then(user => {
           console.log('user in found products', user)
           res.render('admin/products', {
@@ -80,7 +80,17 @@ exports.getProducts = (req, res, next) => {
           });
         })
     })
-    .catch(err => console.log('failed to get products', err))
+    .catch(err => {
+      console.log('failed to get products', err)
+      let prods = []
+      let user = null
+      res.render('admin/products', {
+        prods,
+        user,
+        pageTitle: 'Admin Products',
+        path: '/admin/products'
+      });
+    })
 
 };
 
