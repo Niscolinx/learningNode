@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // const Product = require('./models/product')
-// const User = require('./models/user')
+ const User = require('./models/user')
 // const Cart = require('./models/cart')
 // const CartItems = require('./models/cartItems')
 // const Order = require('./models/order')
@@ -27,14 +27,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-// app.use((req, res, next) => {
-//     User.findByPk(1)
-//         .then(user => {
-//             req.user = user
-//             next()
-//         })
-//         .catch(err => console.log('user failure from db', err))
-// })
+ app.use((req, res, next) => {
+
+    const user = new User('Collins', 'munisco12@gmail.com')
+    user.save()
+        .then(user => {
+            console.log('user created successfully', user)
+            req.user = user
+            next()
+        })
+        .catch(err => console.log('user failure from db', err))
+})
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

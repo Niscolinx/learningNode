@@ -11,6 +11,10 @@ class User {
         const db = getDB()
 
         return db.collection('users').insertOne(this)
+        .then(user => {
+            console.log('new user', user)
+        })
+        .catch(err => console.log('Failed to create a new user', err))
     }
 
     static findById(userId){
