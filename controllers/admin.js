@@ -17,7 +17,7 @@ exports.postAddProduct = (req, res, next) => {
   const user = User.findById(req.user)
   user.then(result => console.log('result', result)).catch(err => console.log('error', err))
 
-  const product = new Product(title, price, description, imageUrl, null, user._id)
+  const product = new Product(title, price, description, imageUrl, null, req.user._id)
   product.save()
     .then(result => {
       console.log('result from added mongodb', result)

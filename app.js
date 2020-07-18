@@ -37,7 +37,7 @@ app.use((req, res, next) => {
             console.log('req.user', req.user)
         })
         .catch(err => console.log('user failure from db', err))
-    next()
+        next()
 })
 
 app.use('/admin', adminRoutes);

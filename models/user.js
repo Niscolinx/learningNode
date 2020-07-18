@@ -29,8 +29,7 @@ class User {
         })
         .catch(userNotFound => {
             console.log('user does not exist', userNotFound)
-        })
-        
+        })  
     }
 
     static findById(userId){
