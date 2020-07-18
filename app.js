@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // const Product = require('./models/product')
- const User = require('./models/user')
+const User = require('./models/user')
 // const Cart = require('./models/cart')
 // const CartItems = require('./models/cartItems')
 // const Order = require('./models/order')
@@ -24,20 +24,21 @@ const { MongoConnect } = require('./util/database');
 const e = require('express');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 
- app.use((req, res, next) => {
+app.use((req, res, next) => {
 
     const user = new User('Collins', 'munisco12@gmail.com')
     user.save()
         .then(user => {
-            req.user = user            
+            req.user = user
+            console.log('req.user', req.user)
         })
         .catch(err => console.log('user failure from db', err))
-        next()
-    })
+    next()
+})
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

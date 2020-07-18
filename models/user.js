@@ -35,7 +35,7 @@ class User {
 
     static findById(userId){
         const db = getDB()
-
+        console.log('id', userId)
         return db.collection('users').findOne({_id: new MongoDb.ObjectId(userId)})
         .then(res => {
             console.log('Adding the id ', res)
