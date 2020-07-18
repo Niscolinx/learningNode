@@ -17,12 +17,12 @@ class Product {
 
     if (this._id) {
       prod = db.collection('products').updateOne({ _id: this._id }, { $set: this })
-      console.log('update')
+      console.log('updated')
         
     }
     else{
       prod = db.collection('products').insertOne(this)
-      console.log('new save')
+      console.log('newly saved')
     }
     return prod
       .then(result => {
