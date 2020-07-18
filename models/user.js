@@ -37,6 +37,13 @@ class User {
         const db = getDB()
 
         return db.collection('users').findOne({_id: new MongoDb.ObjectId(userId)})
+        .then(res => {
+            console.log('Adding the id ', res)
+            return res
+        })
+        .catch(err => {
+            console.log('Error adding the product', err)
+        })
     }
 }
 
