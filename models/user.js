@@ -49,30 +49,40 @@ class User {
 
     static addCart(prodId, userId) {
         const db = getDB()
-        let updatedCart;
-
-        console.log(prodId, userId)
+        
         return db.collection('users').findOne({ _id: new MongoDb.ObjectID(userId) })
             .then(user => {
-               const cartExists =  user.cart.items.filter(p => {
-                   console.log('the inner loop', p.productId, prodId)
+                let prevCart = user.cart.items
+                let toUpdate;
+                const cartItemExists = user.cart.items.filter(p => {
                     return p.productId === prodId
                 })
 
-                console.log('cart exists', cartExists)
-            })
-
-
-        return db.collection('users').updateOne({ _id: new MongoDb.ObjectId(userId) }, {
-            $set: {
-                cart: {
-                    items: [{
+                if (cartItemExists.length < 1) {
+                    console.log('the cart Id not found', cartItemExists)
+                    toUpdate = {
                         productId: prodId,
                         quantity: 1
-                    }]
+                    }
                 }
-            }
-        })
+                else {
+                    console.log('the cart Id is found', cartItemExists)
+
+                    let increment = cartItemExists[0].quantity
+                    cartItemExists[0].quantity = increment + 1
+                    toUpdate = null
+                }
+
+                return db.collection('users').updateOne({ _id: new MongoDb.ObjectId(userId) }, {
+                    $set: {
+                        cart: {
+                            items: [...prevCart, toUpdate]
+                        }
+                    }
+                })
+
+            })
+
     }
 
     static getCart() {
