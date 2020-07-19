@@ -47,12 +47,25 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  User.getCart()
+  let handleCart = [];
+  User.getCart(req.user._id)
     .then(cart => {
-      return cart
+
+      return Product.fetchAll()
+        .then(products => {
+          let filterProds
+          return cart.forEach(c => {
+             filterProds = products.filter(p => {
+              return p._id.toString() === c.productId
+            })
+          })
+          console.log('the handle cart', filterProds)
+
+        })
 
     })
     .then(foundCart => {
+      console.log('the handle cart', handleCart)
 
       res.render('shop/cart', {
         path: '/cart',
