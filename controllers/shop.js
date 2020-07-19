@@ -49,12 +49,11 @@ exports.getIndex = (req, res, next) => {
 exports.getCart = (req, res, next) => {
   User.getCart()
     .then(cart => {
-      console.log('the cart', cart)
       return cart
 
     })
     .then(foundCart => {
-      console.log('the found cart', foundCart)
+     
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
@@ -69,14 +68,15 @@ exports.postCart = (req, res, next) => {
   let fetchedCart;
   let newQuantity = 1
 
-  User.addCart(prodId, req.user._id)
-    .then(cart => {
-      console.log('the add cart', cart)
-      fetchedCart = cart
-      res.redirect('/cart');
-
+  Product.findById(prodId)
+  .then(product => {
+   return req.user.addCart(prodId)
+   .then(result => {
+     console.log('the result', result)
+   })
+  })
      // return cart.getProducts({ where: { id: prodId } })
-    })
+    
   //  .then(Products => {
   //     let product;
   //     if (Products.length > 0) {
