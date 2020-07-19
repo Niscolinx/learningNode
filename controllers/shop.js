@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-const User =  require('../models/user')
+const User = require('../models/user')
 //const OrderItems = require('../models/orderItems');
 
 exports.getProducts = (req, res, next) => {
@@ -53,7 +53,7 @@ exports.getCart = (req, res, next) => {
 
     })
     .then(foundCart => {
-     
+
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
@@ -69,33 +69,13 @@ exports.postCart = (req, res, next) => {
   let newQuantity = 1
 
   Product.findById(prodId)
-  .then(product => {
-   return User.addCart(prodId, req.user._id)
-   .then(result => {
-     console.log('the result', result)
-   })
-  })
-     // return cart.getProducts({ where: { id: prodId } })
-    
-  //  .then(Products => {
-  //     let product;
-  //     if (Products.length > 0) {
-  //       product = Products[0]
-  //     }
-  //     if (product) {
-  //       let oldQuantity = Number(product.cartItems.quantity)
-  //       newQ uantity = oldQuantity + 1
-  //       return product
-  //     }
-  //     else {
-  //       return Product.findByPk(prodId)
-  //     }
-
-  //   })
-    // .then(product => {
-    //   fetchedCart.addProduct(product, { through: { quantity: newQuantity } })
-    //   res.redirect('/cart');
-    // })
+    .then(product => {
+      return User.addCart(prodId, req.user._id)
+        .then(result => {
+          console.log('the result',result)
+          res.redirect('/products')
+        })
+    })
     .catch(err => console.log('err from post cart', err))
 };
 
@@ -145,16 +125,16 @@ exports.postOrder = (req, res, next) => {
 
 
 exports.getOrders = (req, res, next) => {
-  req.user.getOrders({include: ['products']})
-  .then(orders => {
-    res.render('shop/orders', {
-      path: '/orders',
-      pageTitle: 'Your Orders',
-      orders
-    });
+  req.user.getOrders({ include: ['products'] })
+    .then(orders => {
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders
+      });
 
-  })
-  .catch(err => console.log('err getting orders', err))
+    })
+    .catch(err => console.log('err getting orders', err))
 };
 
 exports.getCheckout = (req, res, next) => {

@@ -52,6 +52,15 @@ class User {
         let updatedCart;
 
         console.log(prodId, userId)
+        return db.collection('users').findOne({ _id: new MongoDb.ObjectID(userId) })
+            .then(user => {
+               const cartExists =  user.cart.items.filter(p => {
+                   console.log('the inner loop', p.productId, prodId)
+                    return p.productId === prodId
+                })
+
+                console.log('cart exists', cartExists)
+            })
 
 
         return db.collection('users').updateOne({ _id: new MongoDb.ObjectId(userId) }, {
