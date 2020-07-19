@@ -70,7 +70,7 @@ exports.postCart = (req, res, next) => {
 
   Product.findById(prodId)
   .then(product => {
-   return req.user.addCart(prodId)
+   return User.addCart(prodId, req.user._id)
    .then(result => {
      console.log('the result', result)
    })

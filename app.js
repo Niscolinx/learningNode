@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
+//5f14a399fe813c1948012cdf  the user id from the db
 app.use((req, res, next) => {
     const newUser = new User('Collins', 'munisco12@gmail.com')
     newUser.save()
