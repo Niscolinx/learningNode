@@ -69,8 +69,9 @@ exports.postCart = (req, res, next) => {
   let fetchedCart;
   let newQuantity = 1
 
-  User.save(req.user._id)
+  User.addCart(prodId, req.user._id)
     .then(cart => {
+      console.log('the add cart', cart)
       fetchedCart = cart
       res.redirect('/cart');
 
