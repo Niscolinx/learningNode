@@ -17,7 +17,6 @@ exports.postAddProduct = (req, res, next) => {
   const product = new Product(title, price, description, imageUrl, null, req.user._id)
   product.save()
     .then(result => {
-      console.log('result from added mongodb', result)
       res.redirect('/admin/products')
     })
     .catch(err => console.log('error from mongodb', err))

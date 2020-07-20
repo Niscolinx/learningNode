@@ -55,18 +55,18 @@ exports.getCart = (req, res, next) => {
         .then(products => {
           let filterProds
           return cart.forEach(c => {
-             filterProds = products.filter(p => {
-              return p._id.toString() === c.productId
+            filterProds = products.filter(p => {
+              return c.productId === p._id.toString()
             })
+            handleCart.push({...filterProds[0], quantity: c.quantity})
           })
-          console.log('the handle cart', filterProds)
 
         })
+        .catch(err => console.log(err))
 
     })
     .then(foundCart => {
-      console.log('the handle cart', handleCart)
-
+      foundCart = handleCart
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
