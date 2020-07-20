@@ -95,8 +95,13 @@ exports.getProducts = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.deleteOne(prodId)
-    .then(success => {
+    .then(product => {
       console.log('successfully deleted product')
+
+      return User.removeCart(prodId, req.user._id)
+    })
+    .then(cart => {
+
       res.redirect('/admin/products');
     })
     .catch(err => console.log('error from deleting a product', err))

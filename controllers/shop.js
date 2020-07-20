@@ -67,6 +67,7 @@ exports.getCart = (req, res, next) => {
     })
     .then(foundCart => {
       foundCart = handleCart
+     // console.log('found cart', foundCart)
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
@@ -93,11 +94,11 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
-  const prodId = req.body;
-  console.log('prodId', prodId)
+  const prodId = req.body.productId;
+
   User.removeCart(prodId, req.user._id)
     .then(cart => {
-      console.log('deleted cart', cart)
+      console.log('deleted cart')
       res.redirect('/cart')
     })
     .catch(err => console.log('err deleting the cart item', err))

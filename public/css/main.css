@@ -204,6 +204,14 @@ form {
   color: white;
 }
 
+.btn-delete{
+  color: red;
+}
+.btn-delete:hover{
+  color: red;
+  background-color: white;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
@@ -212,4 +220,34 @@ form {
   #side-menu-toggle {
     display: none;
   }
+}
+
+.cart-box{
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #a3d3cd;
+  list-style: none;
+}
+
+.cart-box__item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  border: 1px solid rgb(37, 36, 36);
+  border-radius: 3px 5px;
+  margin-bottom: .5rem;
+}
+
+.cart-box__primary{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.cart-box__item-title{
+  font-weight: bold;
 }
