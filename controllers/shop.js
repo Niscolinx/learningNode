@@ -95,19 +95,11 @@ exports.postCart = (req, res, next) => {
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
 
-  req.user.getCart()
+  User.removeCart(prodId, req.user._id)
     .then(cart => {
-      return cart.getProducts({ where: { id: prodId } })
+      console.log('deleted cart',cart)
     })
-    .then(products => {
-      const product = products[0]
-      product.cartItems.destroy()
-    })
-    .then(result => {
-      console.log('destroyed the a cart item', result)
-      res.redirect('/cart');
-    })
-    .catch(err => console.log('err destroying the cart item', err))
+    .catch(err => console.log('err deleting the cart item', err))
 };
 
 exports.postOrder = (req, res, next) => {
