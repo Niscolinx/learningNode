@@ -86,15 +86,16 @@ class User {
 
     static removeCart(prodId, userId) {
         const db = getDB()
-        console.log('the prev cart', prevCart)
 
-        db.collection('users').findOne({ _id: new MongoDb.ObjectID(userId) })
+       return db.collection('users').findOne({ _id: new MongoDb.ObjectID(userId) })
             .then(user => {
                 let oldCart = user.cart.items
+                
                 const newCart = oldCart.filter(cart => {
+                    console.log('the inner loop', cart.productId, 'the prodId', prodId)
                     return cart.productId !== prodId
                 })
-
+                console.log('the new cart', newCart)
                 return db.collection('users').updateOne({_id: new MongoDb.ObjectID(userId)}, {$set: {
                     cart: {
                         items: [...oldCart]

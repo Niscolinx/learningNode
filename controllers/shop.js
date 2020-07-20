@@ -58,7 +58,7 @@ exports.getCart = (req, res, next) => {
             filterProds = products.filter(p => {
               return c.productId === p._id.toString()
             })
-            handleCart.push({...filterProds[0], quantity: c.quantity})
+            handleCart.push({ ...filterProds[0], quantity: c.quantity })
           })
 
         })
@@ -93,11 +93,12 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
-
+  const prodId = req.body;
+  console.log('prodId', prodId)
   User.removeCart(prodId, req.user._id)
     .then(cart => {
-      console.log('deleted cart',cart)
+      console.log('deleted cart', cart)
+      res.redirect('/cart')
     })
     .catch(err => console.log('err deleting the cart item', err))
 };
