@@ -106,3 +106,12 @@ exports.postDeleteProduct = (req, res, next) => {
     })
     .catch(err => console.log('error from deleting a product', err))
 };
+
+exports.clearCart = (req, res, next) => {
+
+  User.clearCart(req.user._id)
+  .then(cart => {
+    res.redirect('/cart')
+  })
+  .catch(err => console.log(err))
+}

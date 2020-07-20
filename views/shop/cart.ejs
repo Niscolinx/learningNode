@@ -5,6 +5,10 @@
     <%- include('../includes/navigation.ejs') %>
     <main>
         <% if (products.length > 0) { %>
+        <div class="right">
+            <a href="/admin/clear-cart/" class="btn btn-delete">Clear the cart!</a>
+        </div>
+
         <ul class="cart-box">
             <% products.forEach(p => { %>
             <li class="cart-box__item">

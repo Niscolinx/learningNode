@@ -208,8 +208,8 @@ form {
   color: red;
 }
 .btn-delete:hover{
-  color: red;
-  background-color: white;
+  color: white;
+  background-color: rgb(240, 57, 57);
 }
 
 @media (min-width: 768px) {
@@ -250,4 +250,9 @@ form {
 
 .cart-box__item-title{
   font-weight: bold;
+}
+
+.right{
+  display: flex;
+  justify-content: flex-end;
 }

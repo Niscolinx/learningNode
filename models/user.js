@@ -116,6 +116,22 @@ class User {
             })
             .catch(err => console.log('failed to get cart', err))
     }
+
+    static clearCart(userId){
+        const db = getDB()
+        
+        return db.collection('users').updateOne({_id: new MongoDb.ObjectID(userId)}, {$set: {
+            cart: {
+                items: []
+            }
+        }})
+        .then(cart => {
+            console.log('Clear the cart')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
 }
 
 module.exports = User
