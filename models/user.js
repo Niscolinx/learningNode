@@ -53,6 +53,7 @@ class User {
         return db.collection('users').findOne({ _id: new MongoDb.ObjectID(userId) })
             .then(user => {
                 let prevCart = user.cart.items
+                console.log('the prev cart is', prevCart)
                 const cartItemExists = user.cart.items.filter(p => {
                     return p.productId === prodId
                 })

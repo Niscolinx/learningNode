@@ -221,7 +221,7 @@ form {
     display: none;
   }
 }
-
+/* CART */
 .cart-box{
   display: flex;
   padding: 1rem;
@@ -236,7 +236,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30%;
+  width: 50%;
   border: 1px solid rgb(37, 36, 36);
   border-radius: 3px 5px;
   margin-bottom: .5rem;
@@ -250,6 +250,7 @@ form {
 
 .cart-box__item-title{
   font-weight: bold;
+  padding-right: .2rem;
 }
 
 .right{

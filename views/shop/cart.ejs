@@ -15,6 +15,7 @@
                 <div class="cart-box__primary">
                     <p><span class="cart-box__item-title">Book Title:</span><%= p.title %></p>
                     <p><span class="cart-box__item-title">Quantity:</span>(<%= p.quantity %>)</p>
+                    <p><span class="cart-box__item-title">Price:</span>$<%= p.price %></p>
 
                 </div>
                 <form action="/cart-delete-item" method="POST">
