@@ -1,6 +1,5 @@
 const MongoDb = require('mongodb')
 const { getDB } = require('../util/database')
-const Product = require('./product')
 
 class User {
     constructor(username, email) {
@@ -19,13 +18,11 @@ class User {
                 if (userExists === null) {
                     return db.collection('users').insertOne(this)
                         .then(userCreated => {
-                            console.log('user created', userCreated.ops)
                             userData = userCreated.ops
                         })
                         .catch(err => { console.log('failed to create user', err) })
                 }
                 else {
-                    console.log('user found', userExists)
                     userData = userExists
                 }
                 return userData
@@ -51,18 +48,13 @@ class User {
         const db = getDB()
 
         prodId = new MongoDb.ObjectID(prodId)
-
         return db.collection('users').findOne({ _id: new MongoDb.ObjectID(userId) })
             .then(user => {
                 let prevCart = user.cart.items
-                let isCart;
-                 prevCart.filter(p => {
-                    console.log('the product id is', p.productId, prodId)
-                    return isCart = p.productId !== prodId
+                const cartItemExists = user.cart.items.filter(p => {
+                    return p.productId.toString() === prodId.toString()
                 })
-                console.log('the cart items', isCart)
                 if (cartItemExists.length < 1) {
-                    console.log('the cart Id not found', cartItemExists)
                     prevCart = [...prevCart, {
 
                         productId: prodId,
@@ -71,14 +63,12 @@ class User {
                     }]
                 }
                 else {
-                    console.log('the cart Id is found', cartItemExists)
-
                     let oldQuantity = cartItemExists[0].quantity
                     let oldPrice = cartItemExists[0].price
-                  
-                     cartItemExists[0].quantity = oldQuantity + 1
+
+                    cartItemExists[0].quantity = oldQuantity + 1
                     cartItemExists[0].price = oldPrice + +price
-                    
+
                 }
 
                 return db.collection('users').updateOne({ _id: new MongoDb.ObjectId(userId) }, {
@@ -102,9 +92,8 @@ class User {
 
                 const newCart = oldCart.filter(cart => {
 
-                    return cart.productId !== prodId
+                    return cart.productId.toString() !== prodId.toString()
                 })
-                console.log('the new cart', newCart)
                 return db.collection('users').updateOne({ _id: new MongoDb.ObjectID(userId) }, {
                     $set: {
                         cart: {
@@ -118,7 +107,7 @@ class User {
 
     static getCart(userId) {
         const db = getDB()
-
+        console.log('the user cart', this.User)
         return db.collection('users').findOne({ _id: new MongoDb.ObjectID(userId) })
             .then(user => {
                 return user.cart.items
@@ -137,7 +126,6 @@ class User {
             }
         })
             .then(cart => {
-                console.log('Clear the cart')
             })
             .catch(err => {
                 console.log(err)

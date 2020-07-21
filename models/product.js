@@ -23,11 +23,9 @@ class Product {
     }
     else {
       prod = db.collection('products').insertOne(this)
-      console.log('newly saved')
     }
     return prod
       .then(result => {
-        console.log('the result from db save')
       })
       .catch(err => console.log('err from db save', err))
 

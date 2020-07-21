@@ -56,7 +56,7 @@ exports.getCart = (req, res, next) => {
           let filterProds
           return cart.forEach(c => {
             filterProds = products.filter(p => {
-              return c.productId === p._id.toString()
+              return c.productId.toString() === p._id.toString()
             })
             handleCart.push({ ...filterProds[0], quantity: c.quantity, price: c.price })
           })
