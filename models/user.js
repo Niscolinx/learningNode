@@ -47,30 +47,38 @@ class User {
             })
     }
 
-    static addCart(prodId, userId) {
+    static addCart(prodId, price, userId) {
         const db = getDB()
+
+        prodId = new MongoDb.ObjectID(prodId)
 
         return db.collection('users').findOne({ _id: new MongoDb.ObjectID(userId) })
             .then(user => {
                 let prevCart = user.cart.items
-                console.log('the prev cart is', prevCart)
-                const cartItemExists = user.cart.items.filter(p => {
-                    return p.productId === prodId
+                let isCart;
+                 prevCart.filter(p => {
+                    console.log('the product id is', p.productId, prodId)
+                    return isCart = p.productId !== prodId
                 })
-
+                console.log('the cart items', isCart)
                 if (cartItemExists.length < 1) {
                     console.log('the cart Id not found', cartItemExists)
                     prevCart = [...prevCart, {
 
                         productId: prodId,
-                        quantity: 1
+                        quantity: 1,
+                        price: +price
                     }]
                 }
                 else {
                     console.log('the cart Id is found', cartItemExists)
 
-                    let increment = cartItemExists[0].quantity
-                    cartItemExists[0].quantity = increment + 1
+                    let oldQuantity = cartItemExists[0].quantity
+                    let oldPrice = cartItemExists[0].price
+                  
+                     cartItemExists[0].quantity = oldQuantity + 1
+                    cartItemExists[0].price = oldPrice + +price
+                    
                 }
 
                 return db.collection('users').updateOne({ _id: new MongoDb.ObjectId(userId) }, {
@@ -118,20 +126,22 @@ class User {
             .catch(err => console.log('failed to get cart', err))
     }
 
-    static clearCart(userId){
+    static clearCart(userId) {
         const db = getDB()
-        
-        return db.collection('users').updateOne({_id: new MongoDb.ObjectID(userId)}, {$set: {
-            cart: {
-                items: []
+
+        return db.collection('users').updateOne({ _id: new MongoDb.ObjectID(userId) }, {
+            $set: {
+                cart: {
+                    items: []
+                }
             }
-        }})
-        .then(cart => {
-            console.log('Clear the cart')
         })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(cart => {
+                console.log('Clear the cart')
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }
 

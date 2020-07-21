@@ -58,7 +58,7 @@ exports.getCart = (req, res, next) => {
             filterProds = products.filter(p => {
               return c.productId === p._id.toString()
             })
-            handleCart.push({ ...filterProds[0], quantity: c.quantity })
+            handleCart.push({ ...filterProds[0], quantity: c.quantity, price: c.price })
           })
 
         })
@@ -66,8 +66,8 @@ exports.getCart = (req, res, next) => {
 
     })
     .then(foundCart => {
+      console.log('the found cart', handleCart)
       foundCart = handleCart
-     // console.log('found cart', foundCart)
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
