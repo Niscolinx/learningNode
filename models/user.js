@@ -1,5 +1,6 @@
 const MongoDb = require('mongodb')
 const { getDB } = require('../util/database')
+const { get } = require('../routes/shop')
 
 class User {
     constructor(username, email) {
@@ -130,6 +131,18 @@ class User {
             .catch(err => {
                 console.log(err)
             })
+    }
+
+    static postOrder(cart, userId){
+
+        console.log('the cart order', cart)
+        const order = {...cart, userId}
+
+        const db = getDB()
+
+        return db.collection('orders').insertOne(order)
+        .then(order => console.log('the order', order))
+        .catch(err => {console.log(err)})
     }
 }
 
