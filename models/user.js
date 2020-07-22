@@ -133,8 +133,7 @@ class User {
     }
 
     static postOrder(cart, userId) {
-
-        console.log('the cart order', cart)
+        console.log('cart', cart)
         const order = { ...cart, userId }
 
         const db = getDB()
@@ -148,10 +147,15 @@ class User {
 
     static getOrders(userId) {
         const db = getDB()
-
+        let store = []
         return db.collection('orders').find({ userId: new MongoDb.ObjectID(userId) }).toArray()
             .then(orders => {
-                console.log('the orders', orders)
+                console.log('main orders', orders)
+                for(let item of orders){
+                    console.log('the orders', item)
+                   store.push(Object.values(item))
+                }
+                let newStore = store.reduce((acc, arr) => { return acc.concat(arr)}, [])
                 return orders
             })
             .catch(err => console.log(err))

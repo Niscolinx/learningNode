@@ -121,7 +121,7 @@ exports.postOrder = (req, res, next) => {
 exports.getOrders = (req, res, next) => {
   User.getOrders(req.user._id)
     .then(result => {
-      console.info('the order result', result)
+     // console.info('the order result', result)
       return result
     })
     .then(orders => {
