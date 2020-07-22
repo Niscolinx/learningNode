@@ -2,7 +2,7 @@ const Product = require('../models/product');
 const User = require('../models/user')
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll(req.user._id)
+  Product.find()
     .then(products => {
       res.render('shop/product-list', {
         prods: products,
@@ -30,7 +30,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll(req.user._id)
+  Product.find(req.user._id)
     .then(products => {
       console.log('the products data', products)
 

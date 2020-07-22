@@ -14,7 +14,7 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, price, description } = req.body;
 
-  const product = new Product({title, price, description, imageUrl})
+  const product = new Product({ title, price, description, imageUrl })
   product.save()
     .then(result => {
       console.log('created product', result)
@@ -30,7 +30,7 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  Product.findById(prodId)
+  Product.find(prodId)
     .then(product => {
 
       if (!product) {
@@ -55,10 +55,17 @@ exports.getEditProduct = (req, res, next) => {
 exports.postEditProduct = (req, res, next) => {
   const { title, imageUrl, price, description, productId } = req.body;
 
-  const product = new Product(title, price, description, imageUrl, new Mongodb.ObjectId(productId))
-  return product.save()
+  Product.find(productId)
+    .then(product => {
+      product.title = title,
+        product.imageUrl = imageUrl,
+        product.price = price,
+        product.description = description
+
+      return product.save()
+    })
     .then(result => {
-      console.log('result from the edited product')
+      console.log('result from the edited product', result)
       res.redirect('/admin/products');
 
     })
@@ -66,18 +73,16 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll(req.user._id)
-    .then(prods => {
-      User.findById(req.user._id)
-        .then(user => {
-          console.log('user in found products', user)
-          res.render('admin/products', {
-            prods,
-            user,
-            pageTitle: 'Admin Products',
-            path: '/admin/products'
-          });
-        })
+
+  Product.find()
+    .then(products => {
+      console.log('found products', products)
+      res.render('admin/products', {
+        prods,
+        user: products,
+        pageTitle: 'Admin Products',
+        path: '/admin/products'
+      });
     })
     .catch(err => {
       console.log('failed to get products', err)
@@ -99,7 +104,7 @@ exports.postDeleteProduct = (req, res, next) => {
     .then(product => {
       console.log('successfully deleted product')
 
-      return User.removeCart(prodId, req.user._id)
+      // return User.removeCart(prodId, req.user._id)
     })
     .then(cart => {
 
@@ -111,8 +116,8 @@ exports.postDeleteProduct = (req, res, next) => {
 exports.clearCart = (req, res, next) => {
 
   User.clearCart(req.user._id)
-  .then(cart => {
-    res.redirect('/cart')
-  })
-  .catch(err => console.log(err))
+    .then(cart => {
+      res.redirect('/cart')
+    })
+    .catch(err => console.log(err))
 }
