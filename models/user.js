@@ -1,6 +1,5 @@
 const MongoDb = require('mongodb')
 const { getDB } = require('../util/database')
-const { get } = require('../routes/shop')
 
 class User {
     constructor(username, email) {
@@ -133,16 +132,29 @@ class User {
             })
     }
 
-    static postOrder(cart, userId){
+    static postOrder(cart, userId) {
 
         console.log('the cart order', cart)
-        const order = {...cart, userId}
+        const order = { ...cart, userId }
 
         const db = getDB()
 
         return db.collection('orders').insertOne(order)
-        .then(order => console.log('the order', order))
-        .catch(err => {console.log(err)})
+            .then(order => {
+                return order
+            })
+            .catch(err => { console.log(err) })
+    }
+
+    static getOrders(userId) {
+        const db = getDB()
+
+        return db.collection('orders').find({ userId: new MongoDb.ObjectID(userId) }).toArray()
+            .then(orders => {
+                console.log('the orders', orders)
+                return orders
+            })
+            .catch(err => console.log(err))
     }
 }
 

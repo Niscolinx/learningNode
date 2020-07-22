@@ -1,6 +1,5 @@
 const Product = require('../models/product');
 const User = require('../models/user')
-//const OrderItems = require('../models/orderItems');
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
@@ -66,7 +65,6 @@ exports.getCart = (req, res, next) => {
 
     })
     .then(foundCart => {
-      console.log('the found cart', handleCart)
       foundCart = handleCart
       res.render('shop/cart', {
         path: '/cart',
@@ -84,7 +82,7 @@ exports.postCart = (req, res, next) => {
     .then(product => {
       return User.addCart(productId, price, req.user._id)
         .then(result => {
-          console.log('the result')
+          console.log('Added the cart')
           res.redirect('/products')
         })
     })
@@ -111,7 +109,7 @@ exports.postOrder = (req, res, next) => {
     })
     
     .then(order => {
-      return User.clearCart()
+      return User.clearCart(req.user._id)
     })
     .then(result => {
       res.redirect('/orders')
@@ -121,7 +119,11 @@ exports.postOrder = (req, res, next) => {
 
 
 exports.getOrders = (req, res, next) => {
-  req.user.getOrders({ include: ['products'] })
+  User.getOrders(req.user._id)
+    .then(result => {
+      console.info('the order result', result)
+      return result
+    })
     .then(orders => {
       res.render('shop/orders', {
         path: '/orders',
