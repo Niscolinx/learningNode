@@ -30,7 +30,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.find(req.user._id)
+  Product.find()
     .then(products => {
       console.log('the products data', products)
 

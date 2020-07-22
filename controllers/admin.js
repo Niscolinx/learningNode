@@ -1,6 +1,6 @@
 const Product = require('../models/product');
 const User = require('../models/user')
-const Mongodb = require('mongodb')
+
 
 exports.getAddProduct = (req, res, next) => {
 
@@ -30,9 +30,9 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  Product.find(prodId)
+  Product.findById(prodId)
     .then(product => {
-
+      console.log('the single product', product)
       if (!product) {
         res.redirect('admin/products')
       }
@@ -55,7 +55,7 @@ exports.getEditProduct = (req, res, next) => {
 exports.postEditProduct = (req, res, next) => {
   const { title, imageUrl, price, description, productId } = req.body;
 
-  Product.find(productId)
+  Product.findById(productId)
     .then(product => {
       product.title = title,
         product.imageUrl = imageUrl,
@@ -78,7 +78,7 @@ exports.getProducts = (req, res, next) => {
     .then(products => {
       console.log('found products', products)
       res.render('admin/products', {
-        prods,
+        prods: products,
         user: products,
         pageTitle: 'Admin Products',
         path: '/admin/products'
@@ -100,7 +100,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteOne(prodId)
+  Product.findByIdAndDelete(prodId)
     .then(product => {
       console.log('successfully deleted product')
 
