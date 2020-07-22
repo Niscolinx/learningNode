@@ -2,7 +2,7 @@ const Product = require('../models/product');
 const User = require('../models/user')
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  Product.fetchAll(req.user._id)
     .then(products => {
       res.render('shop/product-list', {
         prods: products,
@@ -30,7 +30,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
+  Product.fetchAll(req.user._id)
     .then(products => {
       console.log('the products data', products)
 
@@ -50,7 +50,7 @@ exports.getCart = (req, res, next) => {
   User.getCart(req.user._id)
     .then(cart => {
 
-      return Product.fetchAll()
+      return Product.fetchAll(req.user._id)
         .then(products => {
           let filterProds
           return cart.forEach(c => {
@@ -76,7 +76,7 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
-  const {productId, price} = req.body;
+  const { productId, price } = req.body;
 
   Product.findById(productId)
     .then(product => {
@@ -101,13 +101,11 @@ exports.postCartDeleteProduct = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
-  let fetchedCart;
   User.getCart(req.user._id)
     .then(cart => {
-      fetchedCart = cart
       return User.postOrder(cart, req.user._id)
     })
-    
+
     .then(order => {
       return User.clearCart(req.user._id)
     })
@@ -119,16 +117,21 @@ exports.postOrder = (req, res, next) => {
 
 
 exports.getOrders = (req, res, next) => {
+  let totalPrice = 0
   User.getOrders(req.user._id)
     .then(result => {
-     // console.info('the order result', result)
+      for (let item of result) {
+        totalPrice += item.price
+      }
       return result
     })
     .then(orders => {
+      console.log('the orders', orders)
       res.render('shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
-        orders
+        orders,
+        totalPrice
       });
 
     })

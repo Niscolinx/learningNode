@@ -3,23 +3,22 @@
 
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <main>
+    <main class="cart-box">
         <% if (orders.length <= 0) { %>
         <h1>Nothing there!</h1>
         <% } else { %>
         <ul>
             <% orders.forEach(order => { %>
             <li>
-                <h1># <%= order._id %></h1>
-                <ul>
-                    <% for(let prod in order[0]){ %>
+                <h2># <%= order.productId %></h2>
+                <ul style="list-style: none;">
 
-                    <li>"<%= prod.price %> (<%= prod.quantity %>)"</li>
-                    <% }; %>
+                    <li>Quantity ==>(<%= order.quantity %>), Price:>$<%= order.price %> </li>
                 </ul>
             </li>
             <% }); %>
         </ul>
+        <h3>The total price is ==> $<%=totalPrice %></h3>
         <% } %>
     </main>
     <%- include('../includes/end.ejs') %>

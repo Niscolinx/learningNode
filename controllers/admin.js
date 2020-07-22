@@ -65,7 +65,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  Product.fetchAll(req.user._id)
     .then(prods => {
       User.findById(req.user._id)
         .then(user => {
