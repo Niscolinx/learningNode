@@ -14,9 +14,10 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, price, description } = req.body;
 
-  const product = new Product(title, price, description, imageUrl, null, req.user._id)
+  const product = new Product({title, price, description, imageUrl})
   product.save()
     .then(result => {
+      console.log('created product', result)
       res.redirect('/admin/products')
     })
     .catch(err => console.log('error from mongodb', err))
