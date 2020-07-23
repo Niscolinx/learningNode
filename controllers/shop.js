@@ -47,7 +47,9 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   let handleCart = [];
-  req.user.getCart()
+  req.user.getCart(cb => {
+    console.log('the call back', cb)
+  })
     .then(cart => {
       console.log('the cart', cart)
       return Product.find()
@@ -80,6 +82,8 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const { productId, price } = req.body;
+
+  console.log('the req user is ', req.user)
 
   req.user.addToCart(productId, price)
     .then(product => {

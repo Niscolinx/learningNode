@@ -30,9 +30,9 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.methods.getCart = function(){
+userSchema.methods.getCart = function(cb){
 
-    return this.cart
+    return cb(this.cart)
 }
 
 userSchema.methods.addToCart = function(prodId, price){
