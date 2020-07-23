@@ -30,9 +30,13 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.methods.getCart = function(cb){
+userSchema.methods.removeCart = function(prodId){
 
-    return cb(this.cart)
+    const newCart = this.cart.items.filter(p => {
+        return p.productId.toString() !== prodId.toString()
+    })
+
+    return this.cart = newCart
 }
 
 userSchema.methods.addToCart = function(prodId, price){

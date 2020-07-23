@@ -47,37 +47,24 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   let handleCart = [];
-  req.user.getCart(cb => {
-    console.log('the call back', cb)
-  })
-    .then(cart => {
-      console.log('the cart', cart)
-      return Product.find()
-        .then(products => {
 
-          console.log('the cart products', products)
-          let filterProds
-          return cart.forEach(c => {
-            filterProds = products.filter(p => {
-              return c.productId.toString() === p._id.toString()
-            })
-            handleCart.push({ ...filterProds[0], quantity: c.quantity, price: c.price })
-          })
-
-        })
-        .catch(err => console.log(err))
-
-    })
-    .then(foundCart => {
-      console.log('the handle cart is ', foundCart)
-      foundCart = handleCart
+  req.user.populate('cart.items.productId').execPopulate()
+    .then(user => {
+      const products = user.cart.items
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
-        products: foundCart
+        products
       });
+      let filterProds
+      // return cb.forEach(c => {
+      //   filterProds = products.filter(p => {
+      //     return c.productId.toString() === p._id.toString()
+      //   })
+      //   handleCart.push({ ...filterProds[0]._doc, quantity: c.quantity, price: c.price })
+      // })
     })
-    .catch(err => console.log('the error from cart', err))
+    .catch(err => console.log(err))
 };
 
 exports.postCart = (req, res, next) => {
@@ -96,7 +83,7 @@ exports.postCart = (req, res, next) => {
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
 
-  User.removeCart(prodId, req.user._id)
+  req.user.removeCart(prodId)
     .then(cart => {
       console.log('deleted cart')
       res.redirect('/cart')
