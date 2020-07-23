@@ -15,6 +15,7 @@ const userSchema = new Schema({
         items: [{
             productId: {
                 type: Schema.Types.ObjectId,
+                ref: 'products',
                 required: true
             },
             price: {
@@ -28,6 +29,46 @@ const userSchema = new Schema({
         }]
     }
 })
+
+userSchema.methods.getCart = function(){
+
+    return this.cart
+}
+
+userSchema.methods.addToCart = function(prodId, price){
+
+    price = +price
+    console.log('the add to cart', prodId, typeof(price))
+
+    const productIdx = this.cart.items.findIndex(p => {
+       return p.productId.toString() === prodId.toString()
+    })
+
+    console.log('the index', productIdx)
+    let newQuantity = 1;
+    const updatedCartItems = [...this.cart.items]
+
+    if(productIdx >= 0){
+        newQuantity = this.cart.items[productIdx].quantity
+        oldPrice = this.cart.items[productIdx].price
+        updatedCartItems[productIdx].quantity = newQuantity + 1
+        updatedCartItems[productIdx].price = oldPrice + price
+    }
+    else{
+        updatedCartItems.push({
+            productId: prodId,
+            quantity: newQuantity,
+            price: price
+        })
+    }
+    const updatedCart = {
+        items: updatedCartItems
+    }
+
+    this.cart = updatedCart
+
+   return this.save()
+}
 
 module.exports = mongoose.model('users', userSchema)
 

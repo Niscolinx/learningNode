@@ -14,7 +14,9 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, price, description } = req.body;
 
-  const product = new Product({ title, price, description, imageUrl })
+  console.log('the user', req.user)
+
+  const product = new Product({ title, price, description, imageUrl, userId: req.user })
   product.save()
     .then(result => {
       console.log('created product', result)
@@ -73,7 +75,6 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-
   Product.find()
     .then(products => {
       console.log('found products', products)

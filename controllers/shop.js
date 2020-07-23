@@ -47,11 +47,13 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   let handleCart = [];
-  User.getCart(req.user._id)
+  req.user.getCart()
     .then(cart => {
-
-      return Product.fetchAll(req.user._id)
+      console.log('the cart', cart)
+      return Product.find()
         .then(products => {
+
+          console.log('the cart products', products)
           let filterProds
           return cart.forEach(c => {
             filterProds = products.filter(p => {
@@ -65,6 +67,7 @@ exports.getCart = (req, res, next) => {
 
     })
     .then(foundCart => {
+      console.log('the handle cart is ', foundCart)
       foundCart = handleCart
       res.render('shop/cart', {
         path: '/cart',
@@ -78,13 +81,10 @@ exports.getCart = (req, res, next) => {
 exports.postCart = (req, res, next) => {
   const { productId, price } = req.body;
 
-  Product.findById(productId)
+  req.user.addToCart(productId, price)
     .then(product => {
-      return User.addCart(productId, price, req.user._id)
-        .then(result => {
-          console.log('Added the cart')
-          res.redirect('/products')
-        })
+      console.log('Added the cart', product)
+      res.redirect('/products')
     })
     .catch(err => console.log('err from post cart', err))
 };
