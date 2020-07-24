@@ -46,16 +46,21 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  let handleCart = [];
-
+  
   req.user.populate('cart.items.productId').execPopulate()
-    .then(user => {
+  .then(user => {
+    let totalCartPrice = 0;
 
       const products = user.cart.items
+
+      for(let item of products){
+        totalCartPrice += item.price
+      }
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
-        products
+        products,
+        totalCartPrice
       });
     })
     .catch(err => console.log(err))
@@ -111,33 +116,36 @@ exports.postOrder = (req, res, next) => {
   
   
   exports.getOrders = (req, res, next) => {
-    let reducedItems;
     let totalPrice = 0
-  Order.find()
+    let totalCartPrice = 0
+    Order.find()
     .then(result => {
-
-      console.log('the order result', result.length)
+      
       let innerItems = []
       for (let i of result) {
         innerItems.push(i.orders)
       }
-      reducedItems = innerItems.reduce((acc, arr) => {
+      console.log('the order result', innerItems)
+     let reducedItems = innerItems.reduce((acc, arr) => {
         return acc.concat(arr)
       }, [])
-
+      
       for (let item of reducedItems) {
         totalPrice += item.price
       }
-     
+      
       return result
     })
     .then(orders => {
-
-      console.log('the orders', orders.length)
+      let newOrders = []
+      for(let i of orders){
+        newOrders.push({products: i.orders})
+      }
       res.render('shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
         orders,
+        totalCartPrice,
         totalPrice: totalPrice.toFixed(2)
       });
 

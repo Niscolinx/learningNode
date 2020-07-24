@@ -8,19 +8,26 @@
         <h1>Nothing there!</h1>
         <% } else { %>
         <ul>
-            <% orders.forEach(i => { %>
+            <% orders.forEach(order => {%>
             <li>
-                <h2># <%= i._id %></h2>
+                <h2># <%= order._id %></h2>
+
                 <ul class="cart-box">
+                    <% for(let i in order.orders) {%>
                     <li class="cart-box__item">
                         <div class="cart-box__primary">
-                            <p><span class="cart-box__item-title">Book Title:</span><%= i.cartProduct.title %>
+                            <p><span class="cart-box__item-title">Book Title:</span><%= order.orders[i].cartProduct.title %>
                             </p>
-                            <p><span class="cart-box__item-title">Quantity:</span>(<%= i.quantity%>)</p>
-                            <p><span class="cart-box__item-title">Price:</span>$<%= i.price %></p>
+                            <p><span class="cart-box__item-title">Quantity:</span>(<%= order.orders[i].quantity%>)</p>
+                            <p><span class="cart-box__item-title">Price:</span>$<%= order.orders[i].price %></p>
 
                         </div>
                     </li>
+                    <% }; %>
+                     <div class="centered">
+                         <p class="btn" style="font-weight: bold; cursor: none;">Total cart price is:
+                             &nbsp;$<%= totalCartPrice %></p>
+                     </div>
                 </ul>
             </li>
             <% }); %>
