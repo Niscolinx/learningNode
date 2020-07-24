@@ -3,16 +3,15 @@
 
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <main class="cart-box">
+    <main>
         <% if (orders.length <= 0) { %>
         <h1>Nothing there!</h1>
         <% } else { %>
         <ul>
-            <% orders.forEach(order => { %>
+            <% orders.forEach(i => { %>
             <li>
-                <h2># <%= order._id %></h2>
-                <ul style="list-style: none;">
-                    <% for(let i of innerItems) {%>
+                <h2># <%= i._id %></h2>
+                <ul class="cart-box">
                     <li class="cart-box__item">
                         <div class="cart-box__primary">
                             <p><span class="cart-box__item-title">Book Title:</span><%= i.cartProduct.title %>
@@ -22,12 +21,11 @@
 
                         </div>
                     </li>
-                    <% }; %>
                 </ul>
             </li>
             <% }); %>
         </ul>
-        <h3>The total price is ==> $<%=totalPrice %></h3>
+        <h3 style="text-align: center;">The total price is ==> $<%=totalPrice %></h3>
         <% } %>
     </main>
     <%- include('../includes/end.ejs') %>

@@ -90,7 +90,7 @@ exports.postOrder = (req, res, next) => {
     })
     .then(cart => {
       const products = cart.map(i => {
-        return {price: i.price, quantity: i.quantity, cartProduct: i.productId._doc}
+        return { price: i.price, quantity: i.quantity, cartProduct: i.productId._doc }
       })
 
       const order = new Order({
@@ -103,31 +103,42 @@ exports.postOrder = (req, res, next) => {
       return order.save()
     })
     .then(result => {
+      
       res.redirect('/orders')
     })
     .catch(err => console.log('err posting order', err))
-}
-
-
-exports.getOrders = (req, res, next) => {
-  let totalPrice = 0
+  }
+  
+  
+  exports.getOrders = (req, res, next) => {
+    let reducedItems;
+    let totalPrice = 0
   Order.find()
     .then(result => {
-      console.log('the list orders', result)
-      for (let item of result[0].orders) {
+
+      console.log('the order result', result.length)
+      let innerItems = []
+      for (let i of result) {
+        innerItems.push(i.orders)
+      }
+      reducedItems = innerItems.reduce((acc, arr) => {
+        return acc.concat(arr)
+      }, [])
+
+      for (let item of reducedItems) {
         totalPrice += item.price
       }
+     
       return result
     })
     .then(orders => {
-     let innerItems = orders[0].orders
-      console.log('the orders', orders)
+
+      console.log('the orders', orders.length)
       res.render('shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
         orders,
-        innerItems,
-        totalPrice
+        totalPrice: totalPrice.toFixed(2)
       });
 
     })
