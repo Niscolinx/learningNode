@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-const User = require('../models/user')
+const Order = require('../models/order')
 
 exports.getProducts = (req, res, next) => {
   Product.find()
@@ -50,27 +50,19 @@ exports.getCart = (req, res, next) => {
 
   req.user.populate('cart.items.productId').execPopulate()
     .then(user => {
+
       const products = user.cart.items
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
         products
       });
-      let filterProds
-      // return cb.forEach(c => {
-      //   filterProds = products.filter(p => {
-      //     return c.productId.toString() === p._id.toString()
-      //   })
-      //   handleCart.push({ ...filterProds[0]._doc, quantity: c.quantity, price: c.price })
-      // })
     })
     .catch(err => console.log(err))
 };
 
 exports.postCart = (req, res, next) => {
   const { productId, price } = req.body;
-
-  console.log('the req user is ', req.user)
 
   req.user.addToCart(productId, price)
     .then(product => {
@@ -92,13 +84,23 @@ exports.postCartDeleteProduct = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
-  User.getCart(req.user._id)
-    .then(cart => {
-      return User.postOrder(cart, req.user._id)
+  req.user.populate('cart.items.productId').execPopulate()
+    .then(user => {
+      return user.cart.items
     })
+    .then(cart => {
+      const products = cart.map(i => {
+        return {price: i.price, quantity: i.quantity, cartProduct: i.productId._doc}
+      })
 
-    .then(order => {
-      return User.clearCart(req.user._id)
+      const order = new Order({
+        orders: products,
+        user: {
+          name: req.user.name,
+          userId: req.user
+        }
+      })
+      return order.save()
     })
     .then(result => {
       res.redirect('/orders')
@@ -109,9 +111,10 @@ exports.postOrder = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
   let totalPrice = 0
-  User.getOrders(req.user._id)
+  Order.find()
     .then(result => {
-      for (let item of result) {
+      console.log('the list orders', result)
+      for (let item of result[0].orders) {
         totalPrice += item.price
       }
       return result
