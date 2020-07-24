@@ -12,9 +12,17 @@
             <li>
                 <h2># <%= order._id %></h2>
                 <ul style="list-style: none;">
-                    <% for(let i in order.orders) { %>
-                         <li>Quantity ==>(<%= order.quantity %>), Price:>$<%= order.price %> </li>
-                     <% }; %>
+                    <% for(let i of innerItems) {%>
+                    <li class="cart-box__item">
+                        <div class="cart-box__primary">
+                            <p><span class="cart-box__item-title">Book Title:</span><%= i.cartProduct.title %>
+                            </p>
+                            <p><span class="cart-box__item-title">Quantity:</span>(<%= i.quantity%>)</p>
+                            <p><span class="cart-box__item-title">Price:</span>$<%= i.price %></p>
+
+                        </div>
+                    </li>
+                    <% }; %>
                 </ul>
             </li>
             <% }); %>

@@ -120,11 +120,13 @@ exports.getOrders = (req, res, next) => {
       return result
     })
     .then(orders => {
+     let innerItems = orders[0].orders
       console.log('the orders', orders)
       res.render('shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
         orders,
+        innerItems,
         totalPrice
       });
 
