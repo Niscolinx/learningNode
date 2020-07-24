@@ -30,7 +30,7 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.methods.removeCart = function(prodId){
+userSchema.methods.removeCart = function (prodId) {
 
     const newCart = this.cart.items.filter(p => {
         return p._id.toString() !== prodId.toString()
@@ -41,26 +41,32 @@ userSchema.methods.removeCart = function(prodId){
     return this.save()
 }
 
-userSchema.methods.addToCart = function(prodId, price){
+userSchema.methods.clearCart = function () {
+
+    this.cart.items = []
+
+    return this.save()
+}
+
+userSchema.methods.addToCart = function (prodId, price) {
 
     price = +price
-    console.log('the add to cart', prodId, typeof(price))
 
     const productIdx = this.cart.items.findIndex(p => {
-       return p.productId.toString() === prodId.toString()
+        return p.productId.toString() === prodId.toString()
     })
 
     console.log('the index', productIdx)
     let newQuantity = 1;
     const updatedCartItems = [...this.cart.items]
 
-    if(productIdx >= 0){
+    if (productIdx >= 0) {
         newQuantity = this.cart.items[productIdx].quantity
         oldPrice = this.cart.items[productIdx].price
         updatedCartItems[productIdx].quantity = newQuantity + 1
         updatedCartItems[productIdx].price = oldPrice + price
     }
-    else{
+    else {
         updatedCartItems.push({
             productId: prodId,
             quantity: newQuantity,
@@ -73,7 +79,7 @@ userSchema.methods.addToCart = function(prodId, price){
 
     this.cart = updatedCart
 
-   return this.save()
+    return this.save()
 }
 
 module.exports = mongoose.model('users', userSchema)

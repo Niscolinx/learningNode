@@ -116,7 +116,7 @@ exports.postDeleteProduct = (req, res, next) => {
 
 exports.clearCart = (req, res, next) => {
 
-  User.clearCart(req.user._id)
+  req.user.clearCart()
     .then(cart => {
       res.redirect('/cart')
     })
