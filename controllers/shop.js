@@ -117,7 +117,6 @@ exports.postOrder = (req, res, next) => {
   
   exports.getOrders = (req, res, next) => {
     let totalPrice = 0
-    let totalCartPrice = 0
     Order.find()
     .then(result => {
       
@@ -125,7 +124,6 @@ exports.postOrder = (req, res, next) => {
       for (let i of result) {
         innerItems.push(i.orders)
       }
-      console.log('the order result', innerItems)
      let reducedItems = innerItems.reduce((acc, arr) => {
         return acc.concat(arr)
       }, [])
@@ -145,7 +143,6 @@ exports.postOrder = (req, res, next) => {
         path: '/orders',
         pageTitle: 'Your Orders',
         orders,
-        totalCartPrice,
         totalPrice: totalPrice.toFixed(2)
       });
 
