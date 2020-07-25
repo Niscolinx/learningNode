@@ -32,7 +32,6 @@ exports.getProduct = (req, res, next) => {
 exports.getIndex = (req, res, next) => {
   Product.find()
     .then(products => {
-      console.log('the products data', products)
 
       res.render('shop/index', {
         prods: products,
@@ -71,7 +70,6 @@ exports.postCart = (req, res, next) => {
 
   req.user.addToCart(productId, price)
     .then(product => {
-      console.log('Added the cart', product)
       res.redirect('/products')
     })
     .catch(err => console.log('err from post cart', err))
