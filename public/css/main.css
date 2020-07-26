@@ -86,6 +86,7 @@ form {
 
 .mobile-nav.open {
   transform: translateX(0);
+  transform: translateX(0);
 }
 
 .mobile-nav__item-list {
