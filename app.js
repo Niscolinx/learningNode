@@ -39,27 +39,24 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 
-// mongoose.connect('mongodb+srv://munisco:fkNZcq4s9ZmcXho5@cluster0.zhgsa.mongodb.net/shop', { useNewUrlParser: true, useUnifiedTopology: true })
-// .then(result => {
-//     console.log('connected to the client')
+mongoose.connect('mongodb+srv://munisco:fkNZcq4s9ZmcXho5@cluster0.zhgsa.mongodb.net/shop', { useNewUrlParser: true, useUnifiedTopology: true })
+.then(result => {
+    console.log('connected to the client')
 
-//     User.findOne().then(user => {
-//         if(!user){
-//             const user = new User({
-//                 name: 'Collins', email: 'munisco12@gmail.com', cart: {
-//                     items: []
-//                 }
-//             })
-//             user.save()
-//         }
-//     })
+    User.findOne().then(user => {
+        if(!user){
+            const user = new User({
+                name: 'Collins', email: 'munisco12@gmail.com', cart: {
+                    items: []
+                }
+            })
+            user.save()
+        }
+    })
     
-//     app.listen(3030, () => {
-//         console.log('Listening on 3030')
-//     })
-// }).catch(err => console.log(err))
+    app.listen(3030, () => {
+        console.log('Listening on 3030')
+    })
+}).catch(err => console.log(err))
 
-app.listen(3030, () => {
-    console.log('Listening on 3030')
-})
 
