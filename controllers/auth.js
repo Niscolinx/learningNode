@@ -1,6 +1,6 @@
 exports.getLogin = (req, res, next) => {
 
-  console.log('The login page')
+  console.log('the request is', req.get('Cookie'))
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login'
@@ -9,9 +9,6 @@ exports.getLogin = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
 
-  console.log('Post login page')
-  res.render('auth/login', {
-    path: '/login',
-    pageTitle: 'Login'
-  });
+ res.setHeader('Set-Cookie', 'loggedIn=true')
+ res.redirect('/login')
 };
