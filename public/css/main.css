@@ -23,10 +23,9 @@ form {
   text-align: center;
 }
 
-.image-box{
-}
+.image-box {}
 
-.image-box img{
+.image-box img {
   width: 50%;
 }
 
@@ -57,6 +56,17 @@ form {
 .main-header__item {
   margin: 0 1rem;
   padding: 0;
+}
+
+.main-header__item button{
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: inherit;
+}
+.main-header__item button:hover{
+  color: #ffeb3b;
 }
 
 .main-header__item a {
@@ -206,10 +216,11 @@ form {
   color: white;
 }
 
-.btn-delete{
+.btn-delete {
   color: red;
 }
-.btn-delete:hover{
+
+.btn-delete:hover {
   color: white;
   background-color: rgb(240, 57, 57);
 }
@@ -223,8 +234,9 @@ form {
     display: none;
   }
 }
+
 /* CART */
-.cart-box{
+.cart-box {
   display: flex;
   padding: 1rem;
   flex-direction: column;
@@ -234,7 +246,7 @@ form {
   list-style: none;
 }
 
-.cart-box__item{
+.cart-box__item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -244,18 +256,18 @@ form {
   margin-bottom: .5rem;
 }
 
-.cart-box__primary{
+.cart-box__primary {
   display: flex;
   justify-content: space-around;
   width: 100%;
 }
 
-.cart-box__item-title{
+.cart-box__item-title {
   font-weight: bold;
   padding-right: .2rem;
 }
 
-.right{
+.right {
   display: flex;
   justify-content: flex-end;
 }
