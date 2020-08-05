@@ -10,12 +10,12 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-
+  console.log('Logged In')
   User.findById('5f19b5ab78a28e28cea1081d')
     .then(user => {
       req.session.isLoggedIn = true
       req.user = user
-      res.redirect('/login')
+      res.redirect('/')
       next()
     })
     .catch(err => console.log('user failure from db', err))
