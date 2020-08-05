@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session')
 
 const User = require('./models/user')
 
@@ -21,6 +22,7 @@ const mongoose = require('mongoose')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false }))
 
 
 app.use((req, res, next) => {
@@ -40,23 +42,23 @@ app.use(errorController.get404);
 
 
 mongoose.connect('mongodb+srv://munisco:fkNZcq4s9ZmcXho5@cluster0.zhgsa.mongodb.net/shop', { useNewUrlParser: true, useUnifiedTopology: true })
-.then(result => {
-    console.log('connected to the client')
+    .then(result => {
+        console.log('connected to the client')
 
-    User.findOne().then(user => {
-        if(!user){
-            const user = new User({
-                name: 'Collins', email: 'munisco12@gmail.com', cart: {
-                    items: []
-                }
-            })
-            user.save()
-        }
-    })
-    
-    app.listen(3030, () => {
-        console.log('Listening on 3030')
-    })
-}).catch(err => console.log(err))
+        User.findOne().then(user => {
+            if (!user) {
+                const user = new User({
+                    name: 'Collins', email: 'munisco12@gmail.com', cart: {
+                        items: []
+                    }
+                })
+                user.save()
+            }
+        })
+
+        app.listen(3030, () => {
+            console.log('Listening on 3030')
+        })
+    }).catch(err => console.log(err))
 
 
