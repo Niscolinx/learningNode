@@ -65,6 +65,13 @@ form {
   color: white;
   font-size: inherit;
 }
+.mobile-nav__item button{
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: inherit;
+}
 .main-header__item button:hover{
   color: #ffeb3b;
 }
