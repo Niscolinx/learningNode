@@ -34,6 +34,8 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+  console.log('check req user', req.user, req.session)
+
   Product.find()
     .then(products => {
 
