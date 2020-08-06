@@ -14,12 +14,7 @@ exports.postLogin = (req, res, next) => {
     .then(user => {
       req.session.isLoggedIn = true
       req.session.user = user
-      console.log('the req', req.session.isLoggedIn)
-      res.render('shop/index', {
-        path: '/',
-        pageTitle: 'Shop',
-        isAuthenticated: req.session.isLoggedIn
-      });
+      res.redirect('/')
       next()
     })
     .catch(err => console.log('user failure from db', err))
