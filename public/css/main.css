@@ -69,7 +69,7 @@ form {
   cursor: pointer;
   background: transparent;
   border: none;
-  color: white;
+  color: black;
   font-size: inherit;
 }
 .main-header__item button:hover{
