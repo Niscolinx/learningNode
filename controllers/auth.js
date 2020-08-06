@@ -14,9 +14,10 @@ exports.postLogin = (req, res, next) => {
     .then(user => {
       req.session.isLoggedIn = true
       req.session.user = user
-      res.render('auth/login', {
-        path: '/login',
-        pageTitle: 'Login',
+      console.log('the req', req.session.isLoggedIn)
+      res.render('shop/index', {
+        path: '/',
+        pageTitle: 'Shop',
         isAuthenticated: req.session.isLoggedIn
       });
       next()
