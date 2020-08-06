@@ -28,7 +28,17 @@ const store = new mongoDbSession({
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false, store}))
+app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false, store }))
+
+app.use((req, res, next) => {
+    if(!req.session.user) return next()
+    User.findById(req.session.user._id)
+        .then(user => {
+            req.user = user
+            next()
+        })
+        .catch(err => console.log('user failure from db', err))
+})
 
 
 app.use('/admin', adminRoutes);
