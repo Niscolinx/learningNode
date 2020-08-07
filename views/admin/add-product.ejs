@@ -34,7 +34,7 @@
                         <label for="ImgUrl" class="form-label">Image Url</label>
                         <input type="text" id="ImgUrl" name="imgUrl" class="form-input">
                     </div>
-
+                    <input type="hidden" value="<%= csrfToken %>" name="_csrf">
                     <button class="btn form-btn">Add product</button>
                 </form>
             </div>
