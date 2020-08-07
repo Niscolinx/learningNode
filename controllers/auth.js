@@ -10,9 +10,11 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  console.log('Logged In')
-  User.findById('5f19b5ab78a28e28cea1081d')
-    .then(user => {
+  const {email, password} = req.body
+  
+  User.findOne({email})
+  .then(user => {
+    console.log('Logged In')
       req.session.isLoggedIn = true
       req.session.user = user
       req.session.save(err => {
@@ -20,7 +22,7 @@ exports.postLogin = (req, res, next) => {
         res.redirect('/')
       })
     })
-    .catch(err => console.log('user failure from db', err))
+    .catch(err => console.log('Failed to user in', err))
 
 };
 
@@ -44,31 +46,29 @@ exports.postSignup = (req, res, next) => {
   const { email, password } = req.body;
 
   User.findOne({ email }).then(user => {
-    if (!user) {
-      console.log('new user')
-      bcrypt.hash(password, 12)
-        .then(hashedPassword => {
-          const user = new User({
-            email,
-            password: hashedPassword,
-            cart: {
-              items: []
-            }
-          })
-          return user.save()
-        })
-
-        .then(foundUser => {
-          res.redirect('/login')
-        })
-        .catch(err => {
-          console.log(err)
-          res.redirect('/signup')
-        })
+    if (user) {
+      console.log('user exists')
+      return res.redirect('/login')
     }
-    else {
-      console.log('user already exists')
-      res.redirect('/login')
-    }
+    console.log('new user')
+    bcrypt.hash(password, 12)
+      .then(hashedPassword => {
+        const user = new User({
+          email,
+          password: hashedPassword,
+          cart: {
+            items: []
+          }
+        })
+        return user.save()
+      })
+      .then(neUser => {
+        res.redirect('/login')
+      })
   })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/signup')
+  })
+
 };

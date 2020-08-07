@@ -52,17 +52,6 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
     .then(result => {
         console.log('connected to the client')
 
-        User.findOne().then(user => {
-            if (!user) {
-                const user = new User({
-                    name: 'Collins', email: 'munisco12@gmail.com', cart: {
-                        items: []
-                    }
-                })
-                user.save()
-            }
-        })
-
         app.listen(3030, () => {
             console.log('Listening on 3030')
         })
