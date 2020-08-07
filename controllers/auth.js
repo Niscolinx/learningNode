@@ -10,17 +10,20 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  const {email, password} = req.body
-  
-  User.findOne({email})
-  .then(user => {
-    console.log('Logged In')
-      req.session.isLoggedIn = true
-      req.session.user = user
-      req.session.save(err => {
-        console.log(err)
-        res.redirect('/')
-      })
+  const { email, password } = req.body
+
+  User.findOne({ email })
+    .then(user => {
+      bcrypt.compare(password, user.password)
+      .then(doesMatch => {
+        console.log('Logged In')
+          req.session.isLoggedIn = true
+          req.session.user = user
+          req.session.save(err => {
+            console.log(err)
+            res.redirect('/')
+          })
+        })
     })
     .catch(err => console.log('Failed to user in', err))
 
@@ -66,9 +69,9 @@ exports.postSignup = (req, res, next) => {
         res.redirect('/login')
       })
   })
-  .catch(err => {
-    console.log(err)
-    res.redirect('/signup')
-  })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/signup')
+    })
 
 };
