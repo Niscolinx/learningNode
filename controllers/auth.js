@@ -39,6 +39,31 @@ exports.getSignup = (req, res, next) => {
   });
 };
 
-exports.postSignup = (req, res, next) => { 
+exports.postSignup = (req, res, next) => {
+  const { email, password } = req.body;
 
+  User.findOne({ email }).then(user => {
+    if (!user) {
+      console.log('new user')
+      const user = new User({
+        email,
+        password,
+        cart: {
+          items: []
+        }
+      })
+      return user.save()
+        .then(foundUser => {
+          res.redirect('/login')
+        })
+        .catch(err => {
+          console.log(err)
+          res.redirect('/signup')
+        })
+    }
+    else {
+      console.log('user already exists')
+      res.redirect('/login')
+    }
+  })
 };
