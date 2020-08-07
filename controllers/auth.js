@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const bcrypt = require('bcryptjs')
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
@@ -45,14 +46,18 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email }).then(user => {
     if (!user) {
       console.log('new user')
-      const user = new User({
-        email,
-        password,
-        cart: {
-          items: []
-        }
-      })
-      return user.save()
+      bcrypt.hash(password, 12)
+        .then(hashedPassword => {
+          const user = new User({
+            email,
+            password: hashedPassword,
+            cart: {
+              items: []
+            }
+          })
+          return user.save()
+        })
+
         .then(foundUser => {
           res.redirect('/login')
         })
