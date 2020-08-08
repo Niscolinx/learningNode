@@ -3,13 +3,10 @@ const express = require('express');
 
 const shopController = require('../controllers/shop');
 const isAuth = require('../middlewares/isAuth')
-//const authController = require('../controllers/auth');
 
 const router = express.Router();
 
 router.get('/', shopController.getIndex);
-
-//router.get('/signup', authController.getSignup);
 
 router.get('/products', shopController.getProducts);
 
