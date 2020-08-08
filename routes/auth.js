@@ -12,6 +12,8 @@ router.post('/login', authController.postLogin);
 
 router.post('/signup', authController.postSignup);
 
+// PROTECTED ROUTE
+
 router.post('/logout', authController.postLogout);
 
 module.exports = router;
