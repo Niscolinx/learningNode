@@ -5,7 +5,8 @@ exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
-    isAuthenticated: req.session.isLoggedIn
+    isAuthenticated: req.session.isLoggedIn,
+    errorMessage: req.flash('error')
   });
 };
 
@@ -28,6 +29,7 @@ exports.postLogin = (req, res, next) => {
             })
           }
           else {
+            req.flash('error', 'wrong password or email')
             res.redirect('/login')
           }
         })

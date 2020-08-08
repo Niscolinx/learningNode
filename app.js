@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const mongoDbSession = require('connect-mongodb-session')(session)
 const csrf = require('csurf')
-const csrfToken = csrf()
+const flash = require('connect-flash')
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -22,6 +22,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const MONGODB_URI = 'mongodb+srv://munisco:fkNZcq4s9ZmcXho5@cluster0.zhgsa.mongodb.net/shop'
+const csrfToken = csrf()
 
 const store = new mongoDbSession({
     uri: MONGODB_URI,
@@ -32,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false, store }))
 app.use(csrfToken)
+app.use(flash())
 
 app.use((req, res, next) => {
     if(!req.session.user) return next()

@@ -232,6 +232,19 @@ form {
   background-color: rgb(240, 57, 57);
 }
 
+.message{
+  width: 30rem;
+  padding: 1rem;
+  background: #75759e;
+  border: 1px solid #7777db;
+  margin: auto;
+}
+
+.message__error{
+  background: #885d5d;
+  border: 1px solid #f37c7c;
+}
+
 @media (max-width: 768px) {
   .main-header__nav {
     display: none;
@@ -239,6 +252,10 @@ form {
 
   #side-menu-toggle {
     display: flex;
+  }
+
+  .message{
+    width: 80%;
   }
 }
 
