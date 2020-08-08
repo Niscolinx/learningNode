@@ -20,6 +20,7 @@
                 </div>
                 <form action="/cart-delete-item" method="POST">
                     <input type="hidden" value="<%=p._id%>" name="productId">
+                    <input type="hidden" value="<%= csrfToken %>" name="_csrf">
                     <button class="btn btn-delete" type="submit">Delete</button>
                 </form>
                 <hr>
@@ -28,10 +29,12 @@
         </ul>
         <hr>
         <div class="centered">
-                <p class="btn" style="font-weight: bold; cursor: none;">Total cart price is: &nbsp;$<%= totalCartPrice %></p>
+            <p class="btn" style="font-weight: bold; cursor: none;">Total cart price is: &nbsp;$<%= totalCartPrice %>
+            </p>
         </div>
         <div class="centered">
             <form action="./create-order" method="POST">
+                <input type="hidden" value="<%= csrfToken %>" name="_csrf">
                 <button class="btn">Order Now!!</button>
             </form>
         </div>

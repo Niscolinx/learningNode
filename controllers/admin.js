@@ -83,7 +83,7 @@ exports.getProducts = (req, res, next) => {
     .then(products => {
       res.render('admin/products', {
         prods: products,
-        user: req.user.name,
+        user: req.user.email,
         pageTitle: 'Admin Products',
         path: '/admin/products',
         isAuthenticated: req.session.isLoggedIn
