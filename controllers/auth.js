@@ -3,14 +3,15 @@ const bcrypt = require('bcryptjs')
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
-  if(message.length > 0){
+  console.log('the first message', message)
+  if (message.length > 0) {
     message = message[0]
     console.log('the initial message==>', message)
   }
-  else{
+  else {
     message = null
   }
-  console.log('the final message==>',message)
+  console.log('the final message==>', message)
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
