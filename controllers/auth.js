@@ -5,12 +5,11 @@ exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
   if (message.length > 0) {
     message = message[0]
-    console.log('the initial message==>', message)
   }
   else {
     message = null
   }
-  console.log('the final message==>', message)
+  console.log('the final message===> ', message)
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
@@ -58,10 +57,18 @@ exports.postLogout = (req, res, next) => {
 }
 
 exports.getSignup = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0]
+  }
+  else {
+    message = null
+  }
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
-    isAuthenticated: false
+    isAuthenticated: false,
+    errorMessage: message
   });
 };
 
@@ -70,10 +77,9 @@ exports.postSignup = (req, res, next) => {
 
   User.findOne({ email }).then(user => {
     if (user) {
-      console.log('user exists')
+      req.flash('error', 'User already exits, please login!!')
       return res.redirect('/login')
     }
-    console.log('new user')
     bcrypt.hash(password, 12)
       .then(hashedPassword => {
         const user = new User({
