@@ -238,6 +238,8 @@ form {
   background: #75759e;
   border: 1px solid #7777db;
   margin: auto;
+  text-align: center;
+  border-radius: 3px;
 }
 
 .message__error{

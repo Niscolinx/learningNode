@@ -2,6 +2,7 @@ const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 
 exports.getLogin = (req, res, next) => {
+  console.log('the flash', req.flash('error'))
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
