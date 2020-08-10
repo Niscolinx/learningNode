@@ -170,7 +170,7 @@ exports.postReset = (req, res, next) => {
           from: 'munisco12@gmail.com',
           subject: 'Reset Password from Node Shop',
           html: `<h3>You requested for a password change!!</h3>
-            <p>If you want to proceed, please click on this <a href='http://localhost:3030/reset/${token}'>link</a></p>`
+            <p>If you want to proceed, please click on this <a href='http://localhost:3030/new-password/${token}'>link</a></p>`
         })
           .then(result => {
             req.flash('message', 'An email has been sent to you')
@@ -181,4 +181,10 @@ exports.postReset = (req, res, next) => {
     })
   })
     .catch(err => console.log(err))
+}
+
+exports.getNewPassword = (req, res, next) => {
+  const {token} = req.param
+
+  User.findOne({password_resetToken: token, password_resetToken_expiration: })
 }
