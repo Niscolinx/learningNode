@@ -186,7 +186,6 @@ exports.postReset = (req, res, next) => {
 exports.getNewPassword = (req, res, next) => {
 
   const { token } = req.params
-  console.log('the get request', req.params)
 
   let message = req.flash('message');
   if (message.length > 0) {
@@ -209,8 +208,7 @@ exports.postNewPassword = (req, res, next) => {
 
   User.findOne({ password_resetToken: token, password_resetToken_expiration: { $gt: Date.now() } })
     .then(user => {
-      console.log('the found user is', user, 'and the password is', password)
-     return bcrypt.hash(password, 12)
+      return bcrypt.hash(password, 12)
         .then(hashedPassword => {
           user.password = hashedPassword
           user.password_resetToken = undefined
@@ -234,5 +232,8 @@ exports.postNewPassword = (req, res, next) => {
 
         }).catch(err => { console.log(err) })
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      console.log(err)
+      res.redirect('/reset')
+    })
 }
