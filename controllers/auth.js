@@ -5,12 +5,6 @@ const crypto = require('crypto')
 
 const User = require('../models/user')
 
-// const mailTransport = nodemailer.createTransport(sendgridTransport({
-//   auth: {
-//    api_key: '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'
-//   }
-// }))
-
 const mailTransport = nodemailer.createTransport({
   host: 'smtp.mailtrap.io',
   port: 2525,
@@ -204,11 +198,9 @@ exports.getNewPassword = (req, res, next) => {
 exports.postNewPassword = (req, res, next) => {
   const { password, token } = req.body
 
-  console.log('token', token)
 
   User.findOne({ password_resetToken: token, password_resetToken_expiration: { $gt: Date.now() } })
     .then(user => {
-      let updatedUser = user
       return bcrypt.hash(password, 12)
         .then(hashedPassword => {
           user.password = hashedPassword
@@ -217,13 +209,12 @@ exports.postNewPassword = (req, res, next) => {
           return user.save()
         })
         .then(updatedPassword => {
-          console.log(updatedPassword)
-          console.log(updatedUser, 'the initial user is', user)
+         console.log('lower', updatedPassword)
           req.flash('message', 'Password has been updated Successfully')
           res.redirect('/login')
 
           mailTransport.sendMail({
-            to: updatedUser.email,
+            to: updatedPassword.email,
             from: 'munisco12@gmail.com',
             subject: 'Your password has been updated successfully',
             html: `<h3>You have successfully updated your password, click <a href='http://localhost:3030/login'>here to login</a></h3>`
