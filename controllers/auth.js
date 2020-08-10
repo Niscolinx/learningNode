@@ -208,32 +208,31 @@ exports.postNewPassword = (req, res, next) => {
   console.log('token', token)
 
   User.findOne({ password_resetToken: token, password_resetToken_expiration: { $gt: Date.now() } })
-    .then(async user => {
+    .then(user => {
       console.log('the found user is', user, 'and the password is', password)
-     try {
-        const hashedPassword = await bcrypt.hash(password, 12)
-        user.password = hashedPassword
-        user.password_resetToken = undefined
-        user.password_resetToken_expiration = undefined
-        
-        const updatedPassword = await user.save()
-        req.flash('message', 'Password has been updated Successfully')
-        res.redirect('/login')
-
-        mailTransport.sendMail({
-          to: user.email,
-          from: 'munisco12@gmail.com',
-          subject: 'Your password has been updated successfully',
-          html: `<h3>You have successfully updated your password, click <a href='http://localhost:3030/login'>here to login</a></h3>`
+     return bcrypt.hash(password, 12)
+        .then(hashedPassword => {
+          user.password = hashedPassword
+          user.password_resetToken = undefined
+          user.password_resetToken_expiration = undefined
+          return user.save()
         })
-          .then(result => {
-            console.log('sent updated password email', result)
+        .then(updatedPassword => {
+          req.flash('message', 'Password has been updated Successfully')
+          res.redirect('/login')
+
+          mailTransport.sendMail({
+            to: updatedUser.email,
+            from: 'munisco12@gmail.com',
+            subject: 'Your password has been updated successfully',
+            html: `<h3>You have successfully updated your password, click <a href='http://localhost:3030/login'>here to login</a></h3>`
           })
-          .catch(err => console.log(err))
-      }
-      catch (err_1) {
-        console.log(err_1)
-      }
+            .then(result => {
+              console.log('sent updated password email', result)
+            })
+            .catch(err => console.log(err))
+
+        }).catch(err => { console.log(err) })
     })
     .catch(err => console.log(err))
 }
