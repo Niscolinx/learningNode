@@ -58,7 +58,6 @@ userSchema.methods.addToCart = function (prodId, price) {
         return p.productId.toString() === prodId.toString()
     })
 
-    console.log('the index', productIdx)
     let newQuantity = 1;
     const updatedCartItems = [...this.cart.items]
 

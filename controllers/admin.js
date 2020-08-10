@@ -14,7 +14,6 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, price, description } = req.body;
 
-  console.log('the user', req.user)
 
   const product = new Product({ title, price, description, imageUrl, userId: req.user })
   product.save()
@@ -100,7 +99,6 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  console.log('the req user', req.user)
 
   Product.findByIdAndRemove(prodId)
     .then(product => {

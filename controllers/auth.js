@@ -208,6 +208,7 @@ exports.postNewPassword = (req, res, next) => {
 
   User.findOne({ password_resetToken: token, password_resetToken_expiration: { $gt: Date.now() } })
     .then(user => {
+      let updatedUser = user
       return bcrypt.hash(password, 12)
         .then(hashedPassword => {
           user.password = hashedPassword
@@ -218,7 +219,9 @@ exports.postNewPassword = (req, res, next) => {
         .then(updatedPassword => {
           req.flash('message', 'Password has been updated Successfully')
           res.redirect('/login')
-
+          console.log(updatedPassword)
+          console.log(updatedUser, 'the initial user is', user)
+          
           mailTransport.sendMail({
             to: updatedUser.email,
             from: 'munisco12@gmail.com',
