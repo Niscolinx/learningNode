@@ -163,28 +163,45 @@ exports.postReset = (req, res, next) => {
       user.password_resetToken_expiration = Date.now() + 3600000
 
       return user.save()
-      .then(updatedUser => {
-        
-        mailTransport.sendMail({
-          to: updatedUser.email,
-          from: 'munisco12@gmail.com',
-          subject: 'Reset Password from Node Shop',
-          html: `<h3>You requested for a password change!!</h3>
+        .then(updatedUser => {
+
+          mailTransport.sendMail({
+            to: updatedUser.email,
+            from: 'munisco12@gmail.com',
+            subject: 'Reset Password from Node Shop',
+            html: `<h3>You requested for a password change!!</h3>
             <p>If you want to proceed, please click on this <a href='http://localhost:3030/new-password/${token}'>link</a></p>`
-        })
-          .then(result => {
-            req.flash('message', 'An email has been sent to you')
-            res.redirect('/reset')
           })
-      })
-      .catch(err => console.log(err))
+            .then(result => {
+              req.flash('message', 'An email has been sent to you')
+              res.redirect('/reset')
+            })
+        })
+        .catch(err => console.log(err))
     })
   })
     .catch(err => console.log(err))
 }
 
 exports.getNewPassword = (req, res, next) => {
-  const {token} = req.param
+  let message = req.flash('message');
+  if (message.length > 0) {
+    message = message[0]
+  }
+  else {
+    message = null
+  }
+  res.render('auth/new-password', {
+    path: '/new-password',
+    pageTitle: 'New Password',
+    errorMessage: message
+  });
+}
+exports.postNewPassword = (req, res, next) => {
+  const { token } = req.param
 
-  User.findOne({password_resetToken: token, password_resetToken_expiration: })
+  User.findOne({ password_resetToken: token, password_resetToken_expiration: { $gt: Date.now() } })
+    .then(user => {
+     console.log('the found user is', user)
+    })
 }
