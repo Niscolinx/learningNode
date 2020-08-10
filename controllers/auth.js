@@ -1,7 +1,10 @@
-const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
+const crypto = require('crypto')
+
+const User = require('../models/user')
+const { buffer } = require('mongoose/lib/utils')
 
 const mailTransport = nodemailer.createTransport(sendgridTransport({
   auth: {
@@ -20,7 +23,6 @@ exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
-    isAuthenticated: req.session.isLoggedIn,
     errorMessage: message
   });
 };
@@ -75,7 +77,6 @@ exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
-    isAuthenticated: false,
     errorMessage: message
   });
 };
@@ -118,3 +119,43 @@ exports.postSignup = (req, res, next) => {
     })
 
 };
+
+exports.getReset = (req, res, next) => {
+  let message = req.flash('success');
+  if (message.length > 0) {
+    message = message[0]
+  }
+  else {
+    message = null
+  }
+  res.render('auth/reset', {
+    path: '/reset',
+    pageTitle: 'Reset Password',
+    errorMessage: message
+  });
+}
+
+exports.postReset = (req, res, next) => {
+  const { email } = req.body
+
+  const token = crypto.randomBytes(32, (err, buffer) => {
+    if (err) return console.log(err)
+    return buffer.toString('hex')
+  })
+
+  mailTransport.sendMail({
+    to: email,
+    from: 'munisco12@gmail.com',
+    subject: 'Reset Password',
+    html: `
+    <h3>You requested for a password change!!</h3>
+    <p>If you want to proceed, please click on this link http://localhost/3030/${token}</p>
+    `
+  })
+    .then(result => {
+      console.log(result)
+      req.flash('success', 'An email has been sent to you')
+    })
+    .catch(err => console.log(err))
+
+}
