@@ -22,6 +22,6 @@ router.get('/new-password/:token', authController.getNewPassword)
 
 router.get('/new-password', authController.getNewPassword)
 
-router.get('/new-password', authController.postNewPassword)
+router.post('/new-password', authController.postNewPassword)
 
 module.exports = router;
