@@ -1,6 +1,4 @@
 const Product = require('../models/product');
-const User = require('../models/user')
-
 
 exports.getAddProduct = (req, res, next) => {
 
@@ -74,8 +72,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  //{userId: req.user._id}
-  Product.find()
+  Product.find({userId: req.user._id})
     .then(products => {
       res.render('admin/products', {
         prods: products,
@@ -101,16 +98,12 @@ exports.getProducts = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
 
-  Product.find({userId: req.user._id })
-    .then(userProducts => {
-      console.log('user products are', userProducts)
-      Product.findByIdAndRemove({_id: prodId})
-        .then(product => {
-          console.log('successfully deleted product')
-          res.redirect('/admin/products');
-        })
-        .catch(err => console.log('error from deleting a product', err))
+  Product.deleteOne({_id: prodId, userId: req.user._id})
+    .then(product => {
+      console.log('successfully deleted product')
+      res.redirect('/admin/products');
     })
+    .catch(err => console.log('error from deleting a product', err))
 };
 
 exports.clearCart = (req, res, next) => {
