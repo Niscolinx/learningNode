@@ -121,7 +121,7 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.getReset = (req, res, next) => {
-  let message = req.flash('success');
+  let message = req.flash('message');
   if (message.length > 0) {
     message = message[0]
   }
@@ -138,23 +138,29 @@ exports.getReset = (req, res, next) => {
 exports.postReset = (req, res, next) => {
   const { email } = req.body
 
-  const token = crypto.randomBytes(32, (err, buffer) => {
-    if (err) return console.log(err)
-    return buffer.toString('hex')
-  })
+  User.findOne({ email }).then(user => {
+    if (!user) {
 
-  mailTransport.sendMail({
-    to: email,
-    from: 'munisco12@gmail.com',
-    subject: 'Reset Password',
-    html: `
-    <h3>You requested for a password change!!</h3>
-    <p>If you want to proceed, please click on this link http://localhost/3030/${token}</p>
-    `
+      req.flash('message', 'Email does not exist')
+      return res.redirect('/reset')
+    }
+    const token = crypto.randomBytes(32, (err, buffer) => {
+      if (err) return console.log(err)
+      return buffer.toString('hex')
+    })
+
+    mailTransport.sendMail({
+      to: email,
+      from: 'munisco12@gmail.com',
+      subject: 'Reset Password',
+      html: `<h3>You requested for a password change!!</h3>
+            <p>If you want to proceed, please click on this link http://localhost/3030/reset/${token}</p>`
+    })
   })
     .then(result => {
       console.log(result)
-      req.flash('success', 'An email has been sent to you')
+      req.flash('message', 'An email has been sent to you')
+      return res.redirect('/reset')
     })
     .catch(err => console.log(err))
 
