@@ -213,6 +213,9 @@ exports.postNewPassword = (req, res, next) => {
      try {
         const hashedPassword = await bcrypt.hash(password, 12)
         user.password = hashedPassword
+        user.password_resetToken = undefined
+        user.password_resetToken_expiration = undefined
+        
         const updatedPassword = await user.save()
         req.flash('message', 'Password has been updated Successfully')
         res.redirect('/login')
