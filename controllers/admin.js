@@ -74,6 +74,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
+  //{userId: req.user._id}
   Product.find()
     .then(products => {
       res.render('admin/products', {
@@ -100,12 +101,16 @@ exports.getProducts = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
 
-  Product.findByIdAndRemove(prodId)
-    .then(product => {
-      console.log('successfully deleted product')
-      res.redirect('/admin/products');
+  Product.find({userId: req.user._id })
+    .then(userProducts => {
+      console.log('user products are', userProducts)
+      Product.findByIdAndRemove({_id: prodId})
+        .then(product => {
+          console.log('successfully deleted product')
+          res.redirect('/admin/products');
+        })
+        .catch(err => console.log('error from deleting a product', err))
     })
-    .catch(err => console.log('error from deleting a product', err))
 };
 
 exports.clearCart = (req, res, next) => {

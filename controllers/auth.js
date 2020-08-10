@@ -209,7 +209,6 @@ exports.postNewPassword = (req, res, next) => {
           return user.save()
         })
         .then(updatedPassword => {
-         console.log('lower', updatedPassword)
           req.flash('message', 'Password has been updated Successfully')
           res.redirect('/login')
 
