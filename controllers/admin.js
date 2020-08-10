@@ -56,23 +56,27 @@ exports.postEditProduct = (req, res, next) => {
 
   Product.findById(productId)
     .then(product => {
+      console.log('compare product', product.userId, req.user._id)
+      if (product.userId !== req.user._id) {
+        return res.redirect('/admin/products')
+      }
       product.title = title,
         product.imageUrl = imageUrl,
         product.price = price,
         product.description = description
 
       return product.save()
-    })
-    .then(result => {
-      console.log('result from the edited product', result)
-      res.redirect('/admin/products');
-
+        .then(result => {
+          console.log('updated product', result)
+          res.redirect('/admin/products');
+        })
     })
     .catch(err => console.log('error from edited product', err))
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.find({userId: req.user._id})
+  // Product.find({userId: req.user._id})
+  Product.find()
     .then(products => {
       res.render('admin/products', {
         prods: products,
@@ -98,9 +102,8 @@ exports.getProducts = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
 
-  Product.deleteOne({_id: prodId, userId: req.user._id})
+  Product.deleteOne({ _id: prodId, userId: req.user._id })
     .then(product => {
-      console.log('successfully deleted product')
       res.redirect('/admin/products');
     })
     .catch(err => console.log('error from deleting a product', err))
