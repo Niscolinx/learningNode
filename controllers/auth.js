@@ -201,7 +201,7 @@ exports.postNewPassword = (req, res, next) => {
   const { token } = req.param
   const {password} = req.body
 
-  User.findOne({ password_resetToken: token, password_resetToken_expiration: { $gt: Date.now() } })
+  User.findOne({ password_resetToken: token})
     .then(user => {
      console.log('the found user is', user)
     })
