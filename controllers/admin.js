@@ -56,27 +56,29 @@ exports.postEditProduct = (req, res, next) => {
 
   Product.findById(productId)
     .then(product => {
-      console.log('compare product', product.userId, req.user._id)
-      if (product.userId !== req.user._id) {
-        return res.redirect('/admin/products')
-      }
-      product.title = title,
-        product.imageUrl = imageUrl,
-        product.price = price,
-        product.description = description
+      const productId = product.userId.toString()
+      const userId = req.user._id.toString()
 
-      return product.save()
-        .then(result => {
+      if (productId === userId) {
+        product.title = title,
+          product.imageUrl = imageUrl,
+          product.price = price,
+          product.description = description
+
+        product.save().then(result => {
           console.log('updated product', result)
           res.redirect('/admin/products');
         })
+      } else {
+        return res.redirect('/')
+      }
     })
     .catch(err => console.log('error from edited product', err))
 };
 
 exports.getProducts = (req, res, next) => {
-  // Product.find({userId: req.user._id})
-  Product.find()
+
+  Product.find({ userId: req.user._id })
     .then(products => {
       res.render('admin/products', {
         prods: products,
