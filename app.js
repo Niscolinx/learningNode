@@ -52,9 +52,9 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use(authRoutes);
 app.use(shopRoutes);
 app.use('/admin', adminRoutes);
+app.use(authRoutes);
 
 app.use(errorController.get404);
 

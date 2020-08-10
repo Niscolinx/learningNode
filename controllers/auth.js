@@ -1,16 +1,24 @@
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
-const sendgridTransport = require('nodemailer-sendgrid-transport')
+//const sendgridTransport = require('nodemailer-sendgrid-transport')
 const crypto = require('crypto')
 
 const User = require('../models/user')
-const { buffer } = require('mongoose/lib/utils')
 
-const mailTransport = nodemailer.createTransport(sendgridTransport({
+// const mailTransport = nodemailer.createTransport(sendgridTransport({
+//   auth: {
+//    api_key: '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'
+//   }
+// }))
+
+const mailTransport = nodemailer.createTransport({
+  host: 'smtp.mailtrap.io',
+  port: 2525,
   auth: {
-    api_key: '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'
+    user: 'ede59559c58636',
+    pass: 'ae32b40b8df082'
   }
-}))
+})
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
@@ -84,35 +92,38 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const { email, password } = req.body;
 
-  User.findOne({ email }).then(user => {
-    if (user) {
-      req.flash('error', 'User already exits, please login!!')
-      return res.redirect('/login')
-    }
-    bcrypt.hash(password, 12)
-      .then(hashedPassword => {
-        const user = new User({
-          email,
-          password: hashedPassword,
-          cart: {
-            items: []
-          }
-        })
-        return user.save()
-      })
-      .then(newUser => {
-        res.redirect('/login')
-        mailTransport.sendMail({
-          to: email,
-          from: 'munisco12@gmail.com',
-          subject: 'Successful sign up',
-          html: '<h1>Welcome, you have signed Up successfully!!</h1>'
+  User.findOne({ email })
+    .then(user => {
+      if (user) {
+        req.flash('error', 'User already exits, please login!!')
+        return res.redirect('/login')
+      }
+      bcrypt.hash(password, 12)
+        .then(hashedPassword => {
+          const user = new User({
+            email,
+            password: hashedPassword,
+            cart: {
+              items: []
+            }
+          })
+          return user.save()
+        }).catch(err => { console.log(err) })
 
-        }).then(result => {
-          console.log('from the mailer', result)
-        }).catch(err => console.log(err))
+      res.redirect('/login')
+      mailTransport.sendMail({
+        to: email,
+        from: 'munisco12@gmail.com',
+        subject: 'Successful sign up',
+        html: '<h1>Welcome, you have signed Up successfully!!</h1>'
+
       })
-  })
+        .then(result => {
+          console.log('from the mailer', result)
+        })
+        .catch(err => console.log(err))
+
+    })
     .catch(err => {
       console.log(err)
       res.redirect('/signup')
@@ -144,24 +155,30 @@ exports.postReset = (req, res, next) => {
       req.flash('message', 'Email does not exist')
       return res.redirect('/reset')
     }
-    const token = crypto.randomBytes(32, (err, buffer) => {
+    return crypto.randomBytes(32, (err, buffer) => {
       if (err) return console.log(err)
-      return buffer.toString('hex')
-    })
+      const token = buffer.toString('hex')
 
-    mailTransport.sendMail({
-      to: email,
-      from: 'munisco12@gmail.com',
-      subject: 'Reset Password',
-      html: `<h3>You requested for a password change!!</h3>
-            <p>If you want to proceed, please click on this link http://localhost/3030/reset/${token}</p>`
+      user.password_resetToken = token
+      user.password_resetToken_expiration = Date.now() + 3600000
+
+      return user.save()
+      .then(updatedUser => {
+        
+        mailTransport.sendMail({
+          to: updatedUser.email,
+          from: 'munisco12@gmail.com',
+          subject: 'Reset Password from Node Shop',
+          html: `<h3>You requested for a password change!!</h3>
+            <p>If you want to proceed, please click on this <a href='http://localhost:3030/reset/${token}'>link</a></p>`
+        })
+          .then(result => {
+            req.flash('message', 'An email has been sent to you')
+            res.redirect('/reset')
+          })
+      })
+      .catch(err => console.log(err))
     })
   })
-    .then(result => {
-      console.log(result)
-      req.flash('message', 'An email has been sent to you')
-      return res.redirect('/reset')
-    })
     .catch(err => console.log(err))
-
 }

@@ -26,7 +26,10 @@ exports.getProduct = (req, res, next) => {
         path: '/products'
       });
     })
-    .catch(err => console.log('error from getting a product detail', err))
+    .catch(err => {
+      console.log('error from getting a product detail', err)
+      res.redirect('/products')
+    })
 };
 
 exports.getIndex = (req, res, next) => {
@@ -46,14 +49,14 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  
+
   req.user.populate('cart.items.productId').execPopulate()
-  .then(user => {
-    let totalCartPrice = 0;
+    .then(user => {
+      let totalCartPrice = 0;
 
       const products = user.cart.items
 
-      for(let item of products){
+      for (let item of products) {
         totalCartPrice += item.price
       }
       res.render('shop/cart', {
@@ -113,32 +116,32 @@ exports.postOrder = (req, res, next) => {
       }).catch(err => console.log(err))
     })
     .catch(err => console.log('err posting order', err))
-  }
-  
-  
-  exports.getOrders = (req, res, next) => {
-    let totalPrice = 0
-    Order.find()
+}
+
+
+exports.getOrders = (req, res, next) => {
+  let totalPrice = 0
+  Order.find()
     .then(result => {
-      
+
       let innerItems = []
       for (let i of result) {
         innerItems.push(i.orders)
       }
-     let reducedItems = innerItems.reduce((acc, arr) => {
+      let reducedItems = innerItems.reduce((acc, arr) => {
         return acc.concat(arr)
       }, [])
-      
+
       for (let item of reducedItems) {
         totalPrice += item.price
       }
-      
+
       return result
     })
     .then(orders => {
       let newOrders = []
-      for(let i of orders){
-        newOrders.push({products: i.orders})
+      for (let i of orders) {
+        newOrders.push({ products: i.orders })
       }
       res.render('shop/orders', {
         path: '/orders',
