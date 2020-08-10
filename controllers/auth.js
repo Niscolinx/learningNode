@@ -217,11 +217,11 @@ exports.postNewPassword = (req, res, next) => {
           return user.save()
         })
         .then(updatedPassword => {
-          req.flash('message', 'Password has been updated Successfully')
-          res.redirect('/login')
           console.log(updatedPassword)
           console.log(updatedUser, 'the initial user is', user)
-          
+          req.flash('message', 'Password has been updated Successfully')
+          res.redirect('/login')
+
           mailTransport.sendMail({
             to: updatedUser.email,
             from: 'munisco12@gmail.com',
