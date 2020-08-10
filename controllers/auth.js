@@ -21,7 +21,7 @@ const mailTransport = nodemailer.createTransport({
 })
 
 exports.getLogin = (req, res, next) => {
-  let message = req.flash('error');
+  let message = req.flash('message');
   if (message.length > 0) {
     message = message[0]
   }
@@ -41,7 +41,7 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email })
     .then(user => {
       if (!user) {
-        req.flash('error', 'User does not exist, please sign up')
+        req.flash('message', 'User does not exist, please sign up')
         return res.redirect('/signup')
       }
       bcrypt.compare(password, user.password)
@@ -55,7 +55,7 @@ exports.postLogin = (req, res, next) => {
             })
           }
           else {
-            req.flash('error', 'wrong password or email')
+            req.flash('message', 'wrong password or email')
             res.redirect('/login')
           }
         })
@@ -75,7 +75,7 @@ exports.postLogout = (req, res, next) => {
 }
 
 exports.getSignup = (req, res, next) => {
-  let message = req.flash('error');
+  let message = req.flash('message');
   if (message.length > 0) {
     message = message[0]
   }
@@ -95,7 +95,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email })
     .then(user => {
       if (user) {
-        req.flash('error', 'User already exits, please login!!')
+        req.flash('message', 'User already exits, please login!!')
         return res.redirect('/login')
       }
       bcrypt.hash(password, 12)
@@ -184,6 +184,10 @@ exports.postReset = (req, res, next) => {
 }
 
 exports.getNewPassword = (req, res, next) => {
+
+  const { token } = req.params
+  console.log('the get request', req.params)
+
   let message = req.flash('message');
   if (message.length > 0) {
     message = message[0]
@@ -194,15 +198,39 @@ exports.getNewPassword = (req, res, next) => {
   res.render('auth/new-password', {
     path: '/new-password',
     pageTitle: 'New Password',
-    errorMessage: message
+    errorMessage: message,
+    token
   });
 }
 exports.postNewPassword = (req, res, next) => {
-  const { token } = req.param
-  const {password} = req.body
+  const { password, token } = req.body
 
-  User.findOne({ password_resetToken: token})
-    .then(user => {
-     console.log('the found user is', user)
+  console.log('token', token)
+
+  User.findOne({ password_resetToken: token, password_resetToken_expiration: { $gt: Date.now() } })
+    .then(async user => {
+      console.log('the found user is', user, 'and the password is', password)
+     try {
+        const hashedPassword = await bcrypt.hash(password, 12)
+        user.password = hashedPassword
+        const updatedPassword = await user.save()
+        req.flash('message', 'Password has been updated Successfully')
+        res.redirect('/login')
+
+        mailTransport.sendMail({
+          to: user.email,
+          from: 'munisco12@gmail.com',
+          subject: 'Your password has been updated successfully',
+          html: `<h3>You have successfully updated your password, click <a href='http://localhost:3030/login'>here to login</a></h3>`
+        })
+          .then(result => {
+            console.log('sent updated password email', result)
+          })
+          .catch(err => console.log(err))
+      }
+      catch (err_1) {
+        console.log(err_1)
+      }
     })
+    .catch(err => console.log(err))
 }

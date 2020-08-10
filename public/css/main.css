@@ -247,7 +247,7 @@ form {
   border: 1px solid #f37c7c;
 }
 
-.message_success{
+.message__success{
   background: #769e76;
   border: 1px solid #65ee65;
 }

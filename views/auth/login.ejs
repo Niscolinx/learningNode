@@ -8,7 +8,7 @@
 
     <main>
         <% if(errorMessage) {console.log('ejs error', errorMessage)%>
-            <div class="message message__error"> <%= errorMessage %></div>
+            <div class="message"> <%= errorMessage %></div>
             <% } %>
         <form class="login-form" action="/login" method="POST">
             <div class="form-control">
