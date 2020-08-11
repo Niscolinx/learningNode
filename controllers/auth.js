@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
-//const sendgridTransport = require('nodemailer-sendgrid-transport')
 const crypto = require('crypto')
+const {validationResult} = require('express-validator/check')
 
 const User = require('../models/user')
 
@@ -85,6 +85,11 @@ exports.getSignup = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
   const { email, password } = req.body;
+
+  const errors = validationResult(email)
+  if(!errors.isEmpty()){
+    
+  }
 
   User.findOne({ email })
     .then(user => {
