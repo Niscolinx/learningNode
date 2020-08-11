@@ -88,7 +88,12 @@ exports.postSignup = (req, res, next) => {
 
   const errors = validationResult(email)
   if(!errors.isEmpty()){
-    
+    console.log('the validation err', errors.array())
+    return res.status(422).render('auth/signup', {
+      path: '/signup',
+      pageTitle: 'Signup',
+      errorMessage: errors.array()
+    });
   }
 
   User.findOne({ email })
