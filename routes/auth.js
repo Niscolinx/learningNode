@@ -13,7 +13,7 @@ router.post('/login', authController.postLogin);
 
 router.post('/signup',
     [check('email').isEmail().withMessage('Invalid email'),
-    body('password').isLength({ min: 6 }).isAlphanumeric()],
+    body('password','password must be at least 6 characters and alphanumeric').isLength({ min: 6 }).isAlphanumeric()],
     authController.postSignup);
 
 router.post('/logout', authController.postLogout);
