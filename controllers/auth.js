@@ -32,12 +32,15 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const { email, password } = req.body
 
-  User.findOne({ email })
-    .then(user => {
-      if (!user) {
-        req.flash('message', 'User does not exist, please sign up')
-        return res.redirect('/signup')
-      }
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    console.log('the validation err', errors.array())
+    return res.status(422).render('auth/login', {
+      path: '/login',
+      pageTitle: 'Login',
+      errorMessage: errors.array()[0].msg
+    });
+  }
       bcrypt.compare(password, user.password)
         .then(doesMatch => {
           if (doesMatch) {
@@ -53,7 +56,6 @@ exports.postLogin = (req, res, next) => {
             res.redirect('/login')
           }
         })
-    })
     .catch(err => {
       console.log('Failed to user in', err)
     })

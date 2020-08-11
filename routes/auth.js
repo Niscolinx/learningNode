@@ -2,6 +2,7 @@ const express = require('express');
 const { check, body } = require('express-validator')
 
 const authController = require('../controllers/auth');
+const User = require('../models/user')
 
 const router = express.Router();
 
@@ -9,9 +10,7 @@ router.get('/login', authController.getLogin);
 
 router.get('/signup', authController.getSignup);
 
-router.post('/login', authController.postLogin);
-
-router.post('/signup',
+router.post('/login',
     [
         check('email')
             .isEmail()
@@ -20,13 +19,32 @@ router.post('/signup',
         body('password', 'password must be at least 6 characters and alphanumeric')
             .isLength({ min: 6 })
             .isAlphanumeric(),
+    ],
+    authController.postLogin);
 
-        body('confirmPassword').custom((value, {req}) => {
-            if(value !== req.body.password){
+router.post('/signup',
+    [
+        check('email')
+            .isEmail()
+            .withMessage('Invalid email').custom((value, { req }) => {
+                return User.findOne({ email: value })
+                    .then(user => {
+                        if (user) {
+                            Promise.reject('Email does not exist, please sign up')
+                        }
+                    })
+            }),
+
+        body('password', 'password must be at least 6 characters and alphanumeric')
+            .isLength({ min: 6 })
+            .isAlphanumeric(),
+
+        body('confirmPassword').custom((value, { req }) => {
+            if (value !== req.body.password) {
                 throw new Error('Passwords do not match')
             }
             return true
-        }) 
+        })
     ],
     authController.postSignup);
 
