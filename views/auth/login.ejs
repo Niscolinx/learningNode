@@ -8,16 +8,16 @@
 
     <main>
         <% if(errorMessage) {%>
-            <div class="message"> <%= errorMessage %></div>
+            <div class="message message__error"> <%= errorMessage %></div>
             <% } %>
         <form class="login-form" action="/login" method="POST">
             <div class="form-control">
                 <label for="email">E-Mail</label>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="email" value="<%= oldInput.email %>">
             </div>
             <div class="form-control">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" min="6">
+                <input type="password" name="password" id="password" min="6" value="<%= oldInput.password %>">
             </div>
             <input type="hidden" value="<%= csrfToken %>" name="_csrf">
             <button class="btn" type="submit">Login</button>
