@@ -141,7 +141,7 @@ exports.postSignup = (req, res, next) => {
         password,
         confirmPassword
       }, 
-      validationError: errors.array()[0]
+      validationError: errors.array()
     });
   }
 
@@ -165,7 +165,7 @@ exports.postSignup = (req, res, next) => {
       email,
       password,
     },
-    validationError: errors.array()[0]
+    validationError: errors.array()
   });
   mailTransport.sendMail({
     to: email,
@@ -190,7 +190,7 @@ exports.postSignup = (req, res, next) => {
           password,
           confirmPassword
         },
-        validationError: errors.array()[0]
+        validationError: errors.array()
       });
     })
 
