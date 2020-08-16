@@ -47,7 +47,7 @@ exports.postLogin = (req, res, next) => {
         email,
         password,
       },
-      validationError: errors.array()[0]
+      validationError: []
     });
   }
   User.findOne({ email })
@@ -59,10 +59,8 @@ exports.postLogin = (req, res, next) => {
           errorMessage: 'User does not exist, please sign up',
           oldInput: {
             email,
-            password,
-            confirmPassword
+            password
           },
-          validationError: []
         });
       }
 
@@ -86,7 +84,6 @@ exports.postLogin = (req, res, next) => {
                 password,
                 confirmPassword
               },
-              validationError: []
             });
           }
         })
