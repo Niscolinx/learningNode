@@ -29,7 +29,8 @@ exports.getLogin = (req, res, next) => {
     oldInput: {
       email: '',
       password: '',
-    }
+    }, 
+    validationError: []
   });
 };
 
@@ -45,14 +46,24 @@ exports.postLogin = (req, res, next) => {
       oldInput: {
         email,
         password,
-      }
+      },
+      validationError: errors.array()[0]
     });
   }
   User.findOne({ email })
     .then(user => {
       if (!user) {
-        req.flash('message', 'User does not exist, please sign up')
-        return res.redirect('/signup')
+        return res.status(422).render('auth/signup', {
+          path: '/signup',
+          pageTitle: 'Signup',
+          errorMessage: 'User does not exist, please sign up',
+          oldInput: {
+            email,
+            password,
+            confirmPassword
+          },
+          validationError: []
+        });
       }
 
       bcrypt.compare(password, user.password)
@@ -66,8 +77,17 @@ exports.postLogin = (req, res, next) => {
             })
           }
           else {
-            req.flash('message', 'wrong password or email')
-            res.redirect('/login')
+            return res.status(422).render('auth/login', {
+              path: '/login',
+              pageTitle: 'Login',
+              errorMessage: 'Wrong password or Email',
+              oldInput: {
+                email,
+                password,
+                confirmPassword
+              },
+              validationError: []
+            });
           }
         })
     })
