@@ -7,25 +7,23 @@
     <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <% console.log('the validation Error is ', validationError) %>
-
         <% if(errorMessage) {%>
         <div class="message message__error"> <%= errorMessage %></div>
         <% } %>
         <form class="login-form" action="/signup" method="POST">
             <div class="form-control">
                 <label for="email">E-Mail</label>
-                <input class="<%= validationError.find(e => e.param === 'email' ? 'invalid' : '') %>" type="email"
+                <input class="<%= validationError.find(e => e.param === 'email') ? 'invalid' : '' %>" type="email"
                     name="email" id="email" value="<%= oldInput.email %>">
             </div>
             <div class="form-control">
                 <label for="password">Password</label>
-                <input class="<%= validationError.find(e => e.param === 'password' ? 'invalid' : '') %>" type="password"
+                <input class="<%= validationError.find(e => e.param === 'password') ? 'invalid' : '' %>" type="password"
                     name="password" id="password" minlength="6" value="<%= oldInput.password %>">
             </div>
             <div class="form-control">
                 <label for="confirmPassword">Confirm Password</label>
-                <input class="<%= validationError.find(e => e.param === 'confirmPassword' ? 'invalid' : '') %>"
+                <input class="<%= validationError.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
                     type="password" name="confirmPassword" id="confirmPassword" minlength="6"
                     value="<%= oldInput.confirmPassword %>">
             </div>
