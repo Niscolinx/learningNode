@@ -7,21 +7,23 @@
     <%- include('../includes/navigation.ejs') %>
 
     <main>
-         <% if(errorMessage) {%>
-         <div class="message message__error"> <%= errorMessage %></div>
-         <% } %>
+        <% if(errorMessage) {%>
+        <div class="message message__error"> <%= errorMessage %></div>
+        <% } %>
         <form class="login-form" action="/signup" method="POST">
             <div class="form-control">
                 <label for="email">E-Mail</label>
-                <input type="email" name="email" id="email" value="<%= oldInput.email %>">
+                <input class="<%= errorMesssage.find(e => e.param === 'email' ? 'invalid' : '') %>" type="email" name="email" id="email" value="<%= oldInput.email %>">
             </div>
             <div class="form-control">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" minlength="6" value="<%= oldInput.password %>">
+                <input class="<%= errorMesssage.find(e => e.param === 'password' ? 'invalid' : '') %>" type="password" name="password"
+                    id="password" minlength="6" value="<%= oldInput.password %>">
             </div>
             <div class="form-control">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" name="confirmPassword" id="confirmPassword" minlength="6"
+                <input class="<%= errorMesssage.find(e => e.param === 'confirmPassword' ? 'invalid' : '') %>" type="password"
+                    name="confirmPassword" id="confirmPassword" minlength="6"
                     value="<%= oldInput.confirmPassword %>">
             </div>
             <input type="hidden" value="<%= csrfToken %>" name="_csrf">
