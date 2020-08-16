@@ -101,7 +101,8 @@ exports.getSignup = (req, res, next) => {
       email: '',
       password: '',
       confirmPassword: ''
-    }
+    }, 
+    validationError: []
   });
 };
 
@@ -119,7 +120,8 @@ exports.postSignup = (req, res, next) => {
         email,
         password,
         confirmPassword
-      }
+      }, 
+      validationError: errors.array()[0]
     });
   }
 
@@ -135,7 +137,16 @@ exports.postSignup = (req, res, next) => {
       return user.save()
     }).catch(err => { console.log(err) })
 
-  res.redirect('/login')
+  res.status(422).render('auth/login', {
+    path: '/login',
+    pageTitle: 'Login',
+    errorMessage: errors.array()[0].msg,
+    oldInput: {
+      email,
+      password,
+    },
+    validationError: errors.array()[0]
+  });
   mailTransport.sendMail({
     to: email,
     from: 'munisco12@gmail.com',
@@ -150,7 +161,17 @@ exports.postSignup = (req, res, next) => {
   })
     .catch(err => {
       console.log(err)
-      res.redirect('/signup')
+       res.status(422).render('auth/signup', {
+        path: '/signup',
+        pageTitle: 'Signup',
+        errorMessage: errors.array()[0].msg,
+        oldInput: {
+          email,
+          password,
+          confirmPassword
+        },
+        validationError: errors.array()[0]
+      });
     })
 
 };
