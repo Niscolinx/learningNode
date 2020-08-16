@@ -61,6 +61,7 @@ exports.postLogin = (req, res, next) => {
             email,
             password
           },
+          validationError: []
         });
       }
 
@@ -84,12 +85,13 @@ exports.postLogin = (req, res, next) => {
                 password,
                 confirmPassword
               },
+              validationError: []
             });
           }
         })
     })
     .catch(err => {
-      console.log('Failed to user in', err)
+      console.log('Failed user in', err)
     })
 
 };
