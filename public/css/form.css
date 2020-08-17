@@ -1,4 +1,4 @@
-/* .form-container {
+.form-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,11 +38,11 @@
     padding: .5rem;
     width: 120%;
     color: black;
-    background-color: #bebcbc;
-    border: 1px solid #a83a9a;
-    font-size: 1.2rem;
+    border: 1px solid #a1a1a1;
+    font: inherit;
+    border-radius: 2px;
 }
 
 .form-btn{
    margin-left: 1.3rem;
-} */
+}

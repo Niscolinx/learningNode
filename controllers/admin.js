@@ -5,8 +5,7 @@ exports.getAddProduct = (req, res, next) => {
 
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
-    path: '/admin/add-product',
-    editing: false
+    path: '/admin/edit-product',
   });
 };
 
@@ -26,6 +25,7 @@ exports.postAddProduct = (req, res, next) => {
         price,
         description
       },
+      editing: false,
       hasError: true,
       validationError: errors.array()
     });
