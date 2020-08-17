@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const {validationErros} = require('express-validator')
 
 exports.getAddProduct = (req, res, next) => {
 
