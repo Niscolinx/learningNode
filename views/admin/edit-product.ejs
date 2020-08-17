@@ -39,9 +39,11 @@
             <input type="hidden" value="<%= product._id %>" name="productId">
             <% } %>
 
-            <input type="hidden" value="<%= csrfToken %>" name="_csrf">
-            <button class="btn" type="submit"><% if (editing) { %>Update Product<% } else { %>Add
-                Product<% } %></button>
+            <div class="btn-control">
+                <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                <button class="btn form-btn" type="submit"><% if (editing) { %>Update Product<% } else { %>Add
+                    Product<% } %></button>
+            </div>
         </form>
     </main>
     <%- include('../includes/end.ejs') %>
