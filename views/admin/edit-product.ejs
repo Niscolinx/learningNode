@@ -6,10 +6,14 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
 
-    <main>
-          <!-- <% if(errorMessage) {%>
+    <main class="container main form-container">
+        <!-- <% if(errorMessage) {%>
           <div class="message message__error"> <%= errorMessage %></div>
           <% } %> -->
+        <div class="center-box">
+            <h2 class="main-text">This is the product page </h2>
+            <p class="main-text__secondary form-text">Please fill in the details of your book below</p>
+        </div>
         <form class="product-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>"
             method="POST">
             <div class="form-control">
