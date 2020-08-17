@@ -5,7 +5,7 @@ exports.getAddProduct = (req, res, next) => {
 
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
-    path: '/admin/edit-product',
+    path: '/admin/add-product',
     errorMessage: null,
     editing: null,
     hasError: null
@@ -18,9 +18,9 @@ exports.postAddProduct = (req, res, next) => {
   const errors = validationResult(req)
   console.log('Errors from adding a product', errors.array())
   if (!errors.isEmpty()) {
-    return res.status(422).render('auth/edit-product', {
-      path: '/admin/edit-product',
-      pageTitle: 'Edit product',
+    return res.status(422).render('admin/edit-product', {
+      path: '/admin/add-product',
+      pageTitle: 'Add product',
       errorMessage: errors.array()[0].msg,
       product: {
         title,
