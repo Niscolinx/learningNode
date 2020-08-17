@@ -118,6 +118,7 @@ exports.postEditProduct = (req, res, next) => {
           editing: true,
           hasError: true,
           validationError: errors.array()
+        })
       }
     })
     .catch(err => console.log('error from edited product', err))
