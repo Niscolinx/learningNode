@@ -14,11 +14,13 @@ router.post('/login',
     [
         check('email')
             .isEmail()
-            .withMessage('Invalid email'),
+            .withMessage('Invalid email')
+            .normalizeEmail(),
 
         body('password', 'password must be at least 6 characters and alphanumeric')
             .isLength({ min: 6 })
-            .isAlphanumeric(),
+            .isAlphanumeric()
+            .trim(),
     ],
     authController.postLogin);
 
@@ -33,18 +35,18 @@ router.post('/signup',
                            return Promise.reject('Email already exists, please try a different email')
                         }
                     })
-            }),
+            }).normalizeEmail(),
 
         body('password', 'password must be at least 6 characters and alphanumeric')
             .isLength({ min: 6 })
-            .isAlphanumeric(),
+            .isAlphanumeric().trim(),
 
         body('confirmPassword').custom((value, { req }) => {
             if (value !== req.body.password) {
                 throw new Error('Passwords do not match')
             }
             return true
-        })
+        }).trim()
     ],
     authController.postSignup);
 
