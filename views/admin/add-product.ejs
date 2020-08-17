@@ -9,10 +9,14 @@
 
 
         <main class="main form-container">
+            <% if(errorMessage) {%>
+            <div class="message message__error"> <%= errorMessage %></div>
+            <% } %>
             <div class="center-box">
                 <h2 class="main-text">This is the product page </h2>
                 <p class="main-text__secondary form-text">Please fill in the details of your book below</p>
             </div>
+
             <div class="form-box">
                 <form action="/admin/add-product" method="POST">
                     <div class="form-control">
