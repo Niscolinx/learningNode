@@ -17,6 +17,7 @@ exports.postAddProduct = (req, res, next) => {
   const { title, imageUrl, price, description } = req.body;
 
   const errors = validationResult(req)
+  console.log('Error from posting a product', errors.array())
   if (!errors.isEmpty()) {
     return res.status(422).render('admin/edit-product', {
       path: '/admin/add-product',
@@ -36,10 +37,9 @@ exports.postAddProduct = (req, res, next) => {
   const product = new Product({ title, price, description, imageUrl, userId: req.user })
   product.save()
     .then(result => {
-      console.log('created product', result)
       res.redirect('/admin/products')
     })
-    .catch(err => console.log('error from mongodb', err))
+    .catch(err => console.log(err))
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -59,6 +59,10 @@ exports.getEditProduct = (req, res, next) => {
           pageTitle: 'Edit Product',
           path: '/admin/edit-product',
           editing: editMode,
+          errorMessage: null,
+          editing: true,
+          hasError: null,
+          validationError: [],
           product
         });
       }
@@ -73,6 +77,7 @@ exports.postEditProduct = (req, res, next) => {
   const { title, imageUrl, price, description, productId } = req.body;
 
   const errors = validationResult(req)
+  console.log('Error from posting a product', errors.array())
   if (!errors.isEmpty()) {
     return res.status(422).render('admin/edit-product', {
       path: '/admin/edit-product',
@@ -101,7 +106,6 @@ exports.postEditProduct = (req, res, next) => {
           product.description = description
 
         product.save().then(result => {
-          console.log('updated product', result)
           res.redirect('/admin/products');
         })
       } else {
