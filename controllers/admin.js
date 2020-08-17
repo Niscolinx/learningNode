@@ -8,7 +8,8 @@ exports.getAddProduct = (req, res, next) => {
     path: '/admin/add-product',
     errorMessage: null,
     editing: null,
-    hasError: null
+    hasError: null,
+    validationError: []
   });
 };
 
