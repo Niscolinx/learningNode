@@ -51,7 +51,6 @@ exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
-      console.log('the single product', product)
       if (!product) {
         res.redirect('admin/products')
       }
@@ -66,7 +65,6 @@ exports.getEditProduct = (req, res, next) => {
 
     })
     .catch(err => {
-      console.log('from the edit product', err)
       return res.redirect('/');
     })
 };
@@ -74,6 +72,23 @@ exports.getEditProduct = (req, res, next) => {
 exports.postEditProduct = (req, res, next) => {
   const { title, imageUrl, price, description, productId } = req.body;
 
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(422).render('admin/edit-product', {
+      path: '/admin/edit-product',
+      pageTitle: 'Edit product',
+      errorMessage: errors.array()[0].msg,
+      product: {
+        title,
+        imageUrl,
+        price,
+        description
+      },
+      editing: true,
+      hasError: true,
+      validationError: errors.array()
+    });
+  }
   Product.findById(productId)
     .then(product => {
       const productId = product.userId.toString()
@@ -90,7 +105,19 @@ exports.postEditProduct = (req, res, next) => {
           res.redirect('/admin/products');
         })
       } else {
-        return res.redirect('/')
+        return res.status(422).render('admin/edit-product', {
+          path: '/admin/edit-product',
+          pageTitle: 'Edit product',
+          errorMessage: errors.array()[0].msg,
+          product: {
+            title,
+            imageUrl,
+            price,
+            description
+          },
+          editing: true,
+          hasError: true,
+          validationError: errors.array()
       }
     })
     .catch(err => console.log('error from edited product', err))
