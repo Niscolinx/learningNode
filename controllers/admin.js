@@ -14,7 +14,7 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const { title, imageUrl, price, description } = req.body;
+  const { title, image, price, description } = req.body;
 
   const errors = validationResult(req)
   console.log('Error from posting a product', errors.array())
@@ -25,7 +25,7 @@ exports.postAddProduct = (req, res, next) => {
       errorMessage: errors.array()[0].msg,
       product: {
         title,
-        imageUrl,
+        image,
         price,
         description
       },
@@ -34,7 +34,7 @@ exports.postAddProduct = (req, res, next) => {
       validationError: errors.array()
     });
   }
-  const product = new Product({ title, price, description, imageUrl, userId: req.user })
+  const product = new Product({ title, price, description, image, userId: req.user })
   product.save()
     .then(result => {
       res.redirect('/admin/products')

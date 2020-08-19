@@ -18,7 +18,6 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  console.log('the prod id', prodId, typeof(prodId))
 
   Product.findById(prodId)
     .then(product => {
