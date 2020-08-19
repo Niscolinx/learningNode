@@ -15,9 +15,9 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { title, image, price, description } = req.body;
+  console.log('the request from the body form', title, image, price)
 
   const errors = validationResult(req)
-  console.log('Error from posting a product', errors.array())
   if (!errors.isEmpty()) {
     return res.status(422).render('admin/edit-product', {
       path: '/admin/add-product',

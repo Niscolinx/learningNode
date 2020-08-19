@@ -56,13 +56,12 @@ app.use((req, res, next) => {
     if (!req.session.user) return next()
     User.findById(req.session.user._id)
         .then((user) => {
-            throw new Error('Dummy Error')
             if (!user) return next()
             req.user = user
             next()
         })
         .catch((err) => {
-            return next(new Error(err))
+            next(new Error(err))
         })
 })
 
@@ -74,12 +73,10 @@ app.use(authRoutes)
 app.use(errorController.get404)
 
 app.use((err, req, res, next) => {
-    if (err) {
-        res.status(500).render('500', {
-            pageTitle: 'Server Error',
-            path: '/500'
-        })
-    }
+    res.status(500).render('500', {
+        pageTitle: 'Server Error',
+        path: '/500'
+    })
 })
 mongoose
     .connect(MONGODB_URI, {
