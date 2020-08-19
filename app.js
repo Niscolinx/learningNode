@@ -36,7 +36,7 @@ const fileStorage = multer.diskStorage({
         cb(null, 'images')
     },
     filename: (req, file, cb) => {
-        cb(null, new Date().toISOString() + file.originalname)
+        cb(null, 'Hello' + '-' + file.originalname)
     }
     
 })
@@ -73,6 +73,7 @@ app.use((req, res, next) => {
             next()
         })
         .catch((err) => {
+            console.log('the err', err)
             next(new Error(err))
         })
 })
@@ -85,9 +86,10 @@ app.use(authRoutes)
 app.use(errorController.get404)
 
 app.use((err, req, res, next) => {
+    console.log('from error handler', err)
     res.status(500).render('500', {
         pageTitle: 'Server Error',
-        path: '/500'
+        path: '/500',
     })
 })
 mongoose

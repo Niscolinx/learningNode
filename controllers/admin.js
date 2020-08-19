@@ -41,7 +41,6 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products')
     })
     .catch(err => {
-      console.log('the error', err)
       const error = new Error(err)
       error.httpStatus = 500
       return next(error)
