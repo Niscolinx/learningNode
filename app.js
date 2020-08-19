@@ -62,9 +62,7 @@ app.use((req, res, next) => {
             next()
         })
         .catch((err) => {
-            const error = new Error(err)
-            error.httpStatus = 500
-            next(error)
+            return next(new Error(err))
         })
 })
 
@@ -95,4 +93,8 @@ mongoose
             console.log('Listening on 3030')
         })
     })
-    .catch((err) => console.log(err))
+    .catch(err => {
+        const error = new Error(err)
+        error.httpStatus = 500
+        return next(error)
+    })

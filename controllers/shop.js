@@ -11,7 +11,9 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log('the error from findAll products', err)
+      const error = new Error(err)
+      error.httpStatus = 500
+      return next(error)
     })
 
 };
@@ -45,7 +47,9 @@ exports.getIndex = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err)
+      const error = new Error(err)
+      error.httpStatus = 500
+      return next(error)
     })
 };
 
@@ -67,7 +71,11 @@ exports.getCart = (req, res, next) => {
         totalCartPrice,
       });
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      const error = new Error(err)
+      error.httpStatus = 500
+      return next(error)
+    })
 };
 
 exports.postCart = (req, res, next) => {
@@ -77,7 +85,11 @@ exports.postCart = (req, res, next) => {
     .then(product => {
       res.redirect('/products')
     })
-    .catch(err => console.log('err from post cart', err))
+    .catch(err => {
+      const error = new Error(err)
+      error.httpStatus = 500
+      return next(error)
+    })
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
@@ -88,7 +100,11 @@ exports.postCartDeleteProduct = (req, res, next) => {
       console.log('deleted cart')
       res.redirect('/cart')
     })
-    .catch(err => console.log('err deleting the cart item', err))
+    .catch(err => {
+      const error = new Error(err)
+      error.httpStatus = 500
+      return next(error)
+    })
 };
 
 exports.postOrder = (req, res, next) => {
@@ -116,7 +132,11 @@ exports.postOrder = (req, res, next) => {
 
       }).catch(err => console.log(err))
     })
-    .catch(err => console.log('err posting order', err))
+    .catch(err => {
+      const error = new Error(err)
+      error.httpStatus = 500
+      return next(error)
+    })
 }
 
 
@@ -152,7 +172,11 @@ exports.getOrders = (req, res, next) => {
       });
 
     })
-    .catch(err => console.log('err getting orders', err))
+    .catch(err => {
+      const error = new Error(err)
+      error.httpStatus = 500
+      return next(error)
+    })
 };
 
 exports.getCheckout = (req, res, next) => {
