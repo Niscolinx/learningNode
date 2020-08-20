@@ -107,6 +107,8 @@ exports.postEditProduct = (req, res, next) => {
       const productId = product.userId.toString()
       const userId = req.user._id.toString()
 
+      console.log('the user products', productId, userId)
+
       if (productId === userId) {
         product.title = title,
           product.image = image_path,
