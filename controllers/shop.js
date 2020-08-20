@@ -58,9 +58,9 @@ exports.getCart = (req, res, next) => {
   req.user.populate('cart.items.productId').execPopulate()
     .then(user => {
       let totalCartPrice = 0;
-
+      
       const products = user.cart.items
-
+      
       for (let item of products) {
         totalCartPrice += item.price
       }

@@ -10,7 +10,7 @@
         </div>
 
         <ul class="cart-box">
-            <% products.forEach(p => { console.log('the products', p)%>
+            <% products.forEach(p => {%>
             <li class="cart-box__item">
                 <div class="cart-box__primary">
                     <p><span class="cart-box__item-title">Book Title:</span><%= p.productId.title %></p>
@@ -29,7 +29,7 @@
         </ul>
         <hr>
         <div class="centered">
-            <p class="btn" style="font-weight: bold; cursor: none;">Total cart price is: &nbsp;$<%= totalCartPrice %>
+            <p class="btn" style="font-weight: bold; cursor: none;">Total cart price is: &nbsp;$<%= totalCartPrice.toFixed(2) %>
             </p>
         </div>
         <div class="centered">
