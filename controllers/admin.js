@@ -23,7 +23,7 @@ exports.postAddProduct = (req, res, next) => {
     return res.status(422).render('admin/edit-product', {
       path: '/admin/add-product',
       pageTitle: 'Add product',
-      errorMessage: !image ? 'Attached file is not an image': errors.array()[0].msg,
+      errorMessage: !image ? 'Attached file is not an image' : errors.array()[0].msg,
       product: {
         title,
         price,
@@ -62,7 +62,6 @@ exports.getEditProduct = (req, res, next) => {
         res.redirect('admin/products')
       }
       else {
-        console.log('the product', product)
         res.render('admin/edit-product', {
           pageTitle: 'Edit Product',
           path: '/admin/edit-product',
@@ -85,9 +84,8 @@ exports.postEditProduct = (req, res, next) => {
   const { title, price, description, productId } = req.body;
   const image = req.file
 
-  const image_path = image.path
   const errors = validationResult(req)
-  if (!errors.isEmpty() || !image) {
+  if (!errors.isEmpty()) {
     return res.status(422).render('admin/edit-product', {
       path: '/admin/edit-product',
       pageTitle: 'Edit product',
@@ -102,16 +100,18 @@ exports.postEditProduct = (req, res, next) => {
       validationError: errors.array()
     });
   }
+
+
   Product.findById(productId)
     .then(product => {
       const productId = product.userId.toString()
       const userId = req.user._id.toString()
 
-      console.log('the user products', productId, userId)
+      const oldImage = product.image_path
 
       if (productId === userId) {
         product.title = title,
-          product.image = image_path,
+          product.image_path = image ? image.path : oldImage,
           product.price = price,
           product.description = description
 
@@ -125,7 +125,6 @@ exports.postEditProduct = (req, res, next) => {
           errorMessage: errors.array()[0].msg,
           product: {
             title,
-            imageUrl,
             price,
             description
           },
