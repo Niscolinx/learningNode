@@ -31,20 +31,30 @@ const store = new mongoDbSession({
     collection: 'sessions',
 })
 
-const fileStorage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'images')
     },
     filename: (req, file, cb) => {
         cb(null, new Date().toISOString() + '-' + file.originalname)
     }
-    
+
 })
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpeg' ||
+        file.mimetype === 'image/jpg') {
+        cb(null, true)
+    } else {
+        cb(null, false)
+    }
+}
 
 app.use(bodyParser.urlencoded({
     extended: false
 }))
-app.use(multer({storage: fileStorage}).single('image'))
+app.use(multer({ storage, fileFilter }).single('image'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(
     session({
