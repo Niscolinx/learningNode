@@ -23,10 +23,9 @@ exports.postAddProduct = (req, res, next) => {
     return res.status(422).render('admin/edit-product', {
       path: '/admin/add-product',
       pageTitle: 'Add product',
-      errorMessage: !image ? 'Please upload an image file': errors.array()[0].msg,
+      errorMessage: !image ? 'Attached file is not an image': errors.array()[0].msg,
       product: {
         title,
-        image,
         price,
         description
       },
@@ -88,14 +87,13 @@ exports.postEditProduct = (req, res, next) => {
 
   const image_path = image.path
   const errors = validationResult(req)
-  if (!errors.isEmpty()) {
+  if (!errors.isEmpty() || !image) {
     return res.status(422).render('admin/edit-product', {
       path: '/admin/edit-product',
       pageTitle: 'Edit product',
-      errorMessage: errors.array()[0].msg,
+      errorMessage: !image ? 'Attached file is not an image' : errors.array()[0].msg,
       product: {
         title,
-        image_path,
         price,
         description
       },
@@ -111,7 +109,7 @@ exports.postEditProduct = (req, res, next) => {
 
       if (productId === userId) {
         product.title = title,
-          product.image = image,
+          product.image = image_path,
           product.price = price,
           product.description = description
 

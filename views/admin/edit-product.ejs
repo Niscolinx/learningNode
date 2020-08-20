@@ -23,9 +23,7 @@
             </div>
             <div class="form-control">
                 <label for="image">Image</label>
-                <input  type="file"
-                    name="image" id="image"
-            </div>
+                <input type="file" name="image" id="image"></div>
             <div class="form-control">
                 <label for="price">Price</label>
                 <input class="<%= validationError.find(e => e.param === 'price') ? 'invalid' : '' %>" type="number"
