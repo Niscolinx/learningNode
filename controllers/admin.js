@@ -38,7 +38,7 @@ exports.postAddProduct = (req, res, next) => {
 
   const image_path = image.path
   const product = new Product({ title, price, description, image_path, userId: req.user })
-  
+
   product.save()
     .then(result => {
       res.redirect('/admin/products')
@@ -63,6 +63,7 @@ exports.getEditProduct = (req, res, next) => {
         res.redirect('admin/products')
       }
       else {
+        console.log('the product', product)
         res.render('admin/edit-product', {
           pageTitle: 'Edit Product',
           path: '/admin/edit-product',
