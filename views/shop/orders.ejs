@@ -26,14 +26,15 @@
                     </li>
                     <% }; %>
                     <div class="centered">
-                        <p class="btn" style="font-weight: bold; cursor: none;">Total cart price is:
+                        <a href="" style="font-weight: bold; cursor: pointer;">Download invoice</a>
+                        <p class="btn" style="font-weight: bold; cursor: none;">Order price is:
                             &nbsp;$<%= totalCartPrice %></p>
                     </div>
                 </ul>
             </li>
             <% }); %>
         </ul>
-        <h3 style="text-align: center;">The total price is ==> $<%=totalPrice %></h3>
+        <h3 style="text-align: center;">The total price of all the orders is ==> $<%=totalPrice %></h3>
         <% } %>
     </main>
     <%- include('../includes/end.ejs') %>
