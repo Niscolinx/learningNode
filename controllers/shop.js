@@ -230,20 +230,25 @@ exports.getOrderInvoice = (req, res, next) => {
             })
 
             let totalPrice = 0
-            order.forEach((orderItem) => {
+            order.orders.forEach((orderItem) => {
                 totalPrice += orderItem.price
                 pdfDoc.moveDown()
                 pdfDoc
                     .fontSize(18)
                     .text(
-                        `Title: ${orderItem.cartProduct.title}   |  Quantity: ${orderItem.quantity}  |  Price: $${orderItem.price}`
+                        `${orderItem.cartProduct.title}  - ${orderItem.quantity}  x $${orderItem.cartProduct.price}`,
+                        {
+                            align: 'center',
+                        }
                     )
             })
 
             pdfDoc.text('-----------------------------------------', {
                 align: 'center',
             })
-            pdfDoc.fontSize(20).text(`Total price: $${totalPrice}`)
+            pdfDoc.fontSize(23).text(`Total price: $${totalPrice}`, {
+                align: 'center',
+            })
 
             pdfDoc.end()
         })
