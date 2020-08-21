@@ -207,7 +207,7 @@ exports.getOrderInvoice = (req, res, next) => {
             if (order.user.userId.toString() !== req.user._id.toString()) {
                 return next(new Error('UnAuthorised'))
             }
-    
+
             const pdfDoc = new PDFDocument()
             res.setHeader('Content-Type', 'application/pdf')
             res.setHeader(
@@ -218,10 +218,34 @@ exports.getOrderInvoice = (req, res, next) => {
             pdfDoc.pipe(fs.createWriteStream(invoicePath))
             pdfDoc.pipe(res)
 
-            pdfDoc.text('Hello World!')
+            pdfDoc.moveUp()
+            pdfDoc.fontSize(25).text('Invoice', {
+                underline: true,
+                align: 'center',
+                columns: true,
+            })
+
+            pdfDoc.text('-----------------------------------------', {
+                align: 'center',
+            })
+
+            let totalPrice = 0
+            order.forEach((orderItem) => {
+                totalPrice += orderItem.price
+                pdfDoc.moveDown()
+                pdfDoc
+                    .fontSize(18)
+                    .text(
+                        `Title: ${orderItem.cartProduct.title}   |  Quantity: ${orderItem.quantity}  |  Price: $${orderItem.price}`
+                    )
+            })
+
+            pdfDoc.text('-----------------------------------------', {
+                align: 'center',
+            })
+            pdfDoc.fontSize(20).text(`Total price: $${totalPrice}`)
 
             pdfDoc.end()
-          
         })
         .catch((err) => next(err))
 }
