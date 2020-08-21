@@ -309,3 +309,22 @@ form {
   display: flex;
   justify-content: flex-end;
 }
+
+.pagination{
+  display: flex;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.pagination .pagination__link{
+  text-decoration: none;
+  padding: .5rem;
+  color: #00695c;
+  background: white
+}
+.pagination .pagination__link:hover,
+.pagination .pagination__link:active{
+
+  color: white;
+  background-color: #00695c;
+}
