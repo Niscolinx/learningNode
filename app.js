@@ -116,7 +116,5 @@ mongoose
         })
     })
     .catch(err => {
-        const error = new Error(err)
-        error.httpStatus = 500
-        return next(error)
+        throw new Error(err)
     })

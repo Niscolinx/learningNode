@@ -8,12 +8,32 @@ const Order = require('../models/order')
 const PAGE_TOTAL_COUNT = 1
 
 exports.getProducts = (req, res, next) => {
+    let page = req.query.page
+    let totalCount
+
+    page = Number(page)
+    if (!page) {
+        page = 1
+    }
     Product.find()
+        .countDocuments()
+        .then((totalNumberOfProducts) => {
+            totalCount = totalNumberOfProducts
+            return Product.find()
+                .skip((page - 1) * PAGE_TOTAL_COUNT)
+                .limit(PAGE_TOTAL_COUNT)
+        })
         .then((products) => {
             res.render('shop/product-list', {
                 prods: products,
                 pageTitle: 'All Products',
                 path: '/products',
+                currentPage: page,
+                hasNext: PAGE_TOTAL_COUNT * page < totalCount,
+                hasPrev: page > 1,
+                nextPage: page + 1,
+                prevPage: page - 1,
+                lastPage: Math.ceil(totalCount / PAGE_TOTAL_COUNT),
             })
         })
         .catch((err) => {
@@ -48,7 +68,6 @@ exports.getIndex = (req, res, next) => {
     if(!page){
         page = 1
     }
-    console.log('the number', page, typeof(page))
     Product.find()
         .countDocuments()
         .then((totalNumberOfProducts) => {

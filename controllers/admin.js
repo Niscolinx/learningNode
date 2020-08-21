@@ -139,13 +139,33 @@ exports.postEditProduct = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
+    let page = req.query.page
+    let totalCount
+
+    page = Number(page)
+    if (!page) {
+        page = 1
+    }
     Product.find({ userId: req.user._id })
+        .countDocuments()
+        .then((totalNumberOfProducts) => {
+            totalCount = totalNumberOfProducts
+            return Product.find()
+                .skip((page - 1) * PAGE_TOTAL_COUNT)
+                .limit(PAGE_TOTAL_COUNT)
+        })
         .then((products) => {
             res.render('admin/products', {
                 prods: products,
                 user: req.user.email,
                 pageTitle: 'Admin Products',
                 path: '/admin/products',
+                currentPage: page,
+                hasNext: PAGE_TOTAL_COUNT * page < totalCount,
+                hasPrev: page > 1,
+                nextPage: page + 1,
+                prevPage: page - 1,
+                lastPage: Math.ceil(totalCount / PAGE_TOTAL_COUNT),
             })
         })
         .catch((err) => {
