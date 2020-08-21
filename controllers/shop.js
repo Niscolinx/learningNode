@@ -41,9 +41,14 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getIndex = (req, res, next) => {
-    const page = req.query.page
+    let page = req.query.page
     let totalCount
 
+    page = Number(page)
+    if(!page){
+        page = 1
+    }
+    console.log('the number', page, typeof(page))
     Product.find()
         .countDocuments()
         .then((totalNumberOfProducts) => {
@@ -53,7 +58,6 @@ exports.getIndex = (req, res, next) => {
                 .limit(PAGE_TOTAL_COUNT)
         })
         .then((products) => {
-            console.log('the products', products)
             res.render('shop/index', {
                 prods: products,
                 pageTitle: 'All Products',
@@ -61,7 +65,9 @@ exports.getIndex = (req, res, next) => {
                 currentPage: page,
                 hasNext: PAGE_TOTAL_COUNT * page < totalCount,
                 hasPrev: page > 1,
-                lastPage: 
+                nextPage: page + 1,
+                prevPage: page - 1,
+                lastPage: Math.ceil(totalCount / PAGE_TOTAL_COUNT)
             })
         })
         .catch((err) => {

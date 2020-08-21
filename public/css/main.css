@@ -329,7 +329,8 @@ form {
   background: #d8faea
 }
 .pagination .pagination__link:hover,
-.pagination .pagination__link:active{
+.pagination .pagination__link:active
+.pagination .pagination__link .active{
   color: white;
   background-color: #00695c;
 }
