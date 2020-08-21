@@ -236,7 +236,7 @@ exports.getOrderInvoice = (req, res, next) => {
                 pdfDoc
                     .fontSize(18)
                     .text(
-                        `${orderItem.cartProduct.title}  - ${orderItem.quantity}  x $${orderItem.cartProduct.price}`,
+                        `${orderItem.cartProduct.title}  - ${orderItem.quantity}  x $${orderItem.cartProduct.price} = $${orderItem.price}`,
                         {
                             align: 'center',
                         }
