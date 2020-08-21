@@ -121,29 +121,15 @@ exports.postEditProduct = (req, res, next) => {
                 throw new Error('User is not Authorised')
             }
             product.title = title
-            if(image){
-              product.image_path = image.path
-              fileDelete.deleteFile(oldImage)
+            if (image) {
+                product.image_path = image.path
+                fileDelete.deleteFile(oldImage)
             }
             product.price = price
             product.description = description
 
             product.save().then((result) => {
-                res.redirect('/admin/products')
-            })
-            console.log('the errors', errors.array())
-            return res.status(422).render('admin/edit-product', {
-                path: '/admin/edit-product',
-                pageTitle: 'Edit product',
-                errorMessage: errors.array()[0].msg,
-                product: {
-                    title,
-                    price,
-                    description,
-                },
-                editing: true,
-                hasError: true,
-                validationError: errors.array(),
+                return res.redirect('/admin/products')
             })
         })
         .catch((err) => {
