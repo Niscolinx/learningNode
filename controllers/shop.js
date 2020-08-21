@@ -5,6 +5,8 @@ const PDFDocument = require('pdfkit')
 const Product = require('../models/product')
 const Order = require('../models/order')
 
+const PAGE_TOTAL_COUNT = 3
+
 exports.getProducts = (req, res, next) => {
     Product.find()
         .then((products) => {
@@ -39,12 +41,23 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getIndex = (req, res, next) => {
+    const page = req.query.page
+    let totalCount
+
     Product.find()
+        .countDocuments((totalNumberOfProducts) => {
+            console.log(totalNumberOfProducts)
+            totalCount = totalNumberOfProducts
+            return Product.find()
+                .skip((page - 1) * PAGE_TOTAL_COUNT)
+                .limit(PAGE_TOTAL_COUNT)
+        })
         .then((products) => {
             res.render('shop/index', {
                 prods: products,
                 pageTitle: 'All Products',
                 path: '/',
+                currentPage: 'sjkf'
             })
         })
         .catch((err) => {

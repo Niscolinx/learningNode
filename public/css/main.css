@@ -13,6 +13,8 @@ body {
 main {
   padding: 1rem;
   margin: auto;
+    background-color: #d8faea;
+
 }
 
 form {
@@ -193,11 +195,14 @@ form {
 }
 
 .card__image {
+  display: flex;
+  justify-content: center;
+  align-content: center;
   width: 100%;
 }
 
 .card__image img {
-  width: 100%;
+  width: 70%;
 }
 
 .card__actions {
@@ -312,19 +317,19 @@ form {
 
 .pagination{
   display: flex;
-  margin-top: 2rem;
+  margin: 2rem 0;
   justify-content: center;
 }
 
 .pagination .pagination__link{
+   font-weight: bolder;
   text-decoration: none;
-  padding: .5rem;
+  padding: .5rem 1rem;
   color: #00695c;
-  background: white
+  background: #d8faea
 }
 .pagination .pagination__link:hover,
 .pagination .pagination__link:active{
-
   color: white;
   background-color: #00695c;
 }
