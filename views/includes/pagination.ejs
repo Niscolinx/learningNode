@@ -23,7 +23,8 @@
     <a href="?page=<%= nextPage %>" class="pagination__link">Next Page &rarr;</a>
     <% } %>
 
+    <% if(currentPage > 1) { %>
     <a href="?page=<%= lastPage %>"
         class="pagination__link <%= currentPage == lastPage ? 'active' : ''%>"><%=currentPage == lastPage ? lastPage : '>|' %></a>
-
+    <% } %>
 </section>
