@@ -158,11 +158,10 @@ exports.getUserForPayment = (req, res, next) => {
         .populate('cart.items.productId')
         .execPopulate()
         .then((user) => {
-            return user.cart.items
+            let cart = user.cart.items
+            res.json({ message: 'Successful', user, cart})
         })
-        .then((result) => {
-            res.json({ message: 'Successful', result })
-        })
+        
         .catch((err) => {
             const error = new Error(err)
             error.httpStatus = 500
@@ -199,12 +198,12 @@ exports.postOrder = (req, res, next) => {
             req.user
                 .clearCart()
                 .then((cart) => {
-                    res.json({ message: 'Successful', result })
+                    res.redirect('/orders')
                 })
                 .catch((err) => {
-                    res.json({
-                        message: 'Failed transaction',
-                    })
+                    const error = new Error(err)
+                    error.httpStatus = 500
+                    return next(error)
                 })
         })
         .catch((err) => {

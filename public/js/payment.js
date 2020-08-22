@@ -1,4 +1,3 @@
-
 const payWithPaystack = (btn) => {
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value
 
@@ -13,17 +12,16 @@ const payWithPaystack = (btn) => {
             return res.json()
         })
         .then((data) => {
-            console.log('the data', data)
+            let totalPrice = 0
 
-            let totalPrice;
-
-            data.result.orders.forEach(p => {
+            data.cart.forEach((p) => {
                 totalPrice += p.price
             })
-            console.log('the total price is ', totalPrice)
+            totalPrice = Math.ceil(totalPrice)
+
             let handler = PaystackPop.setup({
-                key: 'pk_test_c5f057dc668f71b52b865b9529b412105f0135a2', // Replace with your public key
-                email: data.result.user.email,
+                key: 'pk_test_c5f057dc668f71b52b865b9529b412105f0135a2',
+                email: data.user.email,
                 amount: totalPrice * 100,
 
                 onClose: function () {
@@ -33,7 +31,17 @@ const payWithPaystack = (btn) => {
                     let message =
                         'Payment complete! Reference: ' + response.reference
                     alert(message)
-                    window.location.replace('/products')
+
+                    fetch('/create-order', {
+                        method: 'POST',
+                        headers: {
+                            'csrf-token': csrf,
+                        },
+                    })
+                        .then((res) => {
+                            console.log(res)
+                        })
+                        .catch((err) => console.log(err))
                 },
             })
             handler.openIframe()
