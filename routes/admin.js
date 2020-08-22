@@ -36,7 +36,7 @@ router.post('/edit-product', [
 ],
     isAuth, adminController.postEditProduct);
 
-router.post('/delete-product', isAuth, adminController.postDeleteProduct);
+router.delete('/delete-product/:productId', isAuth, adminController.deleteProduct);
 
 router.get('/clear-cart', isAuth, adminController.clearCart)
 

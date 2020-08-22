@@ -184,8 +184,8 @@ exports.getProducts = (req, res, next) => {
         })
 }
 
-exports.postDeleteProduct = (req, res, next) => {
-    const prodId = req.body.productId
+exports.deleteProduct = (req, res, next) => {
+    const prodId = req.params.productId
 
     Product.findById(prodId)
         .then((product) => {
@@ -195,12 +195,10 @@ exports.postDeleteProduct = (req, res, next) => {
             return Product.deleteOne({ _id: prodId, userId: req.user._id })
         })
         .then((product) => {
-            res.redirect('/admin/products')
+            return res.json({message: 'Successfully deleted product'})
         })
         .catch((err) => {
-            const error = new Error(err)
-            error.httpStatus = 500
-            return next(error)
+            return res.json({message: 'Failed to delete product'})
         })
 }
 

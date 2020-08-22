@@ -231,10 +231,29 @@ exports.getOrders = (req, res, next) => {
 }
 
 exports.getCheckout = (req, res, next) => {
-    res.render('shop/checkout', {
-        path: '/checkout',
-        pageTitle: 'Checkout',
-    })
+   req.user
+       .populate('cart.items.productId')
+       .execPopulate()
+       .then((user) => {
+           let totalCartPrice = 0
+
+           const products = user.cart.items
+
+           for (let item of products) {
+               totalCartPrice += item.price
+           }
+           res.render('shop/checkout', {
+               path: '/checkout',
+               pageTitle: 'Checkout',
+               products,
+               totalCartPrice,
+           })
+       })
+       .catch((err) => {
+           const error = new Error(err)
+           error.httpStatus = 500
+           return next(error)
+       })
 }
 
 exports.getOrderInvoice = (req, res, next) => {
