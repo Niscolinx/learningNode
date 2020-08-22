@@ -20,7 +20,7 @@
                                     Title:</span><%= order.orders[i].cartProduct.title %>
                             </p>
                             <p><span class="cart-box__item-title">Quantity:</span>(<%= order.orders[i].quantity%>)</p>
-                            <p><span class="cart-box__item-title">Price:</span>$<%= order.orders[i].price %></p>
+                            <p><span class="cart-box__item-title">Price:</span>$<%= order.orders[i].price.toFixed(2) %></p>
 
                         </div>
                     </li>
@@ -29,13 +29,13 @@
                         <a href="/orders/<%= order._id%>" style="font-weight: bold; cursor: pointer;">Download
                             invoice</a>
                         <p class="btn" style="font-weight: bold; cursor: none;">Order price is:
-                            &nbsp;$<%= totalCartPrice %></p>
+                            &nbsp;$<%= Math.ceil(totalCartPrice) %></p>
                     </div>
                 </ul>
             </li>
             <% }); %>
         </ul>
-        <h3 style="text-align: center;">The total price of all the orders is ==> $<%=totalPrice %></h3>
+        <h3 style="text-align: center;">The total price of all the orders is ==> $<%=Math.ceil(totalPrice)%></h3>
         <% } %>
     </main>
     <%- include('../includes/end.ejs') %>

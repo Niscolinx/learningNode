@@ -198,12 +198,12 @@ exports.postOrder = (req, res, next) => {
             req.user
                 .clearCart()
                 .then((cart) => {
-                    res.redirect('/orders')
+                    res.json({ message: 'Successful' })
                 })
                 .catch((err) => {
-                    const error = new Error(err)
-                    error.httpStatus = 500
-                    return next(error)
+                    res.json({
+                        message: 'Failed transaction',
+                    })
                 })
         })
         .catch((err) => {
@@ -232,14 +232,11 @@ exports.getOrders = (req, res, next) => {
             return result
         })
         .then((orders) => {
-            let newOrders = []
-            for (let i of orders) {
-                newOrders.push({ products: i.orders })
-            }
+           
             res.render('shop/orders', {
                 path: '/orders',
                 pageTitle: 'Your Orders',
-                orders,
+                orders: orders.reverse(),
                 totalPrice: totalPrice.toFixed(2),
             })
         })

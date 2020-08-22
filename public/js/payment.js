@@ -1,7 +1,6 @@
 const payWithPaystack = (btn) => {
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value
 
-    console.log('the payment process', csrf)
     fetch('/user-for-payment', {
         method: 'GET',
         headers: {
@@ -40,6 +39,7 @@ const payWithPaystack = (btn) => {
                     })
                         .then((res) => {
                             console.log(res)
+                            window.location.replace('/orders')
                         })
                         .catch((err) => console.log(err))
                 },
