@@ -26,7 +26,7 @@
             </p>
         </div>
         <div class="centered">
-             <form id="paymentForm">
+         <form id="paymentForm" action="./create-order" method="POST">
                  <div class="form-group">
                      <label for="email">Email Address</label>
                      <input type="email" id="email-address" required />
@@ -42,20 +42,18 @@
                  <div class="form-group">
                      <label for="last-name">Last Name</label>
                      <input type="text" id="last-name" />
-                 </div>
-                 <div class="form-submit">
-                     <button type="submit" onclick="payWithPaystack()"> Pay </button>
-                 </div>
-             </form>
-             <script src="https://js.paystack.co/v1/inline.js"></script>
-            <form action="./create-order" method="POST">
-                <input type="hidden" value="<%= csrfToken %>" name="_csrf">
-                <button class="btn">Order Now!!</button>
-            </form>
+                 </div> -->
+                 <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                 <button type="submit" onclick="payWithPaystack()" class="btn"> Pay Now </button>
+
+             </form> 
+            <!-- <form action="./create-order" method="POST">
+            </form> -->
         </div>
         <% } else { %>
         <h1>No Products in Cart!</h1>
         <% } %>
     </main>
     <%- include('../includes/end.ejs') %>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="/js/payment.js"></script>
