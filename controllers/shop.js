@@ -153,6 +153,23 @@ exports.postCartDeleteProduct = (req, res, next) => {
         })
 }
 
+exports.getUserForPayment = (req, res, next) => {
+    req.user
+        .populate('cart.items.productId')
+        .execPopulate()
+        .then((user) => {
+            return user.cart.items
+        })
+        .then((result) => {
+            res.json({ message: 'Successful', result })
+        })
+        .catch((err) => {
+            const error = new Error(err)
+            error.httpStatus = 500
+            return next(error)
+        })
+}
+
 exports.postOrder = (req, res, next) => {
     req.user
         .populate('cart.items.productId')
