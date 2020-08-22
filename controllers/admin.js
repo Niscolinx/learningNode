@@ -2,6 +2,9 @@ const Product = require('../models/product')
 const { validationResult } = require('express-validator')
 const fileDelete = require('../util/fileDelete')
 
+
+const PAGE_TOTAL_COUNT = 2
+
 exports.getAddProduct = (req, res, next) => {
     res.render('admin/edit-product', {
         pageTitle: 'Add Product',
@@ -9,7 +12,7 @@ exports.getAddProduct = (req, res, next) => {
         errorMessage: null,
         editing: null,
         hasError: null,
-        validationError: [],
+        validationError: []
     })
 }
 

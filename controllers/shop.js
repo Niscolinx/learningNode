@@ -5,7 +5,7 @@ const PDFDocument = require('pdfkit')
 const Product = require('../models/product')
 const Order = require('../models/order')
 
-const PAGE_TOTAL_COUNT = 1
+const PAGE_TOTAL_COUNT = 2
 
 exports.getProducts = (req, res, next) => {
     let page = req.query.page

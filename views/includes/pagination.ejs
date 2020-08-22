@@ -4,26 +4,26 @@
         <%=currentPage == 1 ? 1 : '|<' %></a>
 
     <% if(prevPage > 1) {%>
-    <a href="/?page=<%= prevPage %>" class="pagination__link">Previous Page</a>
+    <a href="?page=<%= prevPage %>" class="pagination__link">&larr; Previous Page</a>
     <% } %>
 
     <% if(prevPage > 1) {%>
-    <a href="/?page=<%= prevPage %>" class="pagination__link"><%= prevPage %></a>
+    <a href="?page=<%= prevPage %>" class="pagination__link"><%= prevPage %></a>
     <% } %>
 
     <% if(currentPage > 1 && (currentPage != lastPage)) { %>
-    <a href="/?page=<%= currentPage %>" class="pagination__link active"> <%= currentPage %></a>
+    <a href="?page=<%= currentPage %>" class="pagination__link active"> <%= currentPage %></a>
     <% } %>
 
     <% if(hasNext && (currentPage != lastPage)) {%>
-    <a href="/?page=<%= nextPage %>" class="pagination__link"><%= nextPage %></a>
+    <a href="?page=<%= nextPage %>" class="pagination__link"><%= nextPage %></a>
     <% } %>
 
     <% if(hasNext && (currentPage != lastPage)) {%>
-    <a href="/?page=<%= nextPage %>" class="pagination__link">Next Page</a>
+    <a href="?page=<%= nextPage %>" class="pagination__link">Next Page &larr;</a>
     <% } %>
 
-    <a href="/?page=<%= lastPage %>"
+    <a href="?page=<%= lastPage %>"
         class="pagination__link <%= currentPage == lastPage ? 'active' : ''%>"><%=currentPage == lastPage ? lastPage : '>|' %></a>
 
 </section>
