@@ -65,7 +65,7 @@ exports.getIndex = (req, res, next) => {
     let totalCount
 
     page = Number(page)
-    if(!page){
+    if (!page) {
         page = 1
     }
     Product.find()
@@ -86,7 +86,7 @@ exports.getIndex = (req, res, next) => {
                 hasPrev: page > 1,
                 nextPage: page + 1,
                 prevPage: page - 1,
-                lastPage: Math.ceil(totalCount / PAGE_TOTAL_COUNT)
+                lastPage: Math.ceil(totalCount / PAGE_TOTAL_COUNT),
             })
         })
         .catch((err) => {
@@ -182,9 +182,13 @@ exports.postOrder = (req, res, next) => {
             req.user
                 .clearCart()
                 .then((cart) => {
-                    res.redirect('/orders')
+                    res.json({ message: 'Successful', result })
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => {
+                    res.json({
+                        message: 'Failed transaction',
+                    })
+                })
         })
         .catch((err) => {
             const error = new Error(err)
@@ -231,29 +235,29 @@ exports.getOrders = (req, res, next) => {
 }
 
 exports.getCheckout = (req, res, next) => {
-   req.user
-       .populate('cart.items.productId')
-       .execPopulate()
-       .then((user) => {
-           let totalCartPrice = 0
+    req.user
+        .populate('cart.items.productId')
+        .execPopulate()
+        .then((user) => {
+            let totalCartPrice = 0
 
-           const products = user.cart.items
+            const products = user.cart.items
 
-           for (let item of products) {
-               totalCartPrice += item.price
-           }
-           res.render('shop/checkout', {
-               path: '/checkout',
-               pageTitle: 'Checkout',
-               products,
-               totalCartPrice,
-           })
-       })
-       .catch((err) => {
-           const error = new Error(err)
-           error.httpStatus = 500
-           return next(error)
-       })
+            for (let item of products) {
+                totalCartPrice += item.price
+            }
+            res.render('shop/checkout', {
+                path: '/checkout',
+                pageTitle: 'Checkout',
+                products,
+                totalCartPrice,
+            })
+        })
+        .catch((err) => {
+            const error = new Error(err)
+            error.httpStatus = 500
+            return next(error)
+        })
 }
 
 exports.getOrderInvoice = (req, res, next) => {

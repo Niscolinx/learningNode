@@ -26,10 +26,8 @@
             </p>
         </div>
         <div class="centered">
-            <form action="/checkout" method="GET">
                 <input type="hidden" value="<%= csrfToken %>" name="_csrf">
-                <button type="button" onclick="payWithPaystack()" class="btn"> Pay Now </button>
-            </form>
+                <button type="button" onclick="payWithPaystack(this)" class="btn"> Pay Now </button>
         </div>
         <% } else { %>
         <h1>No Products in Cart!</h1>
