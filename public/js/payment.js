@@ -8,7 +8,6 @@ const payWithPaystack = (btn) => {
         },
     })
         .then((res) => {
-            console.log(res)
             return res.json()
         })
         .then((data) => {
